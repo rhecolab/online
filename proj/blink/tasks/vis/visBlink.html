@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>  
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script type="module" src="visBlink2.js">  </script>
+        <link rel="stylesheet" href="blink.css">
+
+    </head>
+
+    <body>        
+
+
+        <div id="exptBox" class="stimuli-grid"> 
+
+        <div id="instrBox">
+
+            You'll see a rapid stream of letters and digits. 
+            <br> Pay attention to the white and black digits.
+            <br>
+            <br> After the stream, type in the digits you saw.
+            <br>
+            <br>
+            There will be two practice trials, then the main task will start.
+            <br>
+            <br> Press the START button when you're ready to practice. 
+            <br>
+            <button id="startButton" class="button"> START </button>
+
+        </div>
+        
+        <br><br>
+            <div id="alphanum" class="stimuli"></div>
+
+            <!-- commenting out
+            <div id="q1" style="display: none">
+                What was the white digit?
+                <br><input type="text" id="q1input" required>
+                <br>
+                <button id="submitButton" onclick="collectResp(2)">SUBMIT</button>
+            </div>
+            
+            <div id="q2" style="display: none">
+                What was the black digit?
+                <br><input type="text" id="q2input" required>
+                <br>
+                <button id="submitButton" onclick="collectResp(3)">SUBMIT</button>
+            </div>
+        -->
+
+        <div id="q1" style="display: none">
+        What was the white digit?
+        <br>
+        <!-- 1 -->
+        <button onclick="collectResp(2,'1')">
+        1 </button><br>
+        
+        <!-- 2 -->
+        <button onclick="collectResp(2,'2')">
+        2 </button><br>
+
+        <!-- 3 -->
+        <button onclick="collectResp(2,'3')">
+        3 </button><br>
+
+        <!-- 4 -->
+        <button onclick="collectResp(2,'4')">
+        4 </button><br>
+        </div>
+        
+        <div id="q2" style="display: none">
+        What was the black digit?
+        <br>
+
+        <!-- 5 -->
+        <button onclick="collectResp(3,'5')">
+        5 </button><br>
+
+        
+        <!-- 6 -->
+        <button onclick="collectResp(3,'6')">
+        6 </button><br>
+
+
+        <!-- 7 -->
+        <button onclick="collectResp(3,'7')">
+        7 </button><br>
+
+
+        <!-- 8 -->
+        <button onclick="collectResp(3,'8')">
+        8 </button>
+
+
+        </div>
+        
+    </body>
+
+</html>

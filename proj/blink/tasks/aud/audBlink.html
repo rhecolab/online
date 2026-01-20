@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>  
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script type="module" src="audBlink2.js" defer>  </script>
+        <link rel="stylesheet" href="blink.css">
+
+    </head>
+
+    <body>        
+
+        <div id="exptBox" class="stimuli-grid"> 
+
+        <div id="instrBox">
+
+            You'll hear a rapid stream of environmental sounds. Pay attention to the glides and the animal sounds. 
+            <br><br>Click on the blue boxes to listen to the examples below!
+            <br><br>
+            <button class="btn2" onclick="playSound('glide_up',0,true)"><img src="img/up.png" class="choice-img" height=75 width=75 alt="Up"><br>Glide - Up</button>
+            <button class="btn2" onclick="playSound('glide_down',0,true)"><img src="img/down.png" class="choice-img" height=75 width=75 alt="Down"><br>Glide - Down</button>
+
+            <br><br>
+           <button class="btn2" onclick="playSound('a1_sh',0,true)">Cat <br><img src="img/cat.png" class="choice-img" height=75 width=75 alt="cat"></button>  
+            <button class="btn2" onclick="playSound('a2_sh',0,true)">Dog <br><img src="img/dog.png" class="choice-img" height=75 width=75 alt="dog"></button>
+            <button class="btn2" onclick="playSound('a8_sh',0,true)">Horse <br><img src="img/horse.png" class="choice-img" height=75 width=75 alt="horse"></button>
+            <button class="btn2" onclick="playSound('a9_sh',0,true)">Bird <br><img src="img/bird.png" class="choice-img" height=75 width=75 alt="bird"></button>
+            <br><br>
+            After the trial, you will be asked if the glide was up or down and what animal sound you heard.
+            <br>
+            <br> Press the START button when you're ready to start.
+            <br><br>
+            <button id="startButton" class="button" onlick="runTask()"> START </button>
+
+        </div>
+        
+        <br><br>
+
+            <div id="fix"></div>
+
+            <div id="q1" style="display: none"> 
+                Did the glide go up or down?
+                <br>
+            <button class="choice-btn" onclick="collectResp(2,'u')">
+                <img src="img/up.png" class="choice-img" height=75 width=75 alt="Up">
+                </button>
+                <br><br>
+                <button class="choice-btn" onclick="collectResp(2,'d')">
+                    <img src="img/down.png" class="choice-img" height=75 width=75 alt="Down">
+                </button>
+            </div>        
+
+            <div id="q2" style="display: none"> `
+                What animal sound did you hear?
+                <br>
+                <button class="choice-btn" onclick="collectResp(3,'cat')">
+                    <img src="img/cat.png" class="choice-img" height=75 width=75 alt="cat">
+                </button>
+                <br><br>
+                <button class="choice-btn" onclick="collectResp(3,'dog')">
+                    <img src="img/dog.png" class="choice-img" height=75 width=75 alt="dog">
+                </button>
+                <br><br>
+                <button class="choice-btn" onclick="collectResp(3,'horse')">
+                    <img src="img/horse.png" class="choice-img" height=75 width=75 alt="horse">
+                </button>
+                <br><br>
+                <button class="choice-btn" onclick="collectResp(3,'bird')">
+                    <img src="img/bird.png" class="choice-img" height=75 width=75 alt="bird">
+                </button>
+
+            </div>
+
+        </div>
+        
+    </body>
+
+</html>
