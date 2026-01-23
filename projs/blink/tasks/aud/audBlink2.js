@@ -1,6 +1,6 @@
-import { randomizeFull, makeSeq } from './funcs/randomization.js';
-import { saveData } from './funcs/saveData.js';
-import { preloadSounds, playSound, buffer, audioCtx } from './funcs/utils.js';
+import { randomizeFull, makeSeq } from '../../funcs/randomization.js';
+import { saveData } from '../../funcs/saveData.js';
+import { preloadSounds, playSound, buffer, audioCtx } from '../../funcs/utils.js';
 
 window.playSound = playSound;
 window.preloadSounds = preloadSounds;
