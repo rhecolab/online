@@ -1,6 +1,6 @@
-import { randomizeFull, makeSeq } from './funcs/randomization.js';
-import { saveData } from './funcs/saveData.js';
-import { drawShape, drawCircle, drawTriangle, drawSquare, drawSemicircle, drawPolygon} from './funcs/utils.js';
+import { randomizeFull, makeSeq } from '../../funcs/randomization.js';
+import { saveData } from '../../funcs/saveData.js';
+import { drawShape, drawCircle, drawTriangle, drawSquare, drawSemicircle, drawPolygon} from '../../funcs/utils.js';
 
 // Parameters
 const stimON = 150;
