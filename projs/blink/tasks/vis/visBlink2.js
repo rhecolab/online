@@ -16,11 +16,36 @@ let ctx;
 const taskName = 'visBlink';
 
 // Preload & setup
-window.onload = () => {
+//window.onload = () => {
 
-    subjID = prompt("Enter subject number:") || Math.floor(100 + Math.random() * 900);
+//    subjID = prompt("Enter subject number:") || Math.floor(100 + Math.random() * 900);
 
     // Generate trials
+//    const t1opts = ['1', '2', '3', '4'];
+//    const t2opts = ['5', '6', '7', '8'];
+//    const lags = [0,3,9];
+ //   const reps = 2;
+
+ //   const trialRnd = randomizeFull(t1opts, t2opts, lags, reps);
+  //  fullSeq = makeSeq(trialRnd, 'vis');
+
+  //  window.trials = trialRnd
+  //  trialTotal = window.trials.length;
+  //  console.log(trialTotal)
+
+    // Start button listener
+   // document.getElementById("startButton").addEventListener("click", () => {
+    //    document.getElementById("instrBox").style.display = "none";
+    //    document.getElementById("startButton").style.display = "none";
+    //    runTrial(fullSeq[trialNum]);
+
+  //  });
+//};
+
+export function startTask(participantID) {
+
+    subjID = participantID;
+
     const t1opts = ['1', '2', '3', '4'];
     const t2opts = ['5', '6', '7', '8'];
     const lags = [0,3,9];
@@ -29,18 +54,15 @@ window.onload = () => {
     const trialRnd = randomizeFull(t1opts, t2opts, lags, reps);
     fullSeq = makeSeq(trialRnd, 'vis');
 
-    window.trials = trialRnd
+    window.trials = trialRnd;
     trialTotal = window.trials.length;
-    console.log(trialTotal)
 
-    // Start button listener
     document.getElementById("startButton").addEventListener("click", () => {
         document.getElementById("instrBox").style.display = "none";
         document.getElementById("startButton").style.display = "none";
         runTrial(fullSeq[trialNum]);
-
     });
-};
+}
 
 // Run single trial
 function runTrial(trialInfo) {
@@ -188,9 +210,45 @@ window.collectResp = function(question, response = null) {
 }
 
 // End experiment
+//function endTask(subjID, taskName) {
+ //   document.getElementById("exptBox").innerText = "Task complete!";
+  //  console.log("Subject ID:", subjID);
+  //  console.log("Data:", data);
+   // saveData(subjID, taskName, data);
+//}
+
 function endTask(subjID, taskName) {
+
     document.getElementById("exptBox").innerText = "Task complete!";
-    console.log("Subject ID:", subjID);
-    console.log("Data:", data);
-    saveData(subjID, taskName, data);
+
+    // Convert each column into semicolon strings
+    //const rt = [];
+    const t1_item = [];
+    const t2_item = [];
+    const lag = [];
+    const resp1 = [];
+    const resp2 = [];
+
+    data.forEach(trial => {
+        t1_item.push(trial.t1_item);
+        t2_item.push(trial.t2_item);
+        lag.push(trial.lag);
+        resp1.push(trial.resp1);
+        resp2.push(trial.resp2);
+    });
+
+    Qualtrics.SurveyEngine.setEmbeddedData("t1_item", t1_item.join(";"));
+    Qualtrics.SurveyEngine.setEmbeddedData("t2_item", t2_item.join(";"));
+    Qualtrics.SurveyEngine.setEmbeddedData("lag", lag.join(";"));
+    Qualtrics.SurveyEngine.setEmbeddedData("resp1", resp1.join(";"));
+    Qualtrics.SurveyEngine.setEmbeddedData("resp2", resp2.join(";"));
+
+    Qualtrics.SurveyEngine.setEmbeddedData("SubjectID", subjID);
+    Qualtrics.SurveyEngine.setEmbeddedData("taskName", taskName);
+    Qualtrics.SurveyEngine.setEmbeddedData("userAgent", navigator.userAgent);
+
+    // Move survey forward
+    setTimeout(() => {
+        document.querySelector("#NextButton").click();
+    }, 500);
 }
