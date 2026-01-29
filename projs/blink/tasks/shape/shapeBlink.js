@@ -17,33 +17,55 @@ let ctx;
 const taskName = 'shapeBlink';
 
 // Preload & setup
-window.onload = () => {
-    const shapesCanvas = document.getElementById("shapes");
-    ctx = shapesCanvas.getContext("2d");
+//window.onload = () => {
+//   const shapesCanvas = document.getElementById("shapes");
+//    ctx = shapesCanvas.getContext("2d");
 
-    subjID = prompt("Enter subject number:") || Math.floor(100 + Math.random() * 900);
+//    subjID = prompt("Enter subject number:") || Math.floor(100 + Math.random() * 900);
 
     // Generate trials
-    const t1Opts = ['circle', 'square', 'triangle', 'pentagon'];
-    const t2Opts = ['semiup', 'semidown', 'semileft', 'semiright'];
+//    const t1Opts = ['circle', 'square', 'triangle', 'pentagon'];
+//    const t2Opts = ['semiup', 'semidown', 'semileft', 'semiright'];
+//    const lags = [0,3,9];
+//    const reps = 2;
+
+ //   const trialRnd = randomizeFull(t1Opts, t2Opts, lags, reps);
+ //   fullSeq = makeSeq(trialRnd, 'shape');
+
+//    window.trials = trialRnd
+//    trialTotal = window.trials.length;
+//    console.log(trialTotal)
+
+    // Start button listener
+ //   document.getElementById("startButton").addEventListener("click", () => {
+ //       document.getElementById("instrBox").style.display = "none";
+ //       document.getElementById("startButton").style.display = "none";
+ //       runTrial(fullSeq[trialNum]);
+
+  //  });
+//};
+
+export function startTask(participantID) {
+
+    subjID = participantID;
+
+    const t1opts = ['circle', 'square', 'triangle', 'pentagon'];
+    const t2opts = ['semiup', 'semidown', 'semileft', 'semiright'];
     const lags = [0,3,9];
     const reps = 2;
 
-    const trialRnd = randomizeFull(t1Opts, t2Opts, lags, reps);
-    fullSeq = makeSeq(trialRnd, 'shape');
+    const trialRnd = randomizeFull(t1opts, t2opts, lags, reps);
+    fullSeq = makeSeq(trialRnd, 'aud');
 
-    window.trials = trialRnd
+    window.trials = trialRnd;
     trialTotal = window.trials.length;
-    console.log(trialTotal)
 
-    // Start button listener
     document.getElementById("startButton").addEventListener("click", () => {
         document.getElementById("instrBox").style.display = "none";
         document.getElementById("startButton").style.display = "none";
         runTrial(fullSeq[trialNum]);
-
     });
-};
+}
 
 // Run single trial
 function runTrial(trialInfo) {

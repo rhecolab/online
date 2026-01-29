@@ -10,7 +10,10 @@ module.exports = {
   output: {
     filename: 'visBlink_bundle.js',
     path: path.resolve(__dirname, 'dist'),
-    library: 'visBlinkTask',   // exposes functions globally (optional but good)
+    library: {
+        name: 'vblink',
+        type: 'window',
+    },
   },
 
   // Allows importing HTML files into JS

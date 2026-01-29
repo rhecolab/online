@@ -20,11 +20,41 @@ let subjID = "";
 const taskName = 'audBlink';
 
 // Preload & setup
-window.onload = async () => {
+//window.onload = async () => {
 
-  subjID = prompt("Enter subject number:") || Math.floor(100 + Math.random() * 900);
+//  subjID = prompt("Enter subject number:") || Math.floor(100 + Math.random() * 900);
 
     // Generate trials
+//    const t1opts = ['glide_up', 'glide_down'];
+//    const t2opts = ['a1_sh', 'a2_sh', 'a8_sh', 'a9_sh'];
+//    const lags = [0,3,9];
+//    const reps = 2;
+
+ //   const trialRnd = randomizeFull(t1opts, t2opts, lags, reps);
+ //   fullSeq = makeSeq(trialRnd, 'aud');
+
+  //  window.trials = trialRnd
+  //  trialTotal = window.trials.length;
+  //  console.log(trialTotal)
+
+    //
+  //  const soundFiles = ['glide_up', 'glide_down', 'a1_sh', 'a2_sh', 'a8_sh', 'a9_sh', 'h1_sh','h2_sh','h3_sh','h4_sh','h5_sh','h6_sh','h7_sh','h8_sh','h9_sh','h10_sh','i1_sh','i2_sh','i3_sh','i4_sh','i5_sh','i6_sh','i7_sh','i8_sh','i9_sh','i10_sh']
+  //  sounds = await preloadSounds(soundFiles)
+
+    // Start button listener
+  //  document.getElementById("startButton").addEventListener("click", () => {
+  //      document.getElementById("instrBox").style.display = "none";
+  //      document.getElementById("startButton").style.display = "none";
+  //      runTrial(fullSeq[trialNum]);
+
+//    });
+//};
+
+
+export async function startTask(participantID) {
+
+    subjID = participantID;
+
     const t1opts = ['glide_up', 'glide_down'];
     const t2opts = ['a1_sh', 'a2_sh', 'a8_sh', 'a9_sh'];
     const lags = [0,3,9];
@@ -33,22 +63,18 @@ window.onload = async () => {
     const trialRnd = randomizeFull(t1opts, t2opts, lags, reps);
     fullSeq = makeSeq(trialRnd, 'aud');
 
-    window.trials = trialRnd
+    window.trials = trialRnd;
     trialTotal = window.trials.length;
-    console.log(trialTotal)
 
-    //
     const soundFiles = ['glide_up', 'glide_down', 'a1_sh', 'a2_sh', 'a8_sh', 'a9_sh', 'h1_sh','h2_sh','h3_sh','h4_sh','h5_sh','h6_sh','h7_sh','h8_sh','h9_sh','h10_sh','i1_sh','i2_sh','i3_sh','i4_sh','i5_sh','i6_sh','i7_sh','i8_sh','i9_sh','i10_sh']
     sounds = await preloadSounds(soundFiles)
 
-    // Start button listener
     document.getElementById("startButton").addEventListener("click", () => {
         document.getElementById("instrBox").style.display = "none";
         document.getElementById("startButton").style.display = "none";
         runTrial(fullSeq[trialNum]);
-
     });
-};
+}
 
 // Run single trial
 function runTrial(trialInfo) {

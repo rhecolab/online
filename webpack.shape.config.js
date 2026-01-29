@@ -10,7 +10,10 @@ module.exports = {
   output: {
     filename: 'shapeBlink_bundle.js',
     path: path.resolve(__dirname, 'dist'),
-    library: 'shapeBlinkTask',   // exposes functions globally (optional but good)
+    library: {
+        name: 'sblink',
+        type: 'window',
+    },
   },
 
   // Allows importing HTML files into JS
