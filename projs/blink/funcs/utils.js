@@ -4,10 +4,17 @@
 const githubPath = "https://rhecolab.github.io/online/projs/blink/";
 
 function getBasePath() {
-  if (window.location.hostname.includes("qualtrics")) {
-    return githubPath;
+  // local path if testing locally
+  if (
+    window.location.hostname === "localhost" ||
+    window.location.hostname === "127.0.0.1" ||
+    window.location.protocol === "file:"
+  ) {
+    return "../../";
   }
-  return "../../"; // local fallback
+
+  // default to github
+  return githubPath;
 }
 
 // General shuffle
