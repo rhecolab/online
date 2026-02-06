@@ -12,6 +12,15 @@ html, body {
 
 }
 
+.SkinInner {
+  max-width: 1400px !important; 
+  width: 95% !important;
+}
+
+.QuestionOuter {
+  padding: 0 !important;
+}
+
 #expRoot {
   width: 100vw;
   height: 100vh;

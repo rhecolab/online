@@ -47,10 +47,10 @@ export async function preloadSounds(soundFiles) {
 
 export function playSound(stim, when,example=false) {
 
-if (example===true) {
-      $("#fix").text("");}
-
-else  {  $("#fix").text("+");}
+  const fix = document.getElementById("fix");
+  if (fix) {
+    fix.textContent = example ? "" : "+";
+  }
 
   const source = audioCtx.createBufferSource();
   source.buffer = buffer[stim];
