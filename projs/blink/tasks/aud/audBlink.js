@@ -137,6 +137,9 @@ window.collectResp = function(question, response = null) {
     console.log('t2', cTrial.t2);
     console.log('lag', cTrial.lag);
 
+    const q1 = document.getElementById("q1");
+    const q2 = document.getElementById("q2");
+
     // Always initialize when question 1 is shown
     if (question === 1) {
 
@@ -170,20 +173,22 @@ window.collectResp = function(question, response = null) {
     }
 
     if (question === 1) {
-        $("#q1").show();
-        $("#q2").hide();
+
+        if (q1) q1.style.display = "block";
+        if (q2) q2.style.display = "none";
     }
 
     if (question === 2) {
-        $("#q1").hide();
-        $("#q2").show();
+        if (q1) q1.style.display = "none";
+        if (q2) q2.style.display = "block";
     }
 
     if (question === 3) {
         data.push(currentTrialRow);
         currentTrialRow = null;
 
-        $("#q1, #q2").hide();
+        if (q1) q1.style.display = "none";
+        if (q2) q2.style.display = "none";
         trialNum++;
 
         if (trialNum < trialTotal) {
