@@ -118,14 +118,14 @@ function runTrial(trialInfo) {
 }
 
 function scheduleFixOn(when) {
-    // align JavaScript with audio clock
     const delay = (when - audioCtx.currentTime) * 1000;
-    setTimeout(() => { $("#fix").text("+"); }, delay);
+    setTimeout(() => {   document.getElementById("fix").textContent = "+";
+; }, delay);
 }
 
 function scheduleFixOff(when) {
     const delay = (when - audioCtx.currentTime) * 1000;
-    setTimeout(() => { $("#fix").text(""); }, delay);
+    setTimeout(() => { document.getElementById("fix").textContent = ""; }, delay);
 }
 
 
