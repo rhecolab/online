@@ -200,9 +200,22 @@ window.collectResp = function(question, response = null) {
 }
 
 // End experiment
-function endTask(subjID, taskName) {
-    document.getElementById("exptBox").innerText = "Task complete!";
-    console.log("Subject ID:", subjID);
-    console.log("Data:", data);
-    saveData(subjID, taskName, data);
+//function endTask(subjID, taskName) {
+//    document.getElementById("exptBox").innerText = "Task complete!";
+//    console.log("Subject ID:", subjID);
+//    console.log("Data:", data);
+//    saveData(subjID, taskName, data);
+//}
+
+function endTask() {
+  console.log("Task complete.");
+  console.log("Data:", data);
+
+  const jsonData = JSON.stringify(data);
+
+  // Save entire dataset into one embedded field
+  Qualtrics.SurveyEngine.setEmbeddedData("audBlinkData", jsonData);
+
+  // Advance survey so data is actually submitted
+  document.querySelector("#NextButton").click();
 }
