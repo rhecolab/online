@@ -118,14 +118,19 @@ function runTrial(trialInfo) {
 }
 
 function scheduleFixOn(when) {
-    const delay = (when - audioCtx.currentTime) * 1000;
-    setTimeout(() => {   document.getElementById("fix").textContent = "+";
-; }, delay);
+    const delay = Math.max(0, (when - audioCtx.currentTime) * 1000);
+    setTimeout(() => {   
+        const fix = document.getElementById("fix");
+        if (fix) fix.textContent = "+";
+    }, delay);
 }
 
 function scheduleFixOff(when) {
-    const delay = (when - audioCtx.currentTime) * 1000;
-    setTimeout(() => { document.getElementById("fix").textContent = ""; }, delay);
+    const delay = Math.max(0, (when - audioCtx.currentTime) * 1000);
+    setTimeout(() => { 
+        const fix = document.getElementById("fix");
+        if (fix) fix.textContent = "";
+    }, delay);
 }
 
 
