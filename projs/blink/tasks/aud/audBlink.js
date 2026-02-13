@@ -65,7 +65,8 @@ export default { startTask };
 function runTrial(trialInfo) {
     currentTrial = trialInfo;
     currentTrialRow = NaN;
-
+    currentTrial.stimuli = trialInfo.stimOrder;
+    
     const stimuli = trialInfo.stimOrder;
     let t = audioCtx.currentTime;
 
@@ -126,8 +127,8 @@ window.collectResp = function(question, response = null) {
             rt1: "",
             rt2: "",
             time: now.toISOString().split("T")[0] + " " + now.toTimeString().split(" ")[0],
-            seqLen: stimuli.length,                        
-            seqOrder: stimuli.map(s => s.stim).join(","),    
+            seqLen: currentTrial.stimuli.length,
+            seqOrder: currentTrial.stimuli.map(s => s.stim).join(","),
         };
     }
 
@@ -175,6 +176,9 @@ function endTask() {
 
   const jsonData = JSON.stringify(data);
 
+  // Save entire dataset into one embedded field
   Qualtrics.SurveyEngine.setEmbeddedData("blinkData", jsonData);
+
+  // Advance survey so data is actually submitted
   document.querySelector("#NextButton").click();
 }
