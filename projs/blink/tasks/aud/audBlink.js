@@ -16,6 +16,7 @@ let currentTrial = null;
 let currentTrialRow = 0;
 let trialTotal = 0;
 let fullSeq = []
+let trialStartTime;
 
 let subjID = "";
 const taskName = 'audBlink';
@@ -66,6 +67,8 @@ function runTrial(trialInfo) {
     currentTrial = trialInfo;
     currentTrialRow = NaN;
     currentTrial.stimuli = trialInfo.stimOrder;
+
+    trialStartTime = performance.now();
     
     const stimuli = trialInfo.stimOrder;
     let t = audioCtx.currentTime;
