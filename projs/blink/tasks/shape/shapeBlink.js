@@ -32,11 +32,7 @@ async function startTask(participantID) {
     root.innerHTML = html;
 
     // Set up canvas
-    canvas = document.getElementById("shapes");
-    if (!canvas) {
-        console.error("Canvas not found!");
-        return;
-    }
+    canvas = root.querySelector("#shapes");
     ctx = canvas.getContext("2d");
 
     // Define trials
