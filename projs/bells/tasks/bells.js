@@ -1,4 +1,4 @@
-import { preloadSounds, playSound, buffer, audioCtx } from '../../funcs/utils.js';
+import { } from '../../bells/funcs/utils.js';
 import html from "./bells.html";
 import "../../funcs/bells.css";
 ;
