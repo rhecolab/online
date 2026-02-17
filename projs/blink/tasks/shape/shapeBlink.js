@@ -43,7 +43,7 @@ async function startTask(participantID) {
     window.trials = trialRnd;
     trialTotal = window.trials.length;
 
-    const canvas = document.getElementById("myCanvas");
+    const canvas = document.getElementById("shapes");
     const ctx = canvas.getContext("2d");
 
     document.getElementById("startButton").addEventListener("click", () => {
