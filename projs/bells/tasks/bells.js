@@ -1,7 +1,9 @@
-import { } from '../../bells/funcs/utils.js';
-import html from "./bells.html";
-import "../../funcs/bells.css";
-;
+//import { } from '../../bells/funcs/utils.js';
+//import html from "./bells.html";
+//import "../../funcs/bells.css";
+
+import html from "https://rhecolab.github.io/online/projs/bells/tasks/bells";
+import "https://rhecolab.github.io/online/projs/bells/funcs/bells.css"
 
 // Parameters
 let data = [];
