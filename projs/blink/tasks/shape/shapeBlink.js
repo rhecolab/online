@@ -16,7 +16,6 @@ let fullSeq = []
 let trialStartTime;
 
 let subjID = "";
-let ctx;
 const taskName = 'shapeBlink';
 
 
@@ -32,7 +31,6 @@ async function startTask(participantID) {
     // Inject HTML
     root.innerHTML = html;
 
-
     // Define trials
     const t1opts = ['circle', 'square', 'triangle', 'pentagon'];
     const t2opts = ['semiup', 'semidown', 'semileft', 'semiright'];
@@ -44,6 +42,9 @@ async function startTask(participantID) {
 
     window.trials = trialRnd;
     trialTotal = window.trials.length;
+
+    const canvas = document.getElementById("myCanvas");
+    const ctx = canvas.getContext("2d");
 
     document.getElementById("startButton").addEventListener("click", () => {
         document.getElementById("instrBox").style.display = "none";
@@ -112,6 +113,9 @@ window.collectResp = function(question, response = null) {
 
     // Always initialize when question 1 is shown
     if (question === 1) {
+
+        const now = new Date();
+
         currentTrialRow = {
             t1_item: cTrial.t1,
             t2_item: cTrial.t2,

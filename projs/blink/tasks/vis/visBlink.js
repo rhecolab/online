@@ -106,6 +106,8 @@ window.collectResp = function(question, response = null) {
 
     // Always initialize when question 1 is shown
     if (question === 1) {
+          const now = new Date();
+
         currentTrialRow = {
             t1_item: cTrial.t1,
             t2_item: cTrial.t2,
