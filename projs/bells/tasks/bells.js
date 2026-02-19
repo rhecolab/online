@@ -1,15 +1,6 @@
-//import { } from '../../bells/funcs/utils.js';
-//import html from "./bells.html";
-//import "../../funcs/bells.css";
-
-import html from "https://rhecolab.github.io/online/projs/bells/tasks/bells.html";
-//import "https://rhecolab.github.io/online/projs/bells/funcs/bells.css"
-const link = document.createElement("link");
-link.rel = "stylesheet";
-link.href = "https://rhecolab.github.io/online/projs/bells/funcs/bells.css";
-document.head.appendChild(link);
-
-
+import { } from '../funcs/utils_bells.js';
+import html from "./bells.html";
+import "../funcs/bells.css";
 
 // Parameters
 let data = [];
