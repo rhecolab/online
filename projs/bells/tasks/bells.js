@@ -63,7 +63,7 @@ function runTrial(){
             console.log("Trial saved:", trial);
         }
 
-    bells.addEventListener("click", getClicks);
+    stim.addEventListener("click", getClicks);
     
     setTimeout(() => {
             stim.style.display = "none";
