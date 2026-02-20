@@ -6,7 +6,7 @@ import "../funcs/bells.css";
 let data = [];
 let trialNumber = 0;
 let startTime;
-let totalTime = 10000; // how long they have to click; change to 5 min for full time
+let totalTime = 5 * 60 * 1000; // time in ms; 5 min * 60 sec per min * 1000 ms per sec 
 
 let subjID = "";
 const taskName = 'bells';
@@ -46,18 +46,25 @@ function runTrial(){
     stim.style.display = "block";
 
     function countdown(){
-        const countdownElement = document.getElementById("countdown");
-        let timeLeft = totalTime / 1000; // convert to seconds
+        const now = performance.now();
+        const remaining = Math.max(0, endTime - now);
 
-        const timer = setInterval(() => {
-            if (timeLeft <= 0) {
-                clearInterval(timer);
-                countdownElement.innerHTML = "Time's up!";
-            } else {
-                countdownElement.innerHTML = `Time left: ${timeLeft} seconds`;
-            }
-            timeLeft -= 1;
-        }, 1000);
+        const totalSeconds = Math.ceil(remaining / 1000);
+        const minutes = Math.floor(totalSeconds / 60);
+        const seconds = totalSeconds % 60;
+
+        countdown.textContent =
+            String(minutes).padStart(2, "0") + ":" +
+            String(seconds).padStart(2, "0");
+
+        // Turn red in last 30 seconds
+        if (totalSeconds <= 30) {
+            countdown.style.color = "red";
+        }
+
+        if (remaining > 0) {
+            requestAnimationFrame(updateCountdown);
+        }
     }
 
     countdown();
@@ -79,7 +86,23 @@ function runTrial(){
 
             data.push(trial);
             console.log("Trial saved:", trial);
+    
+            const circle = document.createElement("div");
+        circle.style.position = "absolute";
+        circle.style.width = "14px";
+        circle.style.height = "14px";
+        circle.style.border = "2px solid red";
+        circle.style.borderRadius = "50%";
+        circle.style.pointerEvents = "none";
+        circle.style.left = (x - 7) + "px";
+        circle.style.top = (y - 7) + "px";
+
+    document.getElementById("stimContainer").appendChild(circle);
+
+
         }
+
+
 
     stim.addEventListener("click", getClicks);
     
