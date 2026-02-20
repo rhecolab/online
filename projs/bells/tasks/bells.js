@@ -39,13 +39,19 @@ export default { startTask };
 
 
 // Run single trial
-function runTrial(){
+function runTrial() {
+
+    const stim = document.getElementById("stim");
+    const container = document.getElementById("stimContainer");
+    const countdownDiv = document.getElementById("countdown");
+
+    stim.style.display = "block";
 
     const startTime = performance.now();
     const endTime = startTime + totalTime;
-    stim.style.display = "block";
 
-    function countdown(){
+    // --- Countdown ---
+    function countdown() {
         const now = performance.now();
         const remaining = Math.max(0, endTime - now);
 
@@ -57,11 +63,6 @@ function runTrial(){
             String(minutes).padStart(2, "0") + ":" +
             String(seconds).padStart(2, "0");
 
-        // Turn red in last 30 seconds
-        if (totalSeconds <= 30) {
-            countdownDiv.style.color = "red";
-        }
-
         if (remaining > 0) {
             requestAnimationFrame(countdown);
         }
@@ -69,49 +70,91 @@ function runTrial(){
 
     countdown();
 
+    // --- Click handler ---
     function getClicks(event) {
+        const rect = stim.getBoundingClientRect();
 
-            const rect = stim.getBoundingClientRect();
-            const x = event.clientX - rect.left;
-            const y = event.clientY - rect.top;
+        // Get click position relative to image in [0,1]
+        const relativeX = (event.clientX - rect.left) / rect.width;
+        const relativeY = (event.clientY - rect.top) / rect.height;
 
-            trialNumber++;
+        trialNumber++;
 
-            const trial = {
-                trial: trialNumber,
-                x: Math.round(x),
-                y: Math.round(y),
-                rt: Math.round(performance.now() - startTime)
-            };
+        // Save trial data as relative coordinates
+        const trial = {
+            trial: trialNumber,
+            x_rel: parseFloat(relativeX.toFixed(4)),
+            y_rel: parseFloat(relativeY.toFixed(4)),
+            rt: Math.round(performance.now() - startTime)
+        };
 
-            data.push(trial);
-            console.log("Trial saved:", trial);
-    
-            const circle = document.createElement("div");
-            circle.style.position = "absolute";
-            circle.style.width = "14px";
-            circle.style.height = "14px";
-            circle.style.border = "2px solid red";
-            circle.style.borderRadius = "50%";
-            circle.style.pointerEvents = "none";
-            circle.style.left = (x - 7) + "px";
-            circle.style.top = (y - 7) + "px";
+        data.push(trial);
+        console.log("Trial saved:", trial);
 
-    document.getElementById("stimContainer").appendChild(circle);
+        // --- Draw circle on displayed image ---
+        const circle = document.createElement("div");
+        circle.style.position = "absolute";
+        circle.style.width = "14px";
+        circle.style.height = "14px";
+        circle.style.border = "2px solid red";
+        circle.style.borderRadius = "50%";
+        circle.style.pointerEvents = "none";
 
-        }
+        // Convert relative coordinates back to displayed pixels
+        const displayX = relativeX * rect.width;
+        const displayY = relativeY * rect.height;
 
+        circle.style.left = `${displayX - 7}px`; // center circle
+        circle.style.top = `${displayY - 7}px`;
 
-    stim.addEventListener("click", getClicks);
-    
-    setTimeout(() => {
-            stim.style.display = "none";
-            stim.removeEventListener("click", getClicks);
-            endTask();
-        }, totalTime);
+        container.appendChild(circle);
     }
 
+    stim.addEventListener("click", getClicks);
 
+    // --- End trial ---
+    setTimeout(() => {
+        stim.style.display = "none";
+        stim.removeEventListener("click", getClicks);
+        endTask();
+    }, totalTime);
+}
+
+function saveImage() {
+    const stim = document.getElementById("stim");
+    
+    // Create a canvas at the image's natural size
+    const canvas = document.createElement("canvas");
+    canvas.width = stim.naturalWidth;
+    canvas.height = stim.naturalHeight;
+    const ctx = canvas.getContext("2d");
+
+    // Draw the underlying image
+    ctx.drawImage(stim, 0, 0, canvas.width, canvas.height);
+
+    // Draw each click circle using relative offsets
+    data.forEach(trial => {
+        const x = trial.x_rel * canvas.width;
+        const y = trial.y_rel * canvas.height;
+
+        ctx.beginPath();
+        ctx.arc(x, y, 7, 0, 2 * Math.PI); // same radius as on screen
+        ctx.fillStyle = "rgba(255,0,0,0.6)";
+        ctx.fill();
+        ctx.strokeStyle = "black";
+        ctx.lineWidth = 2;
+        ctx.stroke();
+    });
+
+    // Convert canvas to base64 PNG
+    const dataURL = canvas.toDataURL("image/png");
+
+    // Save to Qualtrics Embedded Data
+    if (window.Qualtrics && Qualtrics.SurveyEngine) {
+        Qualtrics.SurveyEngine.setEmbeddedData("bellsImageWithCircles", dataURL);
+        console.log("Image with circles saved to Qualtrics Embedded Data.");
+    }
+}
 
 function endTask() {
 
@@ -119,6 +162,8 @@ function endTask() {
   console.log("Data:", data);
 
   const jsonData = JSON.stringify(data);
+
+  saveImage();
 
   // Save entire dataset into one embedded field
   Qualtrics.SurveyEngine.setEmbeddedData("bellsData", jsonData);
