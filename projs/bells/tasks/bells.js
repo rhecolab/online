@@ -63,7 +63,7 @@ function runTrial(){
         }
 
         if (remaining > 0) {
-            requestAnimationFrame(countdown());
+            requestAnimationFrame(countdown);
         }
     }
 
@@ -88,20 +88,18 @@ function runTrial(){
             console.log("Trial saved:", trial);
     
             const circle = document.createElement("div");
-        circle.style.position = "absolute";
-        circle.style.width = "14px";
-        circle.style.height = "14px";
-        circle.style.border = "2px solid red";
-        circle.style.borderRadius = "50%";
-        circle.style.pointerEvents = "none";
-        circle.style.left = (x - 7) + "px";
-        circle.style.top = (y - 7) + "px";
+            circle.style.position = "absolute";
+            circle.style.width = "14px";
+            circle.style.height = "14px";
+            circle.style.border = "2px solid red";
+            circle.style.borderRadius = "50%";
+            circle.style.pointerEvents = "none";
+            circle.style.left = (x - 7) + "px";
+            circle.style.top = (y - 7) + "px";
 
     document.getElementById("stimContainer").appendChild(circle);
 
-
         }
-
 
 
     stim.addEventListener("click", getClicks);
