@@ -6,7 +6,7 @@ import "../funcs/bells.css";
 let data = [];
 let trialNumber = 0;
 let startTime;
-let totalTime = 1000; // how long they have to click; change to 5 min for full time
+let totalTime = 10000; // how long they have to click; change to 5 min for full time
 
 let subjID = "";
 const taskName = 'bells';
@@ -42,7 +42,25 @@ export default { startTask };
 function runTrial(){
 
     const startTime = performance.now();
-    stim.style.display = "block"; 
+    const endTime = startTime + totalTime;
+    stim.style.display = "block";
+
+    function countdown(){
+        const countdownElement = document.getElementById("countdown");
+        let timeLeft = totalTime / 1000; // convert to seconds
+
+        const timer = setInterval(() => {
+            if (timeLeft <= 0) {
+                clearInterval(timer);
+                countdownElement.innerHTML = "Time's up!";
+            } else {
+                countdownElement.innerHTML = `Time left: ${timeLeft} seconds`;
+            }
+            timeLeft -= 1;
+        }, 1000);
+    }
+
+    countdown();
 
     function getClicks(event) {
 
