@@ -6,7 +6,7 @@ import "../funcs/bells.css";
 let data = [];
 let trialNumber = 0;
 let startTime;
-let totalTime = 100; // how long they have to click; change to 5 min for full time
+let totalTime = 1000; // how long they have to click; change to 5 min for full time
 
 let subjID = "";
 const taskName = 'bells';
