@@ -63,7 +63,7 @@ function runTrial(){
         }
 
         if (remaining > 0) {
-            requestAnimationFrame(updateCountdown);
+            requestAnimationFrame(countdown());
         }
     }
 
