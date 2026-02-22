@@ -58,6 +58,12 @@ html, body {
   object-fit: contain;
 }
 
+#countdownDiv {
+  font-size: 40px;
+  font-weight: bold;
+  color: red;
+}
+
 a:link {
     color: blue;
     text-decoration: none;

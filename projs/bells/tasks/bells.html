@@ -12,20 +12,23 @@
         <div id="exptBox" class="stimuli-grid"> 
 
         <div id="instrBox">
-
+        <center>
             You will see an image that includes bells as well as other items. Your task is to click on as many bells as possible within 5 minutes. 
             <br>
             <br> Press the START button when you're ready to start.
             <br><br>
-            <button id="startButton" class="button" onlick="runTask()"> START </button>
-
+            <button id="startButton" class="button" onclick="runTask()"> START </button>
+        </center>
         </div>
         
         <div id="stim" style="display: none"> 
-            <div id="countdownDiv"></div>
              <div id="stimContainer" style="position: relative; display: inline-block;">
                 <img id="bells" src="https://rhecolab.github.io/online/projs/bells/stimuli/bells.jpg">
             </div>
+
+            <center><div id="countdownDiv"></div></center>
+
+
         </div>        
 
         </div>
