@@ -43,7 +43,7 @@ function runTrial() {
 
     const stim = document.getElementById("stim");
     const container = document.getElementById("stimContainer");
-    const countdownDiv = document.getElementById("countdown");
+    const countdownDiv = document.getElementById("countdownDiv");
 
     stim.style.display = "block";
 
@@ -151,7 +151,6 @@ function saveImage() {
     // Save to Qualtrics Embedded Data
     if (window.Qualtrics && Qualtrics.SurveyEngine) {
         Qualtrics.SurveyEngine.setEmbeddedData("bellsImage", dataURL);
-        console.log("Image with circles saved to Qualtrics Embedded Data.");
     }
 }
 
