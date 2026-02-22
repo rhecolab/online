@@ -94,8 +94,8 @@ function runTrial() {
         // --- Draw circle on displayed image ---
         const circle = document.createElement("div");
         circle.style.position = "absolute";
-        circle.style.width = "14px";
-        circle.style.height = "14px";
+        circle.style.width = "20px";
+        circle.style.height = "20px";
         circle.style.border = "2px solid red";
         circle.style.borderRadius = "50%";
         circle.style.pointerEvents = "none";
@@ -104,15 +104,14 @@ function runTrial() {
         const displayX = relativeX * rect.width;
         const displayY = relativeY * rect.height;
 
-        circle.style.left = `${displayX - 7}px`; // center circle
-        circle.style.top = `${displayY - 7}px`;
+        circle.style.left = `${displayX - 10}px`; // center circle
+        circle.style.top = `${displayY - 10}px`;
 
         container.appendChild(circle);
     }
 
     stim.addEventListener("click", getClicks);
 
-    // --- End trial ---
     setTimeout(() => {
         stim.style.display = "none";
         stim.removeEventListener("click", getClicks);
@@ -151,7 +150,7 @@ function saveImage() {
 
     // Save to Qualtrics Embedded Data
     if (window.Qualtrics && Qualtrics.SurveyEngine) {
-        Qualtrics.SurveyEngine.setEmbeddedData("bellsImageWithCircles", dataURL);
+        Qualtrics.SurveyEngine.setEmbeddedData("bellsImage", dataURL);
         console.log("Image with circles saved to Qualtrics Embedded Data.");
     }
 }
