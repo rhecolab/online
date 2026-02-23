@@ -1,5 +1,5 @@
 
-/* Remove Qualtrics background + padding */
+/* Remove qualtrics default */
 .Skin,
 .SkinInner,
 .QuestionOuter,
@@ -12,17 +12,18 @@
   box-shadow: none !important;
 }
 
-.SkinInner {
-  border: none !important;
+.QuestionOuter {
+  padding: 0 !important;
 }
 
+/* Add experiment specific things */
 #expRoot {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: #d1d1d1;
+  background: #ffffff;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -39,62 +40,23 @@ html, body {
     justify-content: center;  
     align-items: center;
     min-height: 100vh;
-    background-color: #d1d1d1;
+    background-color: #ffffff;
 
 }
 
-.SkinInner {
-  max-width: 1400px !important; 
-  width: 95% !important;
-}
-
-.QuestionOuter {
-  padding: 0 !important;
-}
-
-#expRoot {
-  width: 100vw;
-  height: 100vh;
+#stimContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-
-#exptBox {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-#exptBox > div {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    z-index: 10;        
-}
-
-#shapes {
-  pointer-events: none;   
-}
-
-.stimuli {
-    font-size: 50pt;
-}
-
-#fix {
-    font-size: 70pt;
-    text-align: center;
-}
-
-a:link {
-    color: blue;
-    text-decoration: none;
+#stim {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
 }
 
 button {
@@ -108,29 +70,12 @@ button {
   transition: background-color 0.2s ease, transform 0.1s ease;
 }
 
-.btn2 {
-    width: 80px;
-    height: 80px;
-    padding: 5px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    background: transparent;
-  }
-
-.choice-btn {
-    width: 80px;
-    height: 80px;
-    padding: 5px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
- background: transparent;
-
-}
-
-.choice-img {
-    width: 60px;
-    height: 60px;
-    object-fit: contain;
+#bisectLine {
+    position: absolute;
+    top: -20px;
+    width: 2px;
+    height: 44px;
+    background: rgb(255, 0, 0);
+    pointer-events: none;
+    display: none;
 }

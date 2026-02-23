@@ -1,5 +1,5 @@
 
-/* Remove Qualtrics background + padding */
+/* Remove qualtrics default */
 .Skin,
 .SkinInner,
 .QuestionOuter,
@@ -12,6 +12,11 @@
   box-shadow: none !important;
 }
 
+.QuestionOuter {
+  padding: 0 !important;
+}
+
+/* Add experiment specific things */
 #expRoot {
   position: fixed;
   top: 0;
@@ -39,10 +44,6 @@ html, body {
 
 }
 
-.QuestionOuter {
-  padding: 0 !important;
-}
-
 #stimContainer {
   position: relative;
   width: 100%;
@@ -59,14 +60,9 @@ html, body {
 }
 
 #countdownDiv {
-  font-size: 40px;
+  font-size: 30px;
   font-weight: bold;
   color: red;
-}
-
-a:link {
-    color: blue;
-    text-decoration: none;
 }
 
 button {

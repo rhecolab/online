@@ -38,19 +38,19 @@ async function startTask(participantID) {
 export default { startTask };
 
 
-// Run single trial
+// Display bells image & collect clicks 
 function runTrial() {
 
+    // Make stimulus visible 
     const stim = document.getElementById("stim");
     const container = document.getElementById("stimContainer");
     const countdownDiv = document.getElementById("countdownDiv");
-
     stim.style.display = "block";
 
+    // Set up countdown 
     const startTime = performance.now();
     const endTime = startTime + totalTime;
 
-    // --- Countdown ---
     function countdown() {
         const now = performance.now();
         const remaining = Math.max(0, endTime - now);
@@ -70,14 +70,14 @@ function runTrial() {
 
     countdown();
 
-    // --- Click handler ---
+    // Capture & display clicks on screen 
     function getClicks(event) {
         const rect = stim.getBoundingClientRect();
 
-        // Get click position relative to image in [0,1]
         const relativeX = (event.clientX - rect.left) / rect.width;
         const relativeY = (event.clientY - rect.top) / rect.height;
 
+        // Trial number is each click 
         trialNumber++;
 
         // Save trial data as relative coordinates
@@ -89,9 +89,8 @@ function runTrial() {
         };
 
         data.push(trial);
-        console.log("Trial saved:", trial);
 
-        // --- Draw circle on displayed image ---
+        // Display click locations 
         const circle = document.createElement("div");
         circle.style.position = "absolute";
         circle.style.width = "20px";
@@ -122,7 +121,7 @@ function runTrial() {
 function saveImage() {
     const stim = document.getElementById("stim");
     
-    // Create a canvas at the image's natural size
+    // Create canvas
     const canvas = document.createElement("canvas");
     canvas.width = stim.naturalWidth;
     canvas.height = stim.naturalHeight;
@@ -131,7 +130,7 @@ function saveImage() {
     // Draw the underlying image
     ctx.drawImage(stim, 0, 0, canvas.width, canvas.height);
 
-    // Draw each click circle using relative offsets
+    // Draw clicks
     data.forEach(trial => {
         const x = trial.x_rel * canvas.width;
         const y = trial.y_rel * canvas.height;
@@ -145,7 +144,7 @@ function saveImage() {
         ctx.stroke();
     });
 
-    // Convert canvas to base64 PNG
+    // Convert canvas 
     const dataURL = canvas.toDataURL("image/png");
 
     // Save to Qualtrics Embedded Data
@@ -163,9 +162,9 @@ function endTask() {
 
   saveImage();
 
-  // Save entire dataset into one embedded field
+  // Set up to save to qualtrics 
   Qualtrics.SurveyEngine.setEmbeddedData("bellsData", jsonData);
 
-  // Advance survey so data is actually submitted
+  // Submit to qualtrics
   document.querySelector("#NextButton").click();
 }

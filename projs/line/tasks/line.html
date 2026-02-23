@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>  
+        <script type="module" src="https://rhecolab.github.io/online/projs/bells/tasks/line.js" defer>  </script>
+
+    </head>
+
+    <body>        
+
+        <div id="exptBox" class="stimuli-grid"> 
+
+        <div id="instrBox">
+        <center>
+            You will see a line on the screen. Your task is to select the middle point of the line by clicking on it. 
+            <br>
+            <br> Press the START button when you're ready to start.
+            <br><br>
+            <button id="startButton" class="button" onclick="runTask()"> START </button>
+        </center>
+        </div>
+
+        <div id="stim" style="display: none">
+            <div id="line"></div>
+            <div id="bisectLine"></div>
+        </div>        
+
+        </div>
+        
+    </body>
+
+</html>
