@@ -4,7 +4,8 @@ import "../funcs/line.css";
 
 // Parameters
 let data = [];
-let trialNumber = 5;
+let trialNumber = 0;
+let totalTrials = 5;
 
 let subjID = "";
 const taskName = 'line';
