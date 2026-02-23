@@ -39,7 +39,10 @@ export default { startTask };
 // Run single trial
 function runTrial() {
 
-    // Make stimulus div visible 
+    // Get trial start time
+    const startTime = performance.now();
+
+    // Make stimulus div visible
     const stim = document.getElementById("stim");
     stim.style.display = "block";
     
@@ -52,20 +55,16 @@ function runTrial() {
 
     // Show bisect line following mouse
     function handleMouseMove(event) {
-        bisectLine.style.display = "block";
-        bisectLine.style.left = event.offsetX + "px";
+        bisectLine.style.left = event.clientX + "px";
+        bisectLine.style.top = event.clientY - 20 + "px"; 
     }
 
-    function handleMouseLeave() {
-        bisectLine.style.display = "none";
-    }
+    document.addEventListener("mousemove", handleMouseMove);
 
     line.addEventListener("mousemove", handleMouseMove);
-    line.addEventListener("mouseleave", handleMouseLeave);
 
   function handleClick(event) {
 
-        const offsetX = event.offsetX;
         const clickX = event.clientX;
         const rt = performance.now() - startTime;
 
@@ -73,29 +72,14 @@ function runTrial() {
         const deviationRel = deviationPx / rect.width;
 
         data.push({
-            trial: trialNumber + 1,
-            lineLength: rect.width,
-            clickPosition: offsetX,
             deviationPx: Math.round(deviationPx),
             deviationRel: parseFloat(deviationRel.toFixed(4)),
             rt: Math.round(rt)
         });
 
-        // Create permanent marker
-        const finalMark = document.createElement("div");
-        finalMark.style.position = "absolute";
-        finalMark.style.top = "-20px";
-        finalMark.style.width = "2px";
-        finalMark.style.height = "44px";
-        finalMark.style.background = "blue";
-        finalMark.style.left = offsetX + "px";
-
-        line.parentElement.appendChild(finalMark);
-
-        // Cleanup listeners
-        line.removeEventListener("mousemove", handleMouseMove);
-        line.removeEventListener("mouseleave", handleMouseLeave);
-        line.removeEventListener("click", handleClick);
+        // Stop tracking
+        document.removeEventListener("mousemove", handleMouseMove);
+        document.removeEventListener("click", handleClick);
 
         trialNumber++;
 
