@@ -56,11 +56,10 @@ function runTrial() {
     // Show bisect line following mouse
     function handleMouseMove(event) {
         bisectLine.style.left = event.clientX + "px";
-        bisectLine.style.top = event.clientY - 20 + "px"; 
+        bisectLine.style.top = event.clientY + "px"; 
     }
 
     document.addEventListener("mousemove", handleMouseMove);
-
     line.addEventListener("mousemove", handleMouseMove);
 
   function handleClick(event) {
