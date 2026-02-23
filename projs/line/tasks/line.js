@@ -4,7 +4,7 @@ import "../funcs/line.css";
 
 // Parameters
 let data = [];
-let trialNumber = 0;
+let trialNumber = 5;
 
 let subjID = "";
 const taskName = 'line';
@@ -45,59 +45,73 @@ function runTrial() {
     
     // Create line & get midpoint
     const line = document.getElementById("line");
-    line.style.width = "400px";
+    const lineLength = Math.floor(Math.random() * 200) + 400;
+    line.style.width = lineLength + "px";
     const rect = line.getBoundingClientRect();
-    const midpoint = rect.left + rect.width / 2;
+    const trueMid = rect.left + rect.width / 2;
 
     // Show bisect line following mouse
-    line.addEventListener("mousemove", (event) => {
-        const offsetX = event.offsetX;
-
-        const bisectLine = document.getElementById("bisectLine");
+    function handleMouseMove(event) {
         bisectLine.style.display = "block";
-        bisectLine.style.left = offsetX + "px";
-    });
+        bisectLine.style.left = event.offsetX + "px";
+    }
 
-    line.addEventListener("mouseleave", () => {
-        const bisectLine = document.getElementById("bisectLine");
+    function handleMouseLeave() {
         bisectLine.style.display = "none";
-    });
+    }
 
-    // Record click location 
-    const startTime = performance.now();
+    line.addEventListener("mousemove", handleMouseMove);
+    line.addEventListener("mouseleave", handleMouseLeave);
 
-    line.addEventListener("click", function handleClick(event) {
+  function handleClick(event) {
 
-    const offsetX = event.offsetX;
-    const clickX = event.clientX;
-    const rt = performance.now() - startTime;
+        const offsetX = event.offsetX;
+        const clickX = event.clientX;
+        const rt = performance.now() - startTime;
 
-    const deviationPx = clickX - midpoint;
-    const deviationRel = deviationPx / rect.width;
+        const deviationPx = clickX - trueMid;
+        const deviationRel = deviationPx / rect.width;
 
-    trialData.push({
-        clickPosition: offsetX,
-        deviationPx: Math.round(deviationPx),
-        deviationRel: parseFloat(deviationRel.toFixed(4)),
-        rt: Math.round(rt)
-    });
-})
+        data.push({
+            trial: trialNumber + 1,
+            lineLength: rect.width,
+            clickPosition: offsetX,
+            deviationPx: Math.round(deviationPx),
+            deviationRel: parseFloat(deviationRel.toFixed(4)),
+            rt: Math.round(rt)
+        });
 
-    // Create permanent marker
-    const finalMark = document.createElement("div");
-    finalMark.style.position = "absolute";
-    finalMark.style.top = "-20px";
-    finalMark.style.width = "2px";
-    finalMark.style.height = "44px";
-    finalMark.style.background = "blue";
-    finalMark.style.left = offsetX + "px";
+        // Create permanent marker
+        const finalMark = document.createElement("div");
+        finalMark.style.position = "absolute";
+        finalMark.style.top = "-20px";
+        finalMark.style.width = "2px";
+        finalMark.style.height = "44px";
+        finalMark.style.background = "blue";
+        finalMark.style.left = offsetX + "px";
 
-    wrapper.appendChild(finalMark);
+        line.parentElement.appendChild(finalMark);
 
-    line.removeEventListener("click", handleClick);
-    console.log(trialData);
+        // Cleanup listeners
+        line.removeEventListener("mousemove", handleMouseMove);
+        line.removeEventListener("mouseleave", handleMouseLeave);
+        line.removeEventListener("click", handleClick);
+
+        trialNumber++;
+
+        // Next trial or finish
+        if (trialNumber < totalTrials) {
+            setTimeout(() => {
+                finalMark.remove();
+                runTrial();
+            }, 800);
+        } else {
+            endTask();
+        }
+    }
+
+    line.addEventListener("click", handleClick);
 }
-
 
 function endTask() {
 
@@ -109,7 +123,7 @@ function endTask() {
   saveImage();
 
   // Save entire dataset into one embedded field
-  Qualtrics.SurveyEngine.setEmbeddedData("bellsData", jsonData);
+  Qualtrics.SurveyEngine.setEmbeddedData("lineData", jsonData);
 
   // Advance survey so data is actually submitted
   document.querySelector("#NextButton").click();

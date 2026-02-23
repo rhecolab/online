@@ -70,12 +70,18 @@ button {
   transition: background-color 0.2s ease, transform 0.1s ease;
 }
 
+#line {
+    height: 4px;
+    background: black;
+    position: relative;
+}
+
 #bisectLine {
     position: absolute;
     top: -20px;
     width: 2px;
     height: 44px;
-    background: rgb(255, 0, 0);
-    pointer-events: none;
+    background: red;
     display: none;
+    pointer-events: none;
 }
