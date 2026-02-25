@@ -37,23 +37,20 @@ export default { startTask };
 // Run single trial
 function runTrial() {
 
-    // Get trial start time
-    const startTime = performance.now();
-
-    // Make stimulus div visible
     const stim = document.getElementById("stim");
-    stim.style.display = "block";
-    
-    // Create line & get midpoint
     const line = document.getElementById("line");
-    const lineLength = Math.floor(Math.random() * 200) + 400;
-    line.style.width = lineLength + "px";
-    const rect = line.getBoundingClientRect();
-    const trueMid = rect.left + rect.width / 2;
-
-    // Show bisect line following mouse
     const bisectLine = document.getElementById("bisectLine");
 
+    stim.style.display = "block";
+
+    const startTime = performance.now();
+
+    // Randomize line length
+    const lineLength = Math.floor(Math.random() * 200) + 400;
+    line.style.width = lineLength + "px";
+
+
+    // Get bisect line following mouse
     function handleMouseMove(event) {
         const stimRect = stim.getBoundingClientRect();
         bisectLine.style.left = (event.clientX - stimRect.left) + "px";
@@ -63,16 +60,20 @@ function runTrial() {
     document.addEventListener("mousemove", handleMouseMove);
     line.addEventListener("mousemove", handleMouseMove);
 
-  function handleClick(event) {
+     function handleClick(event) {
 
-        stim.style.display = "none";
-        
+        const clickTime = performance.now();
+        const rt = clickTime - startTime;
+
+        // Recalculate midpoint at click time (safer)
+        const rect = line.getBoundingClientRect();
+        const trueMid = rect.left + rect.width / 2;
+
         const clickX = event.clientX;
-        const rt = performance.now() - startTime;
-
         const devPx = clickX - trueMid;
         const devRel = devPx / rect.width;
 
+        // Save data
         data.push({
             sub: subjID,
             task: taskName,
@@ -82,26 +83,26 @@ function runTrial() {
             rt: Math.round(rt)
         });
 
-        // Stop tracking
+        // Clean up listeners
         document.removeEventListener("mousemove", handleMouseMove);
-        document.removeEventListener("click", handleClick);
-    
-        // Increase trial num 
+        stim.removeEventListener("click", handleClick);
+
+        stim.style.display = "none";
+
         trialNumber++;
 
-        // Next trial or finish
         if (trialNumber < totalTrials) {
-            setTimeout(() => {
-                runTrial();
-            }, 500);
+            setTimeout(runTrial, 400);
         } else {
             endTask();
         }
     }
 
+    // Attach listeners
     document.addEventListener("mousemove", handleMouseMove);
-    line.addEventListener("click", handleClick);
+    stim.addEventListener("click", handleClick);
 }
+
 
 function endTask() {
 
