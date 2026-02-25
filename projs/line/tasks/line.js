@@ -65,6 +65,8 @@ function runTrial() {
 
   function handleClick(event) {
 
+        stim.style.display = "none";
+        
         const clickX = event.clientX;
         const rt = performance.now() - startTime;
 
@@ -83,20 +85,21 @@ function runTrial() {
         // Stop tracking
         document.removeEventListener("mousemove", handleMouseMove);
         document.removeEventListener("click", handleClick);
-
+    
+        // Increase trial num 
         trialNumber++;
 
         // Next trial or finish
         if (trialNumber < totalTrials) {
             setTimeout(() => {
-                finalMark.remove();
                 runTrial();
-            }, 800);
+            }, 500);
         } else {
             endTask();
         }
     }
 
+    document.addEventListener("mousemove", handleMouseMove);
     line.addEventListener("click", handleClick);
 }
 
