@@ -15,15 +15,12 @@ async function startTask(participantID) {
     subjID = participantID;
 
     // Create experiment container
-    const root = document.createElement("div");
-    root.id = "expRoot";
-    document.querySelector(".SkinInner").appendChild(root);
+    const exptDiv = document.createElement("div");
+    exptDiv.id = "exptDiv";
+    document.querySelector(".SkinInner").appendChild(exptDiv);
 
     // Inject HTML
-    root.innerHTML = html;
-
-    // Hide bells image at first 
-    document.getElementById("stim").style.display = "none";
+    exptDiv.innerHTML = html;
 
     // Hide instructions & start button when start
     document.getElementById("startButton").addEventListener("click", () => {
@@ -55,6 +52,8 @@ function runTrial() {
     const trueMid = rect.left + rect.width / 2;
 
     // Show bisect line following mouse
+    const bisectLine = document.getElementById("bisectLine");
+
     function handleMouseMove(event) {
         bisectLine.style.left = event.clientX + "px";
         bisectLine.style.top = event.clientY + "px"; 
