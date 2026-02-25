@@ -54,6 +54,7 @@ html, body {
 }
 
 #stim {
+  position: relative;
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
@@ -77,11 +78,9 @@ button {
 }
 
 #bisectLine {
-    position: fixed;
-    top: -20px;
+    position: absolute;
     width: 2px;
-    height: 44px;
-    background: red;
-    display: none;
+    height: 100px;
+    background-color: red;
     pointer-events: none;
 }

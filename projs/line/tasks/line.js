@@ -55,8 +55,9 @@ function runTrial() {
     const bisectLine = document.getElementById("bisectLine");
 
     function handleMouseMove(event) {
-        bisectLine.style.left = event.clientX + "px";
-        bisectLine.style.top = event.clientY + "px"; 
+        const stimRect = stim.getBoundingClientRect();
+        bisectLine.style.left = (event.clientX - stimRect.left) + "px";
+        bisectLine.style.top = (event.clientY - stimRect.top) + "px";
     }
 
     document.addEventListener("mousemove", handleMouseMove);
