@@ -36,6 +36,7 @@ export default { startTask };
 
 // Run single trial
 function runTrial() {
+    console.log("RUN TRIAL", trialNumber);
 
     const stim = document.getElementById("stim");
     const line = document.getElementById("line");
@@ -61,6 +62,7 @@ function runTrial() {
     line.addEventListener("mousemove", handleMouseMove);
 
      function handleClick(event) {
+        console.log("CLICK REGISTERED");
 
         const clickTime = performance.now();
         const rt = clickTime - startTime;
