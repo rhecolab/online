@@ -5,7 +5,7 @@ import "../funcs/line.css";
 // Parameters
 let data = [];
 let trialNumber = 0;
-let totalTrials = 5;
+let totalTrials = 10;
 
 let subjID = "";
 const taskName = 'line';
@@ -67,12 +67,15 @@ function runTrial() {
         const clickX = event.clientX;
         const rt = performance.now() - startTime;
 
-        const deviationPx = clickX - trueMid;
-        const deviationRel = deviationPx / rect.width;
+        const devPx = clickX - trueMid;
+        const devRel = devPx / rect.width;
 
         data.push({
-            deviationPx: Math.round(deviationPx),
-            deviationRel: parseFloat(deviationRel.toFixed(4)),
+            sub: subjID,
+            task: taskName,
+            trial: trialNumber + 1,
+            deviationPx: Math.round(devPx),
+            deviationRel: parseFloat(devRel.toFixed(4)),
             rt: Math.round(rt)
         });
 
