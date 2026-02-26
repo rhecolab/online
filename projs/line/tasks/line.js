@@ -102,7 +102,7 @@ function runTrial() {
 
     // Attach listeners
     document.addEventListener("mousemove", handleMouseMove);
-    stim.addEventListener("click", handleClick);
+    line.addEventListener("click", handleClick);
 }
 
 
