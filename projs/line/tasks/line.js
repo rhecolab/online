@@ -89,20 +89,31 @@ function runTrial() {
         document.removeEventListener("mousemove", handleMouseMove);
         stim.removeEventListener("click", handleClick);
 
+        console.log("Before increment:", trialNumber);
+
         stim.style.display = "none";
 
         trialNumber++;
 
+
+    console.log("After increment:", trialNumber);
+    console.log("Total trials:", totalTrials);
+    console.log("Condition check:", trialNumber < totalTrials);
+
         if (trialNumber < totalTrials) {
-            setTimeout(runTrial, 400);
+            console.log("Starting next trial...");
+            setTimeout(() => {
+            runTrial();
+            }, 400);
         } else {
+            console.log("Ending task...");
             endTask();
         }
     }
 
     // Attach listeners
     document.addEventListener("mousemove", handleMouseMove);
-    line.addEventListener("click", handleClick);
+    stim.addEventListener("click", handleClick);
 }
 
 
