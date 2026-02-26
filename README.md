@@ -4,6 +4,7 @@ This is an explainer on setting up an online experiment task in Qualtrics via Gi
 The ten thousand foot view is that we’re making a website, hosting it through Github, and then embedding it in Qualtrics and saving the data securely directly to Qualtrics. The participants and their data are on Qualtrics the entire time, but we get a lot more customization and flexibility in the tasks we’re doing.
 
 *Author:* Kira Wegner-Clemens (@kirawc)
+
 *Last updated:* 2/26/26
 
 ## Step by step (detailed explanations below)
