@@ -71,23 +71,22 @@ button {
   transition: background-color 0.2s ease, transform 0.1s ease;
 }
 
-#line {
-    position: relative;
-    height: 40px;              /* larger hit area */
+#lineContainer {
+    position: absolute;
+    height: 100px;          /* clickable vertical band */
     display: flex;
-    align-items: center;
+    align-items: center;    /* center thin line vertically */
 }
 
-#line::before {
-    content: "";
-    height: 10px;               /* actual visible line */
+#line {
+    height: 4px;            /* actual visible line */
     width: 100%;
     background: black;
 }
 #bisectLine {
     position: absolute;
     width: 2px;
-    height: 50px;
+    height: 100px;
     background-color: red;
     pointer-events: none;
 }

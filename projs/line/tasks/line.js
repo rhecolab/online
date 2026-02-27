@@ -50,6 +50,20 @@ function runTrial() {
     const lineLength = Math.floor(Math.random() * 200) + 400;
     line.style.width = lineLength + "px";
 
+    // Random vertical position
+    const stimHeight = stim.clientHeight;
+    const bandHeight = 100;
+    const margin = 60;  // prevents clipping at top/bottom
+
+    const randomY = Math.floor(
+        Math.random() * (stimHeight - bandHeight - margin * 2)
+    ) + margin;
+
+lineContainer.style.top = randomY + "px";
+
+// Center horizontally
+lineContainer.style.left = "50%";
+lineContainer.style.transform = "translateX(-50%)";
 
     // Get bisect line following mouse
     function handleMouseMove(event) {
@@ -59,7 +73,7 @@ function runTrial() {
     }
 
     document.addEventListener("mousemove", handleMouseMove);
-    line.addEventListener("mousemove", handleMouseMove);
+    lineContainer.addEventListener("mousemove", handleMouseMove);
 
      function handleClick(event) {
         console.log("CLICK REGISTERED");
@@ -87,33 +101,24 @@ function runTrial() {
 
         // Clean up listeners
         document.removeEventListener("mousemove", handleMouseMove);
-        stim.removeEventListener("click", handleClick);
-
-        console.log("Before increment:", trialNumber);
-
+        lineContainer.removeEventListener("click", handleClick);
         stim.style.display = "none";
 
         trialNumber++;
 
 
-    console.log("After increment:", trialNumber);
-    console.log("Total trials:", totalTrials);
-    console.log("Condition check:", trialNumber < totalTrials);
-
         if (trialNumber < totalTrials) {
-            console.log("Starting next trial...");
             setTimeout(() => {
             runTrial();
             }, 400);
         } else {
-            console.log("Ending task...");
             endTask();
         }
     }
 
     // Attach listeners
     document.addEventListener("mousemove", handleMouseMove);
-    stim.addEventListener("click", handleClick);
+    lineContainer.addEventListener("click", handleClick);
 }
 
 
