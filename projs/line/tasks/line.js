@@ -48,7 +48,7 @@ function runTrial() {
 
     // Randomize line length
     const lineLength = Math.floor(Math.random() * 200) + 400;
-    line.style.width = lineLength + "px";
+    lineContainer.style.width = lineLength + "px";
 
     // Random vertical position
     const stimHeight = stim.clientHeight;
