@@ -124,8 +124,6 @@ function endTask() {
 
   const jsonData = JSON.stringify(data);
 
-  saveImage();
-
   // Save entire dataset into one embedded field
   Qualtrics.SurveyEngine.setEmbeddedData("lineData", jsonData);
 
