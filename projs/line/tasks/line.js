@@ -128,5 +128,6 @@ function endTask() {
   Qualtrics.SurveyEngine.setEmbeddedData("lineData", jsonData);
 
   // Advance survey so data is actually submitted
-  document.querySelector("#NextButton").click();
+  Qualtrics.SurveyEngine.navClick();
+  
 }
