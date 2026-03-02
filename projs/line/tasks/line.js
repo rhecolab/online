@@ -10,6 +10,11 @@ let totalTrials = 10;
 let subjID = "";
 const taskName = 'line';
 
+// Screen info
+const screenW = window.innerWidth;
+const screenH = window.innerHeight;
+const dpr = window.devicePixelRatio;
+
 async function startTask(participantID) {
 
     subjID = participantID;
@@ -54,11 +59,11 @@ function runTrial() {
         Math.random() * (stimHeight - bandHeight - margin * 2)
     ) + margin;
 
-lineContainer.style.top = randomY + "px";
+    lineContainer.style.top = randomY + "px";
 
-// Center horizontally
-lineContainer.style.left = "50%";
-lineContainer.style.transform = "translateX(-50%)";
+    // Center horizontally
+    lineContainer.style.left = "50%";
+    lineContainer.style.transform = "translateX(-50%)";
 
     // Get bisect line following mouse
     function handleMouseMove(event) {
@@ -71,7 +76,6 @@ lineContainer.style.transform = "translateX(-50%)";
     lineContainer.addEventListener("mousemove", handleMouseMove);
 
      function handleClick(event) {
-        console.log("CLICK REGISTERED");
 
         const clickTime = performance.now();
         const rt = clickTime - startTime;
@@ -89,9 +93,13 @@ lineContainer.style.transform = "translateX(-50%)";
             sub: subjID,
             task: taskName,
             trial: trialNumber + 1,
-            deviationPx: Math.round(devPx),
-            deviationRel: parseFloat(devRel.toFixed(4)),
-            rt: Math.round(rt)
+            dPx: Math.round(devPx),
+            dRel: parseFloat(devRel.toFixed(4)),
+            rt: Math.round(rt),
+            len: lineLength,
+            screenW: screenW,
+            screenH: screenH,
+            dpr: dpr
         });
 
         // Clean up listeners
@@ -129,5 +137,5 @@ function endTask() {
 
   // Advance survey so data is actually submitted
   Qualtrics.SurveyEngine.navClick();
-  
+
 }
