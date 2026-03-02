@@ -27,21 +27,28 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 9999;
+  z-index: 9999;      
 }
 
 html, body {
-  margin: 0 !important;
-  padding: 0 !important;
-  height: 100%;
-  width: 100%;
+    margin: 0 !important;
+    padding: 0 !important;
+    height: 100%;
+    width: 100%;
     font-family: sans-serif;
-    display: flex;
-    justify-content: center;  
-    align-items: center;
     min-height: 100vh;
     background-color: #ffffff;
 
+}
+
+#exptBox {
+    position: fixed;
+    inset: 0;                 
+    display: flex;
+    justify-content: center;  
+    align-items: center;     
+    background: white;
+    text-align: center;
 }
 
 #stimContainer {

@@ -14,13 +14,8 @@ async function startTask(participantID) {
 
     subjID = participantID;
 
-    // Create experiment container
-    const exptDiv = document.createElement("div");
-    exptDiv.id = "exptDiv";
-    document.querySelector(".SkinInner").appendChild(exptDiv);
-
     // Inject HTML
-    exptDiv.innerHTML = html;
+    document.querySelector(".SkinInner").innerHTML = html;
 
     // Hide instructions & start button when start
     document.getElementById("startButton").addEventListener("click", () => {
