@@ -56,7 +56,6 @@ function runTrial() {
     const submitDiv = document.getElementById("submitDiv");
     const submitButton = document.getElementById("submitButton");
 
-
     // Make stimulus visible 
     stimWrapper.style.display = "block";
     submitDiv.style.display = "block";
