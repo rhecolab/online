@@ -16,21 +16,21 @@ let submitTime = 60 * 1000; // if there's no clicks for 60 sec, auto submit
 let warningTimeout;
 let autoSubmitTimeout;
 let taskEnded = false; 
+let clickListener = null; 
 
 async function startTask(participantID) {
 
     subjID = participantID;
 
-    // Create experiment container
+    // Create experiment container & inject html
     const root = document.createElement("div");
     root.id = "expRoot";
     document.querySelector(".SkinInner").appendChild(root);
-
-    // Inject HTML
     root.innerHTML = html;
 
     // Hide bells image at first 
     document.getElementById("stim").style.display = "none";
+    document.getElementById("submitDiv").style.display = "none";
 
     // Hide instructions & start button when start
     document.getElementById("startButton").addEventListener("click", () => {
@@ -49,28 +49,48 @@ function runTrial() {
 
     resetTimers();
 
-    // Make stimulus visible 
-    const stim = document.getElementById("stim");
+    // Define everything
+    const stimWrapper = document.getElementById("stim");
+    const stimImage = document.getElementById("bells");
     const container = document.getElementById("stimContainer");
-    stim.style.display = "block";
+    const submitDiv = document.getElementById("submitDiv");
+    const submitButton = document.getElementById("submitButton");
 
-    // Set up countdown 
+
+    // Make stimulus visible 
+    stimWrapper.style.display = "block";
+    submitDiv.style.display = "block";
+
+    // Get trial start time
     const startTime = performance.now();
 
+        // Add warning message + continue button
+    const warningText = document.createElement("p");
+    warningText.id = "warningText";
+    warningText.style.color = "red";
+    warningText.style.display = "none";
+    warningText.style.marginBottom = "10px";
 
-    // Capture & display clicks on screen 
-    function getClicks(event) {
+    const continueButton = document.createElement("button");
+    continueButton.textContent = "Continue";
+    continueButton.style.display = "none";
+    continueButton.className = "button";
+
+    submitDiv.insertBefore(warningText, submitButton);
+    submitDiv.insertBefore(continueButton, submitButton);
+
+
+    clickListener = function (event) {
+
         resetTimers();
 
-        const rect = stim.getBoundingClientRect();
+        const rect = stimImage.getBoundingClientRect();
 
         const relativeX = (event.clientX - rect.left) / rect.width;
         const relativeY = (event.clientY - rect.top) / rect.height;
 
-        // Trial number is each click 
         trialNumber++;
 
-        // Save trial data as relative coordinates
         const trial = {
             trial: trialNumber,
             x_rel: parseFloat(relativeX.toFixed(4)),
@@ -80,7 +100,6 @@ function runTrial() {
 
         data.push(trial);
 
-        // Display click locations 
         const circle = document.createElement("div");
         circle.style.position = "absolute";
         circle.style.width = "20px";
@@ -89,67 +108,65 @@ function runTrial() {
         circle.style.borderRadius = "50%";
         circle.style.pointerEvents = "none";
 
-        // Convert relative coordinates back to displayed pixels
         const displayX = relativeX * rect.width;
         const displayY = relativeY * rect.height;
 
-        circle.style.left = `${displayX - 10}px`; // center circle
+        circle.style.left = `${displayX - 10}px`;
         circle.style.top = `${displayY - 10}px`;
 
         container.appendChild(circle);
+    };
+
+    stimImage.addEventListener("click", clickListener);
+
+    submitButton.addEventListener("click", endTask);
+
+    continueButton.addEventListener("click", () => {
+        warningText.style.display = "none";
+        continueButton.style.display = "none";
+        resetTimers();
+    });
+
+    function resetTimers() {
+
+        clearTimeout(warningTimeout);
+        clearTimeout(autoSubmitTimeout);
+
+        warningText.style.display = "none";
+        continueButton.style.display = "none";
+
+        warningTimeout = setTimeout(() => {
+            warningText.textContent =
+                "You haven’t clicked in a while. Click continue to keep working or your responses will be submitted automatically.";
+            warningText.style.display = "block";
+            continueButton.style.display = "inline-block";
+        }, reminderTime);
+
+        autoSubmitTimeout = setTimeout(() => {
+            endTask();
+        }, submitTime);
     }
 
-    stim.addEventListener("click", getClicks);
-
-    setTimeout(() => {
-        stim.style.display = "none";
-        stim.removeEventListener("click", getClicks);
-        endTask();
-    }, totalTime);
-}
-
-function resetTimers(){
-    clearTimeout(warningTimeout);
-    clearTimeout(autoSubmitTimeout);
-
-    // Show warning popup
-    warningTimeout = setTimeout(() => {
-        const confirmSubmit = confirm(
-            "You haven’t clicked in a while. Do you want to submit your responses?"
-        );
-
-        if (confirmSubmit) {
-            endTask();
-        }
-    }, reminderTime);
-
-    // Auto-submit
-    autoSubmitTimeout = setTimeout(() => {
-        alert("The task will now be submitted.");
-        endTask();
-    }, submitTime);
-
+    resetTimers();
 }
 
 function saveImage() {
-    const stim = document.getElementById("stim");
-    
-    // Create canvas
+
+    const stimImage = document.getElementById("bells");
+
     const canvas = document.createElement("canvas");
-    canvas.width = stim.naturalWidth;
-    canvas.height = stim.naturalHeight;
+    canvas.width = stimImage.naturalWidth;
+    canvas.height = stimImage.naturalHeight;
+
     const ctx = canvas.getContext("2d");
+    ctx.drawImage(stimImage, 0, 0, canvas.width, canvas.height);
 
-    // Draw the underlying image
-    ctx.drawImage(stim, 0, 0, canvas.width, canvas.height);
-
-    // Draw clicks
     data.forEach(trial => {
         const x = trial.x_rel * canvas.width;
         const y = trial.y_rel * canvas.height;
 
         ctx.beginPath();
-        ctx.arc(x, y, 7, 0, 2 * Math.PI); // same radius as on screen
+        ctx.arc(x, y, 7, 0, 2 * Math.PI);
         ctx.fillStyle = "rgba(255,0,0,0.6)";
         ctx.fill();
         ctx.strokeStyle = "black";
@@ -157,10 +174,8 @@ function saveImage() {
         ctx.stroke();
     });
 
-    // Convert canvas 
     const dataURL = canvas.toDataURL("image/png");
 
-    // Save to Qualtrics Embedded Data
     if (window.Qualtrics && Qualtrics.SurveyEngine) {
         Qualtrics.SurveyEngine.setEmbeddedData("bellsImage", dataURL);
     }
@@ -169,23 +184,21 @@ function saveImage() {
 
 function endTask() {
 
-  if (taskEnded) return;
-  taskEnded = true;
+    if (taskEnded) return;
+    taskEnded = true;
 
-  clearTimeout(warningTimeout);
-  clearTimeout(autoSubmitTimeout);
+    clearTimeout(warningTimeout);
+    clearTimeout(autoSubmitTimeout);
 
-  const stim = document.getElementById("stim");
-  stim.removeEventListener("click", getClicks);
+    const stimImage = document.getElementById("bells");
+    if (clickListener) {
+        stimImage.removeEventListener("click", clickListener);
+    }
 
-  console.log("Task complete.");
-  console.log("Data:", data);
+    saveImage();
 
-  const jsonData = JSON.stringify(data);
+    const jsonData = JSON.stringify(data);
+    Qualtrics.SurveyEngine.setEmbeddedData("bellsData", jsonData);
 
-  saveImage();
-
-  Qualtrics.SurveyEngine.setEmbeddedData("bellsData", jsonData);
-
-  document.querySelector("#NextButton").click();
+    document.querySelector("#NextButton").click();
 }
