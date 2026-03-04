@@ -6,10 +6,16 @@ import "../funcs/bells.css";
 let data = [];
 let trialNumber = 0;
 let startTime;
-let totalTime = 5 * 60 * 1000; // time in ms; 5 min * 60 sec per min * 1000 ms per sec 
 
 let subjID = "";
 const taskName = 'bells';
+
+let reminderTime = 30 * 1000; // after 30 sec of no clicks, ask if they want to submit
+let submitTime = 60 * 1000; // if there's no clicks for 60 sec, auto submit
+
+let warningTimeout;
+let autoSubmitTimeout;
+let taskEnded = false; 
 
 async function startTask(participantID) {
 
@@ -41,37 +47,21 @@ export default { startTask };
 // Display bells image & collect clicks 
 function runTrial() {
 
+    resetTimers();
+
     // Make stimulus visible 
     const stim = document.getElementById("stim");
     const container = document.getElementById("stimContainer");
-    const countdownDiv = document.getElementById("countdownDiv");
     stim.style.display = "block";
 
     // Set up countdown 
     const startTime = performance.now();
-    const endTime = startTime + totalTime;
 
-    function countdown() {
-        const now = performance.now();
-        const remaining = Math.max(0, endTime - now);
-
-        const totalSeconds = Math.ceil(remaining / 1000);
-        const minutes = Math.floor(totalSeconds / 60);
-        const seconds = totalSeconds % 60;
-
-        countdownDiv.textContent =
-            String(minutes).padStart(2, "0") + ":" +
-            String(seconds).padStart(2, "0");
-
-        if (remaining > 0) {
-            requestAnimationFrame(countdown);
-        }
-    }
-
-    countdown();
 
     // Capture & display clicks on screen 
     function getClicks(event) {
+        resetTimers();
+
         const rect = stim.getBoundingClientRect();
 
         const relativeX = (event.clientX - rect.left) / rect.width;
@@ -118,6 +108,29 @@ function runTrial() {
     }, totalTime);
 }
 
+function resetTimers(){
+    clearTimeout(warningTimeout);
+    clearTimeout(autoSubmitTimeout);
+
+    // Show warning popup
+    warningTimeout = setTimeout(() => {
+        const confirmSubmit = confirm(
+            "You haven’t clicked in a while. Do you want to submit your responses?"
+        );
+
+        if (confirmSubmit) {
+            endTask();
+        }
+    }, inactivityWarningTime);
+
+    // Auto-submit
+    autoSubmitTimeout = setTimeout(() => {
+        alert("The task will now be submitted.");
+        endTask();
+    }, autoSubmitTime);
+
+}
+
 function saveImage() {
     const stim = document.getElementById("stim");
     
@@ -153,7 +166,17 @@ function saveImage() {
     }
 }
 
+
 function endTask() {
+
+  if (taskEnded) return;
+  taskEnded = true;
+
+  clearTimeout(warningTimeout);
+  clearTimeout(autoSubmitTimeout);
+
+  const stim = document.getElementById("stim");
+  stim.removeEventListener("click", getClicks);
 
   console.log("Task complete.");
   console.log("Data:", data);
@@ -162,9 +185,7 @@ function endTask() {
 
   saveImage();
 
-  // Set up to save to qualtrics 
   Qualtrics.SurveyEngine.setEmbeddedData("bellsData", jsonData);
 
-  // Submit to qualtrics
   document.querySelector("#NextButton").click();
 }
