@@ -1,11 +1,11 @@
 ## Overview
-This is an explainer on setting up an online experiment task in Qualtrics via Github. The hope is that it should be understandable with no familiarity with web design, Github, or Qualtrics (if you already have experience, skip to tedirect steps at the end). There’s a lot of moving parts in this, so apologies for the length - but all the parts are pretty simple! 
+This is an explainer on setting up an online experiment task in Qualtrics via Github. The hope is that it should be understandable with no familiarity with web design, Github, or Qualtrics (if you already have experience, bear with us!). There’s a lot of moving parts in this, so apologies for the length - but all the parts are pretty simple! 
 
-The ten thousand foot view is that we’re making a website, hosting it through Github, and then embedding it in Qualtrics and saving the data securely directly to Qualtrics. The participants and their data are on Qualtrics the entire time, but we get a lot more customization and flexibility in the tasks we’re doing.
+The ten thousand foot view is that we’re making a website, hosting it through Github, and then embedding it in Qualtrics and saving the data securely directly to Qualtrics. The participants and their data are on Qualtrics the entire time, but we get a lot more customization and flexibility in the tasks we’re doing. 
 
-*Author:* Kira Wegner-Clemens (@kirawc)
+*Author:* Kira Wegner-Clemens ([@kirawc](https://github.com/kirawc))
 
-*Last updated:* 2/26/26
+*Last updated:* 3/3/26
 
 ## Step by step (detailed explanations below)
 Initial set up (general) 
@@ -33,13 +33,18 @@ Updating/testing tasks
 
 ## HTML + CSS + JS
 This is the core of the task. Every single task has it's owThere’s overlap between them but in general this is the division between the three languages: 
+
 •	HTML is the content of the webpage – instruction text, stimulus images, etc 
+
 •	CSS is how that content looks – spacing, fonts, background color, etc
+
 •	Javascript is the behavior of that content – elements appearing/disappearing, capturing clicks, etc 
 
 You will need to edit these outside of Github/Quatrics. I use Visual Studio, but any IDE will work. 
 
 Troubleshooting web experiments can also be a bit tricky compared to experiments that are running directly on your computer because of browser permission issues.  You need to either be running a local server with node js or bundle/linking the bundle through Qualtrics. I would recommend just setting it up in Qualtrics from the start. To see error messages or console logs, you'll need to right click and "inspect" to see the console.
+
+These tasks are set up to be entirely self contained, so if you're trouble shooting a new task, you can make whatever changes you need within your task's folder without impacting ongoing tasks. (Though github also makes reverting to a previous version easy!!)
 
 ## Github
 Github is a platform for collaborating on code and version control. You can clone everything from this repo to your desktop and edit it from there. The best practice is to add your own account as a collaborator on the rhecolab-owned “online” repo. You’ll make changes to your code, save them, then “push” updates to the “online” repo. You can use either the Github Desktop app or commit/pus directly from terminal. 
