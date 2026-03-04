@@ -121,13 +121,13 @@ function resetTimers(){
         if (confirmSubmit) {
             endTask();
         }
-    }, inactivityWarningTime);
+    }, reminderTime);
 
     // Auto-submit
     autoSubmitTimeout = setTimeout(() => {
         alert("The task will now be submitted.");
         endTask();
-    }, autoSubmitTime);
+    }, submitTime);
 
 }
 
