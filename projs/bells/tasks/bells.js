@@ -1,4 +1,3 @@
-import { } from '../funcs/utils_bells.js';
 import html from "./bells.html";
 import "../funcs/bells.css";
 
