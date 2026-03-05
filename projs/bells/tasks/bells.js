@@ -46,6 +46,28 @@ export default { startTask };
 // Display bells image & collect clicks 
 function runTrial() {
 
+    // Create function to reset timers
+        function resetTimers() {
+
+        clearTimeout(warningTimeout);
+        clearTimeout(autoSubmitTimeout);
+
+        warningText.style.display = "none";
+        continueButton.style.display = "none";
+
+        warningTimeout = setTimeout(() => {
+            warningText.textContent =
+                "You haven’t clicked in a while. Click another bell to continue working or click 'submit' to finish the task.";
+            warningText.style.display = "block";
+            continueButton.style.display = "inline-block";
+        }, reminderTime);
+
+        autoSubmitTimeout = setTimeout(() => {
+            endTask();
+        }, submitTime);
+    }
+
+    // Actually restart timers at start of each trial (each click)
     resetTimers();
 
     // Define everything
@@ -124,26 +146,6 @@ function runTrial() {
         continueButton.style.display = "none";
         resetTimers();
     });
-
-    function resetTimers() {
-
-        clearTimeout(warningTimeout);
-        clearTimeout(autoSubmitTimeout);
-
-        warningText.style.display = "none";
-        continueButton.style.display = "none";
-
-        warningTimeout = setTimeout(() => {
-            warningText.textContent =
-                "You haven’t clicked in a while. Click continue to keep working or your responses will be submitted automatically.";
-            warningText.style.display = "block";
-            continueButton.style.display = "inline-block";
-        }, reminderTime);
-
-        autoSubmitTimeout = setTimeout(() => {
-            endTask();
-        }, submitTime);
-    }
 
     resetTimers();
 }
