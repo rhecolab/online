@@ -7,17 +7,22 @@ let data = [];
 let trialNumber = 0;
 let totalTrials = 10;
 
-let subjID = "";
+let subjID = "${e://Field/subjID}";
 const taskName = 'line';
 
 // Screen info
 const screenW = window.innerWidth;
 const screenH = window.innerHeight;
 const dpr = window.devicePixelRatio;
+var pxPerCm = parseFloat("${e://Field/px_per_cm}");
+var viewportWidth = parseFloat("${e://Field/viewport_width}");
+
+// to convert to px so cm size always displayed
+function cmToPx(cm){
+    return cm * pxPerCm;
+}
 
 async function startTask(participantID) {
-
-    subjID = participantID;
 
     // Inject HTML
     document.querySelector(".SkinInner").innerHTML = html;
@@ -46,14 +51,17 @@ function runTrial() {
 
     const startTime = performance.now();
 
-    // Randomize line length
-    const lineLength = Math.floor(Math.random() * 200) + 400;
-    lineContainer.style.width = lineLength + "px";
+    // Randomize line length (based on cm, then converted to px)
+    const lineLengthCm = Math.random() * 6 + 10; // 10–16 cm
+    const lineLengthPx = cmToPx(lineLengthCm);
+
+    lineContainer.style.width = lineLengthPx + "px";
+
 
     // Random vertical position
     const stimHeight = stim.clientHeight;
-    const bandHeight = 100;
-    const margin = 60;  // prevents clipping at top/bottom
+    const bandHeight = cmToPx(2);   // clickable height 
+    const margin = cmToPx(4);
 
     const randomY = Math.floor(
         Math.random() * (stimHeight - bandHeight - margin * 2)
@@ -90,16 +98,26 @@ function runTrial() {
 
         // Save data
         data.push({
+
             sub: subjID,
             task: taskName,
+
             trial: trialNumber + 1,
-            dPx: Math.round(devPx),
-            dRel: parseFloat(devRel.toFixed(4)),
+
+            devPx: Math.round(devPx),
+            devRel: Number(devRel.toFixed(4)),
+
             rt: Math.round(rt),
-            len: lineLength,
-            screenW: screenW,
-            screenH: screenH,
+
+            lineLengthCm: Number(lineLengthCm.toFixed(2)),
+            lineLengthPx: Math.round(lineLengthPx),
+
+            pxPerCm: pxPerCm,
+
+            viewportW: viewportW,
+            viewportH: viewportH,
             dpr: dpr
+
         });
 
         // Clean up listeners
