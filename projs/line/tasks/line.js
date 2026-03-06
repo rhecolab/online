@@ -15,7 +15,6 @@ const screenW = window.innerWidth;
 const screenH = window.innerHeight;
 const dpr = window.devicePixelRatio;
 var pxPerCm = parseFloat("${e://Field/px_per_cm}");
-var viewportWidth = parseFloat("${e://Field/viewport_width}");
 
 // to convert to px so cm size always displayed
 function cmToPx(cm){
@@ -46,6 +45,7 @@ function runTrial() {
     const stim = document.getElementById("stim");
     const line = document.getElementById("line");
     const bisectLine = document.getElementById("bisectLine");
+    const lineContainer = document.getElementById("lineContainer");
 
     stim.style.display = "block";
 
@@ -95,6 +95,7 @@ function runTrial() {
         const clickX = event.clientX;
         const devPx = clickX - trueMid;
         const devRel = devPx / rect.width;
+        const devCm = devPx / pxPerCm;
 
         // Save data
         data.push({
@@ -106,6 +107,7 @@ function runTrial() {
 
             devPx: Math.round(devPx),
             devRel: Number(devRel.toFixed(4)),
+            devCm: Number(devCm.toFixed(2)),
 
             rt: Math.round(rt),
 
