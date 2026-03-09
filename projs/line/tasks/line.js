@@ -61,8 +61,8 @@ function runTrial() {
     const lineLengthCm = Math.random() * 6 + 10; // 10–16 cm
     const lineLengthPx = cmToPx(lineLengthCm);
 
-    lineContainer.style.width = lineLengthPx + "px";
-
+    //lineContainer.style.width = lineLengthPx + "px";
+    lineContainer.style.width = 500 + "px";
 
     // Random vertical position
     const stimRect = stim.getBoundingClientRect();
