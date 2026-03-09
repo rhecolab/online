@@ -21,16 +21,22 @@ function cmToPx(cm){
     return cm * pxPerCm;
 }
 
-async function startTask(participantID) {
+async function startTask() {
 
-    // Inject HTML
     document.querySelector(".SkinInner").innerHTML = html;
 
-    // Hide instructions & start button when start
-    document.getElementById("startButton").addEventListener("click", () => {
-        document.getElementById("instrBox").style.display = "none";
-        document.getElementById("startButton").style.display = "none";
-        runTrial();
+    requestAnimationFrame(() => {
+
+        document
+        .getElementById("startButton")
+        .addEventListener("click", () => {
+
+            document.getElementById("instrBox").style.display = "none";
+
+            runTrial();
+
+        });
+
     });
 
 }
