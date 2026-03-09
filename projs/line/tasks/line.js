@@ -59,8 +59,9 @@ function runTrial() {
 
 
     // Random vertical position
-    const stimHeight = stim.clientHeight;
-    const bandHeight = cmToPx(2);   // clickable height 
+    const stimRect = stim.getBoundingClientRect();
+    const stimHeight = stimRect.height;
+    const bandHeight = cmToPx(2);   // clickable height
     const margin = cmToPx(4);
 
     const randomY = Math.floor(
@@ -75,7 +76,6 @@ function runTrial() {
 
     // Get bisect line following mouse
     function handleMouseMove(event) {
-        const stimRect = stim.getBoundingClientRect();
         bisectLine.style.left = (event.clientX - stimRect.left) + "px";
         bisectLine.style.top = (event.clientY - stimRect.top) + "px";
     }
