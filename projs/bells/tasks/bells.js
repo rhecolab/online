@@ -70,11 +70,11 @@ function runTrial() {
     }
 
     // Define everything
-    stimWrapper = document.getElementById("stim");
-    stimImage = document.getElementById("bells");
-    container = document.getElementById("stimContainer");
-    submitDiv = document.getElementById("submitDiv");
-    submitButton = document.getElementById("submitButton");
+    const stimWrapper = document.getElementById("stim");
+    const stimImage = document.getElementById("bells");
+    const container = document.getElementById("stimContainer");
+    const submitDiv = document.getElementById("submitDiv");
+    const submitButton = document.getElementById("submitButton");
 
     // Make stimulus visible 
     stimWrapper.style.display = "block";
