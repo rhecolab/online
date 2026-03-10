@@ -16,6 +16,8 @@ let warningTimeout;
 let autoSubmitTimeout;
 let taskEnded = false; 
 let clickListener = null; 
+let warningText;
+let continueButton;
 
 async function startTask(participantID) {
 
@@ -67,47 +69,47 @@ function runTrial() {
         }, submitTime);
     }
 
-    // Actually restart timers at start of each trial (each click)
-    resetTimers();
-
     // Define everything
-    const stimWrapper = document.getElementById("stim");
-    const stimImage = document.getElementById("bells");
-    const container = document.getElementById("stimContainer");
-    const submitDiv = document.getElementById("submitDiv");
-    const submitButton = document.getElementById("submitButton");
+    stimWrapper = document.getElementById("stim");
+    stimImage = document.getElementById("bells");
+    container = document.getElementById("stimContainer");
+    submitDiv = document.getElementById("submitDiv");
+    submitButton = document.getElementById("submitButton");
 
     // Make stimulus visible 
     stimWrapper.style.display = "block";
     submitDiv.style.display = "block";
 
     // Get trial start time
-    const startTime = performance.now();
+    startTime = performance.now();
 
-        // Add warning message + continue button
-    const warningText = document.createElement("p");
+    // Add warning message + continue button
+    warningText = document.createElement("p");
     warningText.id = "warningText";
-    warningText.style.color = "red";
-    warningText.style.display = "none";
-    warningText.style.marginBottom = "10px";
 
-    const continueButton = document.createElement("button");
+    continueButton = document.createElement("button");
+    continueButton.id = "continueButton";
     continueButton.textContent = "Continue";
-    continueButton.style.display = "none";
     continueButton.className = "button";
 
     submitDiv.insertBefore(warningText, submitButton);
     submitDiv.insertBefore(continueButton, submitButton);
 
+    // Actually restart timers 
+    resetTimers();
+
 
     clickListener = function (event) {
-
-        resetTimers();
 
         const rect = stimImage.getBoundingClientRect();
 
         const relativeX = (event.clientX - rect.left) / rect.width;
         const relativeY = (event.clientY - rect.top) / rect.height;
+
+        // Prevent invalid clicks
+        if (relativeX < 0 || relativeX > 1 || relativeY < 0 || relativeY > 1) {
+            return;
+        }
 
         trialNumber++;
 
@@ -121,13 +123,6 @@ function runTrial() {
         data.push(trial);
 
         const circle = document.createElement("div");
-        circle.style.position = "absolute";
-        circle.style.width = "20px";
-        circle.style.height = "20px";
-        circle.style.border = "2px solid red";
-        circle.style.borderRadius = "50%";
-        circle.style.pointerEvents = "none";
-
         const displayX = relativeX * rect.width;
         const displayY = relativeY * rect.height;
 
