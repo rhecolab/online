@@ -122,8 +122,8 @@ function runTrial() {
 
             pxPerCm: pxPerCm,
 
-            viewportW: viewportW,
-            viewportH: viewportH,
+            screenW: screenW,
+            screenH: screenH,
             dpr: dpr
 
         });
