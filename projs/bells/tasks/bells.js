@@ -119,8 +119,8 @@ function runTrial() {
         data.push(trial);
 
         const circle = document.createElement("div");
-        const displayX = relativeX * rect.width;
-        const displayY = relativeY * rect.height;
+        const displayX = event.clientX - rect.left;
+        const displayY = event.clientY - rect.top;
 
         circle.style.left = `${displayX - 10}px`;
         circle.style.top = `${displayY - 10}px`;
@@ -140,38 +140,6 @@ function runTrial() {
     
     resetTimers();
 }
-
-function saveImage() {
-
-    const stimImage = document.getElementById("bells");
-
-    const canvas = document.createElement("canvas");
-    canvas.width = stimImage.naturalWidth;
-    canvas.height = stimImage.naturalHeight;
-
-    const ctx = canvas.getContext("2d");
-    ctx.drawImage(stimImage, 0, 0, canvas.width, canvas.height);
-
-    data.forEach(trial => {
-        const x = trial.x_rel * canvas.width;
-        const y = trial.y_rel * canvas.height;
-
-        ctx.beginPath();
-        ctx.arc(x, y, 7, 0, 2 * Math.PI);
-        ctx.fillStyle = "rgba(255,0,0,0.6)";
-        ctx.fill();
-        ctx.strokeStyle = "black";
-        ctx.lineWidth = 2;
-        ctx.stroke();
-    });
-
-    const dataURL = canvas.toDataURL("image/png");
-
-    if (window.Qualtrics && Qualtrics.SurveyEngine) {
-        Qualtrics.SurveyEngine.setEmbeddedData("bellsImage", dataURL);
-    }
-}
-
 
 function endTask() {
 
