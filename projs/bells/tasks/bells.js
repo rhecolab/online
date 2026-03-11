@@ -92,12 +92,8 @@ function runTrial() {
     continueButton.textContent = "Continue";
     continueButton.className = "button";
 
-    submitDiv.insertBefore(warningText, submitButton);
-    submitDiv.insertBefore(continueButton, submitButton);
-
-    // Actually restart timers 
-    resetTimers();
-
+    submitButton.before(warningText);
+    submitButton.before(continueButton);
 
     clickListener = function (event) {
 
@@ -141,7 +137,7 @@ function runTrial() {
         continueButton.style.display = "none";
         resetTimers();
     });
-
+    
     resetTimers();
 }
 

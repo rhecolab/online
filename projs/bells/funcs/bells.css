@@ -97,3 +97,11 @@ button {
     pointer-events: none;
 
 }
+
+#submitDiv {
+    text-align: center;
+}
+
+#instrBox {
+    text-align: center;
+}
