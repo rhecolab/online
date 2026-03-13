@@ -163,8 +163,6 @@ function endTask() {
         stimImage.removeEventListener("click", clickListener);
     }
 
-    saveImage();
-
     const jsonData = JSON.stringify(data);
     Qualtrics.SurveyEngine.setEmbeddedData("bellsData", jsonData);
 
