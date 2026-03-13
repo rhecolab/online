@@ -119,14 +119,23 @@ function runTrial() {
         data.push(trial);
 
         const circle = document.createElement("div");
-        const displayX = event.clientX - rect.left;
-        const displayY = event.clientY - rect.top;
 
-        circle.style.left = `${displayX - 10}px`;
-        circle.style.top = `${displayY - 10}px`;
+    circle.style.position = "absolute";
+    circle.style.width = "20px";
+    circle.style.height = "20px";
+    circle.style.border = "2px solid red";
+    circle.style.borderRadius = "50%";
+    circle.style.pointerEvents = "none";
+    circle.style.zIndex = "10";
 
-        container.appendChild(circle);
-    };
+    const displayX = event.clientX - rect.left;
+    const displayY = event.clientY - rect.top;
+
+    circle.style.left = `${displayX - 10}px`;
+    circle.style.top = `${displayY - 10}px`;
+
+    container.appendChild(circle);
+        };
 
     stimImage.addEventListener("click", clickListener);
 
