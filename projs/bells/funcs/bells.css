@@ -78,13 +78,19 @@ button {
 
 
 #warningText {
+    display: none; 
+    position: absolute;
+    top: -40px;
+    left: 0;
+    width: 100%;
+    text-align: center;
     color: red;
-    display: none;
-    margin-bottom: 10px;
+    font-weight: bold;
 }
 
 #continueButton {
     display: none;
+    margin-bottom: 10px;
 }
 
 #circle {
@@ -100,6 +106,9 @@ button {
 
 #submitDiv {
     text-align: center;
+    position: relative;
+    min-height: 80px;
+
 }
 
 #instrBox {
