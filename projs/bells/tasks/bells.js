@@ -59,7 +59,7 @@ function runTrial() {
 
         warningTimeout = setTimeout(() => {
             warningText.textContent =
-                "You haven’t clicked in a while. Click another bell to continue working or click 'submit' to finish the task.";
+                "You haven’t clicked in a while. Click continue to keep working or click 'submit' to finish the task.";
             warningText.style.display = "block";
             continueButton.style.display = "inline-block";
         }, reminderTime);

@@ -161,7 +161,7 @@ function endTask() {
   // Save entire dataset into one embedded field
   Qualtrics.SurveyEngine.setEmbeddedData("lineData", jsonData);
 
-  // Advance survey so data is actually submitted
-  Qualtrics.SurveyEngine.navClick();
+  // Advance survey
+    document.querySelector("#NextButton").click();
 
 }
