@@ -123,6 +123,12 @@ button {
     box-sizing: border-box;
 }
 
+.btn2 span {
+    font-size: 14px;
+    text-align: center;
+    line-height: 1.2;
+}
+
 .choice-btn {
     width: 100px;
     height: 100px;

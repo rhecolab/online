@@ -40,11 +40,11 @@ export async function runPractice(seq, func){
     // Practice starting screen
     await showMessage("Practice starting...");
 
-    for (let i = 0; i < practiceSeq.length; i++) {
+    for (let i = 0; i < seq.length; i++) {
 
         const startTrial = window.trialNum;
 
-        runTrialFunc(practiceSeq[i], true);
+        runTrialFunc(seq[i], true);
 
         // Wait until collectResp advances the trial
         await new Promise((resolve) => {
