@@ -44,7 +44,7 @@ export async function runPractice(seq, func){
 
         const startTrial = window.trialNum;
 
-        runTrialFunc(seq[i], true);
+        func(seq[i], true);
 
         // Wait until collectResp advances the trial
         await new Promise((resolve) => {

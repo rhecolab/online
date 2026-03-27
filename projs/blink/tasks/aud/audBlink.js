@@ -66,7 +66,7 @@ async function startTask(participantID) {
         document.getElementById("startButton").style.display = "none";
 
         // Run practice block first
-        await runPractice(pracSeq, runTrial());
+        await runPractice(pracSeq, runTrial);
 
         // Reset for main trials
         trialNum = 0;
