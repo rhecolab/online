@@ -111,14 +111,13 @@ button {
 
 .btn2 {
     width: 100px;
-    height: 110px;
-    padding: 5px;
+    padding: 8px;
     display: inline-flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     background: #e8f2ff;
-  }
+}
 
 .choice-btn {
     width: 100px;
@@ -132,10 +131,9 @@ button {
 }
 
 .choice-img {
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
     object-fit: contain;
-
 }
 
 img {
