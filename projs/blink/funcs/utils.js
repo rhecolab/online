@@ -37,6 +37,10 @@ export async function runPractice(seq, func) {
     // Practice starting screen
     await showMessage("Practice starting...");
 
+    // Hide message starting screen
+    const messageScreen = document.getElementById("messageScreen");
+    if (messageScreen) messageScreen.style.display = "none";
+
     for (let i = 0; i < seq.length; i++) {
         const startTrial = window.pracTrialNum;
 
