@@ -18,13 +18,11 @@ function getBasePath() {
 }
 
 // Make practice trials
-export async function runPractice(seq, func){
-
+export async function runPractice(seq, func) {
     const root = document.getElementById("expRoot");
 
     function showMessage(text) {
         return new Promise((resolve) => {
-
             root.innerHTML = `
                 <div style="text-align:center; font-size:28px; margin-top:200px;">
                     ${text}
@@ -32,7 +30,6 @@ export async function runPractice(seq, func){
                     <button id="continueBtn">Continue</button>
                 </div>
             `;
-
             document.getElementById("continueBtn").onclick = resolve;
         });
     }
@@ -41,15 +38,14 @@ export async function runPractice(seq, func){
     await showMessage("Practice starting...");
 
     for (let i = 0; i < seq.length; i++) {
+        const startTrial = window.pracTrialNum;
 
-        const startTrial = window.trialNum;
+        func(seq[i], true); // run the trial
 
-        func(seq[i], true);
-
-        // Wait until collectResp advances the trial
+        // Wait until collectResp advances the practice trial number
         await new Promise((resolve) => {
             const check = setInterval(() => {
-                if (window.trialNum > startTrial) {
+                if (window.pracTrialNum > startTrial) {
                     clearInterval(check);
                     resolve();
                 }
@@ -57,12 +53,8 @@ export async function runPractice(seq, func){
         });
     }
 
-    // Reset counter so main task starts clean
-    window.trialNum = 0;
-
-    // Practice finished screen
-    await showMessage("Practice ended. Task starting...");
-
+    // Optional: message after practice
+    await showMessage("Practice finished! Press continue for main trials.");
 }
 
 // General shuffle

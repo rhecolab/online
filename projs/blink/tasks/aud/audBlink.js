@@ -18,6 +18,7 @@ let fullSeq = []
 let trialStartTime;
 
 window.trialNum = 0
+window.pracNum = 0;
 
 let subjID = "";
 const taskName = 'audBlink';
