@@ -17,6 +17,54 @@ function getBasePath() {
   return githubPath;
 }
 
+// Make practice trials
+export async function runPractice(seq, func){
+
+    const root = document.getElementById("expRoot");
+
+    function showMessage(text) {
+        return new Promise((resolve) => {
+
+            root.innerHTML = `
+                <div style="text-align:center; font-size:28px; margin-top:200px;">
+                    ${text}
+                    <br><br>
+                    <button id="continueBtn">Continue</button>
+                </div>
+            `;
+
+            document.getElementById("continueBtn").onclick = resolve;
+        });
+    }
+
+    // Practice starting screen
+    await showMessage("Practice starting...");
+
+    for (let i = 0; i < practiceSeq.length; i++) {
+
+        const startTrial = window.trialNum;
+
+        runTrialFunc(practiceSeq[i], true);
+
+        // Wait until collectResp advances the trial
+        await new Promise((resolve) => {
+            const check = setInterval(() => {
+                if (window.trialNum > startTrial) {
+                    clearInterval(check);
+                    resolve();
+                }
+            }, 50);
+        });
+    }
+
+    // Reset counter so main task starts clean
+    window.trialNum = 0;
+
+    // Practice finished screen
+    await showMessage("Practice ended. Task starting...");
+
+}
+
 // General shuffle
 export function shuffle(array) {
   let arr = array.slice();

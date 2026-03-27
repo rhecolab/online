@@ -70,15 +70,16 @@ html, body {
     align-items: center;
 }
 
-#exptBox > div {
+#instrBox,
+#q1,
+#q2,
+#fix {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
-    z-index: 10;        
 }
-
 #shapes {
   pointer-events: none;   
 }
@@ -131,8 +132,8 @@ button {
 }
 
 .choice-img {
-    width: 80%;
-    height: 80%;
+    width: 60px;
+    height: 60px;
     object-fit: contain;
 
 }

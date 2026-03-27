@@ -1,5 +1,5 @@
 import { randomizeFull, makeSeq } from '../../funcs/randomization.js';
-import { preloadSounds, playSound, buffer, audioCtx } from '../../funcs/utils.js';
+import { preloadSounds, playSound, buffer, audioCtx, runPractice } from '../../funcs/utils.js';
 import html from "./audBlink.html";
 import "../../funcs/blink.css";
 
@@ -10,7 +10,6 @@ window.preloadSounds = preloadSounds;
 // Parameters
 const stimON = 300;
 const stimOFF = 300;
-let trialNum = 0;
 let data = [];
 let currentTrial = null;
 let currentTrialRow = 0;
@@ -18,12 +17,12 @@ let trialTotal = 0;
 let fullSeq = []
 let trialStartTime;
 
+window.trialNum = 0
+
 let subjID = "";
 const taskName = 'audBlink';
 
 async function startTask(participantID) {
-
-    subjID = participantID;
 
     // Create experiment container
     const root = document.createElement("div");
@@ -42,6 +41,14 @@ async function startTask(participantID) {
     const trialRnd = randomizeFull(t1opts, t2opts, lags, reps);
     fullSeq = makeSeq(trialRnd, 'aud');
 
+    const pracTrials = [
+        { t1: 'glide_up',   t2: 'a1_sh', lag: 0 },
+        { t1: 'glide_down', t2: 'a8_sh', lag: 3 },
+        { t1: 'glide_up',   t2: 'a2_sh', lag: 9 }
+    ];
+
+    const pracSeq = makeSeq(pracTrials, 'aud');
+
     window.trials = trialRnd;
     trialTotal = window.trials.length;
 
@@ -53,21 +60,30 @@ async function startTask(participantID) {
 
     await preloadSounds(soundFiles);
 
-    document.getElementById("startButton").addEventListener("click", () => {
+    document.getElementById("startButton").addEventListener("click", async () => {
+
         document.getElementById("instrBox").style.display = "none";
         document.getElementById("startButton").style.display = "none";
-        runTrial(fullSeq[trialNum]);
+
+        // Run practice block first
+        await runPractice(pracSeq, runTrial);
+
+        // Reset for main trials
+        trialNum = 0;
+        runTrial(fullSeq[trialNum],false);
     });
+
 }
 
 export default { startTask };
 
 
 // Run single trial
-function runTrial(trialInfo) {
+function runTrial(trialInfo, isPractice = false) {
     currentTrial = trialInfo;
     currentTrialRow = NaN;
     currentTrial.stimuli = trialInfo.stimOrder;
+    currentTrial.isPractice = isPractice;
 
     trialStartTime = performance.now();
     
@@ -108,7 +124,7 @@ function scheduleFixOff(when) {
 // Response collection
 window.collectResp = function(question, response = null) {
 
-    const cTrial = trials[trialNum];
+    const cTrial = currentTrial;
     console.log('t1', cTrial.t1);
     console.log('t2', cTrial.t2);
     console.log('lag', cTrial.lag);
@@ -159,8 +175,13 @@ window.collectResp = function(question, response = null) {
     }
 
     if (question === 3) {
-        data.push(currentTrialRow);
+
+        if (!currentTrial.isPractice) {
+            data.push(currentTrialRow);
+        }
+
         currentTrialRow = null;
+
 
         if (q1) q1.style.display = "none";
         if (q2) q2.style.display = "none";
