@@ -135,8 +135,7 @@ window.collectResp = function(question, response = null) {
 
     // Always initialize when question 1 is shown
     if (question === 1) {
-
-      const now = new Date();
+        const now = new Date();
         currentTrialRow = {
             t1_item: cTrial.t1,
             t2_item: cTrial.t2,
@@ -156,7 +155,6 @@ window.collectResp = function(question, response = null) {
     if (question === 2 && response !== null) {
         currentTrialRow.resp1 = response;
         currentTrialRow.rt1 = performance.now() - trialStartTime; 
-
     }
 
     if (question === 3 && response !== null) {
@@ -164,37 +162,46 @@ window.collectResp = function(question, response = null) {
         currentTrialRow.rt2 = performance.now() - trialStartTime; 
     }
 
+    // Show/hide question screens
     if (question === 1) {
-
         if (q1) q1.style.display = "block";
         if (q2) q2.style.display = "none";
     }
-
     if (question === 2) {
         if (q1) q1.style.display = "none";
         if (q2) q2.style.display = "block";
     }
 
     if (question === 3) {
-
+        // Save data if not practice
         if (!currentTrial.isPractice) {
             data.push(currentTrialRow);
         }
 
         currentTrialRow = null;
 
-
         if (q1) q1.style.display = "none";
         if (q2) q2.style.display = "none";
-        trialNum++;
 
-        if (trialNum < trialTotal) {
-            runTrial(fullSeq[trialNum]);
+        // Increment the correct trial counter
+        if (currentTrial.isPractice) {
+            window.pracTrialNum = (window.pracTrialNum || 0) + 1;
         } else {
-            endTask(subjID, taskName);
+            window.trialNum = (window.trialNum || 0) + 1;
+        }
+
+        // Run next trial
+        if (currentTrial.isPractice) {
+            // practice trials: runPractice loop handles next trial
+        } else {
+            if (window.trialNum < trialTotal) {
+                runTrial(fullSeq[window.trialNum]);
+            } else {
+                endTask(subjID, taskName);
+            }
         }
     }
-}
+};
 
 function endTask() {
   console.log("Task complete.");
