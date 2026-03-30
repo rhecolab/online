@@ -36,11 +36,12 @@ export async function runPractice(seq, func) {
 
     // Practice starting screen
     await showMessage("Practice starting...");
+    root.innerHTML = html; 
 
     for (let i = 0; i < seq.length; i++) {
         const startTrial = window.pracTrialNum;
 
-        root.innerHTML = "";
+        root.innerHTML = "+";
         func(seq[i], true); // run the trial
 
         // Wait until collectResp advances the practice trial number
