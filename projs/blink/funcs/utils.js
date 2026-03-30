@@ -17,34 +17,63 @@ function getBasePath() {
   return githubPath;
 }
 
-// Make practice trials
 export async function runPractice(seq, func) {
     const root = document.getElementById("expRoot");
 
+    // Ensure root can host overlay properly
+    root.style.position = "relative";
+
     function showMessage(text) {
         return new Promise((resolve) => {
-            root.innerHTML = `
-                <div style="text-align:center; font-size:28px; margin-top:200px;">
+            const overlay = document.createElement("div");
+
+            overlay.style.position = "absolute";
+            overlay.style.top = "0";
+            overlay.style.left = "0";
+            overlay.style.width = "100%";
+            overlay.style.height = "100%";
+            overlay.style.background = "white";
+            overlay.style.display = "flex";
+            overlay.style.flexDirection = "column";
+            overlay.style.alignItems = "center";
+            overlay.style.justifyContent = "center";
+            overlay.style.fontSize = "28px";
+            overlay.style.zIndex = "9999";
+
+            overlay.innerHTML = `
+                <div style="text-align:center;">
                     ${text}
                     <br><br>
                     <button id="continueBtn">Continue</button>
                 </div>
             `;
-            document.getElementById("continueBtn").onclick = resolve;
+
+            root.appendChild(overlay);
+
+            overlay.querySelector("#continueBtn").onclick = () => {
+                overlay.remove();  
+                resolve();
+            };
         });
     }
 
-    // Practice starting screen
+    // Initialize counter properly
+    window.pracTrialNum = 0;
+
+    // Practice start screen
     await showMessage("Practice starting...");
-    root.innerHTML = html; 
 
     for (let i = 0; i < seq.length; i++) {
         const startTrial = window.pracTrialNum;
 
-        root.innerHTML = "+";
-        func(seq[i], true); // run the trial
+        // (Optional) clear fixation if needed
+        const fix = document.getElementById("fix");
+        if (fix) fix.textContent = "";
 
-        // Wait until collectResp advances the practice trial number
+        // Run trial WITHOUT touching DOM
+        func(seq[i], true);
+
+        // Wait until collectResp increments practice counter
         await new Promise((resolve) => {
             const check = setInterval(() => {
                 if (window.pracTrialNum > startTrial) {
@@ -55,6 +84,7 @@ export async function runPractice(seq, func) {
         });
     }
 
+    // Practice end screen
     await showMessage("Practice finished! Press continue for main trials.");
 }
 
