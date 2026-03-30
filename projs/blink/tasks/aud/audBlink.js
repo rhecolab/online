@@ -185,14 +185,13 @@ window.collectResp = function(question, response = null) {
 
         // Increment the correct trial counter
         if (currentTrial.isPractice) {
-            window.pracTrialNum = (window.pracTrialNum || 0) + 1;
+            window.pracNum = (window.pracNum || 0) + 1;
         } else {
             window.trialNum = (window.trialNum || 0) + 1;
         }
 
         // Run next trial
         if (currentTrial.isPractice) {
-            // practice trials: runPractice loop handles next trial
         } else {
             if (window.trialNum < trialTotal) {
                 runTrial(fullSeq[window.trialNum]);

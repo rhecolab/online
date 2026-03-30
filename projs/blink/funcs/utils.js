@@ -37,13 +37,10 @@ export async function runPractice(seq, func) {
     // Practice starting screen
     await showMessage("Practice starting...");
 
-    // Hide message starting screen
-    const messageScreen = document.getElementById("messageScreen");
-    if (messageScreen) messageScreen.style.display = "none";
-
     for (let i = 0; i < seq.length; i++) {
         const startTrial = window.pracTrialNum;
 
+        root.innerHTML = "";
         func(seq[i], true); // run the trial
 
         // Wait until collectResp advances the practice trial number
@@ -57,7 +54,6 @@ export async function runPractice(seq, func) {
         });
     }
 
-    // Optional: message after practice
     await showMessage("Practice finished! Press continue for main trials.");
 }
 
