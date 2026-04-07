@@ -186,11 +186,18 @@ window.collectResp = function(question, response = null) {
 
         // Run next trial
         if (currentTrial.isPractice) {
+            if (window.pracNum < practiceTotal) {
+                runTrial(practiceSeq[window.pracNum]);
+            } else {
+                // switch to real trials
+                window.trialNum = 0;
+                runTrial(fullSeq[window.trialNum]);
+            }
         } else {
             if (window.trialNum < trialTotal) {
                 runTrial(fullSeq[window.trialNum]);
             } else {
-                endTask(subjID, taskName);
+                endTask();
             }
         }
     }
