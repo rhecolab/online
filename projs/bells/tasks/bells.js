@@ -51,6 +51,8 @@ function runTrial() {
     // Create function to reset timers
         function resetTimers() {
 
+        console.log("Timers reset");
+
         clearTimeout(warningTimeout);
         clearTimeout(autoSubmitTimeout);
 
@@ -97,6 +99,9 @@ function runTrial() {
 
     clickListener = function (event) {
 
+        resetTimers();
+
+
         const rect = stimImage.getBoundingClientRect();
 
         const relativeX = (event.clientX - rect.left) / rect.width;
@@ -135,7 +140,8 @@ function runTrial() {
     circle.style.top = `${displayY - 10}px`;
 
     container.appendChild(circle);
-        };
+
+    };
 
     stimImage.addEventListener("click", clickListener);
 
@@ -147,7 +153,6 @@ function runTrial() {
         resetTimers();
     });
     
-    resetTimers();
 }
 
 function endTask() {
@@ -166,5 +171,5 @@ function endTask() {
     const jsonData = JSON.stringify(data);
     Qualtrics.SurveyEngine.setEmbeddedData("bellsData", jsonData);
 
-    document.querySelector("#NextButton").click();
+    Qualtrics.SurveyEngine.navClick("NextButton");
 }

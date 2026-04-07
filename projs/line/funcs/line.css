@@ -16,7 +16,7 @@
   padding: 0 !important;
 }
 
-/* Add experiment specific things */
+/* Overall experiment box & general */
 #expRoot {
   position: fixed;
   top: 0;

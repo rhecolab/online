@@ -162,6 +162,6 @@ function endTask() {
   Qualtrics.SurveyEngine.setEmbeddedData("lineData", jsonData);
 
   // Advance survey
-    document.querySelector("#NextButton").click();
+    Qualtrics.SurveyEngine.navClick("NextButton");
 
 }
