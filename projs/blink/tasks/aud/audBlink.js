@@ -3,7 +3,6 @@ import { preloadSounds, playSound, buffer, audioCtx, runPractice } from '../../f
 import html from "./audBlink.html";
 import "../../funcs/blink.css";
 
-
 window.playSound = playSound;
 window.preloadSounds = preloadSounds;
 
@@ -70,7 +69,6 @@ async function startTask(participantID) {
         await runPractice(pracSeq, runTrial);
 
         // Reset for main trials
-        trialNum = 0;
         runTrial(fullSeq[trialNum],false);
     });
 
@@ -209,7 +207,7 @@ function endTask() {
   const jsonData = JSON.stringify(data);
 
   // Save entire dataset into one embedded field
-  Qualtrics.SurveyEngine.setEmbeddedData("blinkData", jsonData);
+  Qualtrics.SurveyEngine.setEmbeddedData("audData", jsonData);
 
   // Advance survey so data is actually submitted
   document.querySelector("#NextButton").click();

@@ -1,5 +1,5 @@
 import { randomizeFull, makeSeq } from '../../funcs/randomization.js';
-import { drawShape} from '../../funcs/utils.js';
+import { drawShape, runPractice } from '../../funcs/utils.js';
 import html from "./shapeBlink.html";
 import "../../funcs/blink.css";
 
@@ -16,12 +16,13 @@ let trialStartTime;
 let ctx;
 let canvas;
 
+window.trialNum = 0
+window.pracNum = 0;
+
 let subjID = "";
 const taskName = 'shapeBlink';
 
 async function startTask(participantID) {
-
-    subjID = participantID;
 
     // Create experiment container
     const root = document.createElement("div");
@@ -44,13 +45,27 @@ async function startTask(participantID) {
     const trialRnd = randomizeFull(t1opts, t2opts, lags, reps);
     fullSeq = makeSeq(trialRnd, 'shape');
 
+    const pracTrials = [
+        { t1: 'circle',   t2: 'semiup', lag: 0 },
+        { t1: 'square', t2: 'semidown', lag: 3 },
+        { t1: 'triangle',   t2: 'semileft', lag: 9 }
+    ];
+
+    const pracSeq = makeSeq(pracTrials, 'shape');
+
     window.trials = trialRnd;
     trialTotal = window.trials.length;
 
-    document.getElementById("startButton").addEventListener("click", () => {
+    document.getElementById("startButton").addEventListener("click", async () => {
+
         document.getElementById("instrBox").style.display = "none";
         document.getElementById("startButton").style.display = "none";
-        runTrial(fullSeq[trialNum]);
+
+        // Run practice block first
+        await runPractice(pracSeq, runTrial);
+
+        // Reset for main trials
+        runTrial(fullSeq[trialNum],false);
     });
 }
 
@@ -103,7 +118,7 @@ function changeStim(stim) {
 // Response collection
 window.collectResp = function(question, response = null) {
 
-    const cTrial = trials[trialNum];
+    const cTrial = currentTrial;
     console.log('t1', cTrial.t1);
     console.log('t2', cTrial.t2);
     console.log('lag', cTrial.lag);
@@ -111,12 +126,9 @@ window.collectResp = function(question, response = null) {
     const q1 = document.getElementById("q1");
     const q2 = document.getElementById("q2");
 
-
     // Always initialize when question 1 is shown
     if (question === 1) {
-
         const now = new Date();
-
         currentTrialRow = {
             t1_item: cTrial.t1,
             t2_item: cTrial.t2,
@@ -136,39 +148,52 @@ window.collectResp = function(question, response = null) {
     if (question === 2 && response !== null) {
         currentTrialRow.resp1 = response;
         currentTrialRow.rt1 = performance.now() - trialStartTime; 
-        currentTrialRow.rt2 = performance.now() - trialStartTime; 
-
     }
 
     if (question === 3 && response !== null) {
         currentTrialRow.resp2 = response;
+        currentTrialRow.rt2 = performance.now() - trialStartTime; 
     }
 
+    // Show/hide question screens
     if (question === 1) {
         if (q1) q1.style.display = "block";
         if (q2) q2.style.display = "none";
     }
-
     if (question === 2) {
         if (q1) q1.style.display = "none";
         if (q2) q2.style.display = "block";
     }
 
     if (question === 3) {
-        data.push(currentTrialRow);
+        // Save data if not practice
+        if (!currentTrial.isPractice) {
+            data.push(currentTrialRow);
+        }
+
         currentTrialRow = null;
 
         if (q1) q1.style.display = "none";
         if (q2) q2.style.display = "none";
-        trialNum++;
 
-        if (trialNum < trialTotal) {
-            runTrial(fullSeq[trialNum]);
+        // Increment the correct trial counter
+        if (currentTrial.isPractice) {
+            window.pracNum = (window.pracNum || 0) + 1;
         } else {
-            endTask(subjID, taskName);
+            window.trialNum = (window.trialNum || 0) + 1;
+        }
+
+        // Run next trial
+        if (currentTrial.isPractice) {
+        } else {
+            if (window.trialNum < trialTotal) {
+                runTrial(fullSeq[window.trialNum]);
+            } else {
+                endTask(subjID, taskName);
+            }
         }
     }
-}
+};
 
 // End experiment
 function endTask() {
@@ -178,7 +203,7 @@ function endTask() {
   const jsonData = JSON.stringify(data);
 
   // Save entire dataset into one embedded field
-  Qualtrics.SurveyEngine.setEmbeddedData("blinkData", jsonData);
+  Qualtrics.SurveyEngine.setEmbeddedData("shapeData", jsonData);
 
   // Advance survey so data is actually submitted
   document.querySelector("#NextButton").click();
