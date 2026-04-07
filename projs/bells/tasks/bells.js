@@ -6,7 +6,7 @@ let data = [];
 let trialNumber = 0;
 let startTime;
 
-let subjID = "";
+var subjID = "${e://Field/subjID}";
 const taskName = 'bells';
 
 let reminderTime = 30 * 1000; // after 30 sec of no clicks, ask if they want to submit
@@ -19,9 +19,7 @@ let clickListener = null;
 let warningText;
 let continueButton;
 
-async function startTask(participantID) {
-
-    subjID = participantID;
+async function startTask(subjID) {
 
     // Create experiment container & inject html
     const root = document.createElement("div");
@@ -51,6 +49,8 @@ function runTrial() {
     // Create function to reset timers
         function resetTimers() {
 
+        if (taskEnded) return;
+        
         console.log("Timers reset");
 
         clearTimeout(warningTimeout);
@@ -100,7 +100,6 @@ function runTrial() {
     clickListener = function (event) {
 
         resetTimers();
-
 
         const rect = stimImage.getBoundingClientRect();
 

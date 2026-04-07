@@ -19,7 +19,7 @@ let canvas;
 window.trialNum = 0
 window.pracNum = 0;
 
-let subjID = "";
+var subjID = "${e://Field/subjID}";
 const taskName = 'shapeBlink';
 
 async function startTask(participantID) {

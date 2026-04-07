@@ -87,6 +87,7 @@ button {
     color: red;
     font-weight: bold;
     margin-top: 20px;
+    pointer-events: none; 
 }
 
 #continueButton {

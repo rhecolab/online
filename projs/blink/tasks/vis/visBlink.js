@@ -15,7 +15,7 @@ let trialTotal = 0;
 let fullSeq = []
 let trialStartTime;
 
-let subjID = "";
+var subjID = "${e://Field/subjID}";
 let ctx;
 const taskName = 'visBlink';
 

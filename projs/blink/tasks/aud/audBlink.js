@@ -19,7 +19,7 @@ let trialStartTime;
 window.trialNum = 0
 window.pracNum = 0;
 
-let subjID = "";
+var subjID = "${e://Field/subjID}";
 const taskName = 'audBlink';
 
 async function startTask(participantID) {
