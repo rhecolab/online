@@ -99,19 +99,17 @@ function runTrial() {
 }
 
 function endTask() {
-  console.log("Task complete.");
-  console.log("Data:", data);
+    // Save data to embedded field
+    Qualtrics.SurveyEngine.setEmbeddedData("lineData", JSON.stringify(data));
 
-  Qualtrics.SurveyEngine.setEmbeddedData("lineData", JSON.stringify(data));
-
-  // Advance survey reliably
-  const attemptAdvance = () => {
-    const nextBtn = document.querySelector("#NextButton");
-    if (nextBtn) {
-      nextBtn.click();
-    } else {
-      setTimeout(attemptAdvance, 50);
-    }
-  };
-  attemptAdvance();
+    // Advance survey reliably
+    const attemptAdvance = () => {
+        const nextBtn = document.querySelector("#NextButton");
+        if (nextBtn) {
+            nextBtn.click();  // trigger next question
+        } else {
+            setTimeout(attemptAdvance, 50); // retry if button not yet present
+        }
+    };
+    attemptAdvance();
 }
