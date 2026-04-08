@@ -119,6 +119,8 @@ function changeStim(stim) {
 // Response collection
 window.collectResp = function(question, response = null) {
 
+    console.log("collectResp called with question:", question, "response:", response);
+
     const cTrial = currentTrial;
     console.log('t1', cTrial.t1);
     console.log('t2', cTrial.t2);
