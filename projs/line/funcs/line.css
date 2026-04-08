@@ -61,9 +61,10 @@ html, body {
 }
 
 #stim {
-  position: relative;
-  width: 90vw;
-  height: 70vh;
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
 }
 
 button {
@@ -79,13 +80,14 @@ button {
 
 #lineContainer {
     position: absolute;
-    height: 100px;          /* clickable vertical band */
+    height: 100px;          
     display: flex;
-    align-items: center;    /* center thin line vertically */
+    align-items: center;    
+    top: 0;
 }
 
 #line {
-    height: 4px;            /* actual visible line */
+    height: 4px;           
     width: 100%;
     background: black;
 }
