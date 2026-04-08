@@ -167,41 +167,41 @@ window.collectResp = function(question, response = null) {
     }
 
     if (question === 3) {
-        // Save data if not practice
-        if (!currentTrial.isPractice) {
-            data.push(currentTrialRow);
+    if (!currentTrial.isPractice) {
+        data.push(currentTrialRow);
+    }
+
+    currentTrialRow = null;
+
+    // Hide questions
+    if (q1) q1.style.display = "none";
+    if (q2) q2.style.display = "none";
+
+    if (currentTrial.isPractice) {
+        window.pracNum = (window.pracNum || 0) + 1;
+
+        if (window.pracNum < practiceTotal) {
+            runTrial(practiceSeq[window.pracNum]);
+        } else {
+            window.trialNum = 0;
+            runTrial(fullSeq[0]);
         }
 
-        currentTrialRow = null;
+    } else {
+        window.trialNum = (window.trialNum || 0) + 1;
 
-        if (q1) q1.style.display = "none";
-        if (q2) q2.style.display = "none";
+        console.log("trialNum:", window.trialNum, "trialTotal:", trialTotal);
 
-        // Increment the correct trial counter
-        if (currentTrial.isPractice) {
-            window.pracNum = (window.pracNum || 0) + 1;
+        if (window.trialNum < trialTotal) {
+            runTrial(fullSeq[window.trialNum]);
         } else {
-            window.trialNum = (window.trialNum || 0) + 1;
-        }
-
-        // Run next trial
-        if (currentTrial.isPractice) {
-            if (window.pracNum < practiceTotal) {
-                runTrial(practiceSeq[window.pracNum]);
-            } else {
-                // switch to real trials
-                window.trialNum = 0;
-                runTrial(fullSeq[window.trialNum]);
-            }
-        } else {
-            if (window.trialNum < trialTotal) {
-                runTrial(fullSeq[window.trialNum]);
-            } else {
-                endTask();
-            }
+            console.log("Ending task now");
+            endTask();
         }
     }
+}
 };
+
 
 function endTask() {
   console.log("Task complete.");
