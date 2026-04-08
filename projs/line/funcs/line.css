@@ -1,104 +1,55 @@
-
-/* Remove qualtrics default */
-.Skin,
-.SkinInner,
-.QuestionOuter,
-.QuestionInner {
-  background: transparent !important;
-  padding: 0 !important;
-  margin: 0 !important;
-  max-width: 100% !important;
-  width: 100% !important;
-  box-shadow: none !important;
-}
-
-.QuestionOuter {
-  padding: 0 !important;
-}
-
-/* Overall experiment box & general */
-#expRoot {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: #ffffff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;      
-}
-
-html, body {
-    margin: 0 !important;
-    padding: 0 !important;
-    height: 100%;
-    width: 100%;
-    font-family: sans-serif;
-    min-height: 100vh;
-    background-color: #ffffff;
-
-}
-
 #exptBox {
-    position: fixed;
-    inset: 0;                 
-    display: flex;
-    justify-content: center;  
-    align-items: center;     
-    background: white;
-    text-align: center;
-}
-
-#stimContainer {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-#stim {
   position: fixed;
   inset: 0;
   width: 100vw;
   height: 100vh;
+  background: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;   
+}
+
+#instrBox {
+  text-align: center;
+  z-index: 10;
+}
+
+#stim {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: none; 
+}
+
+#lineContainer {
+  position: absolute;
+  height: 4px; /* line thickness */
+  display: block;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+#line {
+  height: 4px;
+  width: 100%;
+  background: black;
+}
+
+#bisectLine {
+  position: absolute;
+  width: 2px;
+  height: 20px;
+  background-color: red;
+  pointer-events: none;
+  z-index: 10;
 }
 
 button {
   font-size: 15px;    
-  padding: 20px 20px;   
-  margin: 10px;     
+  padding: 20px;   
   border-radius: 12px; 
   border: 2px solid #444;
   background-color: #f5f5f5;
   cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.1s ease;
-}
-
-#lineContainer {
-    position: absolute;
-    height: 100px;          
-    display: flex;
-    align-items: center;    
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    border: 1px solid blue;
-}
-
-#line {
-    height: 4px;           
-    width: 100%;
-    background: black;
-}
-
-#bisectLine {
-    position: absolute;
-    width: 2px;
-    height: 100px;
-    background-color: red;
-    pointer-events: none;
 }
