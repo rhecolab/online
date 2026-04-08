@@ -14,7 +14,7 @@ const taskName = 'line';
 const screenW = window.innerWidth;
 const screenH = window.innerHeight;
 const dpr = window.devicePixelRatio;
-var pxPerCm = parseFloat("${e://Field/px_per_cm}");
+var pxPerCm = parseFloat("${e://Field/px_per_cm}") || 37; // 37 is a fallback value if the credit card calibration fails 
 const stimHeight = window.innerHeight;
 
 // to convert to px so cm size always displayed
@@ -45,7 +45,7 @@ function runTrial() {
 
     stim.style.display = "block";
 
-    // Randomize line length (10-16cm)
+    // Randomize line length 
     const lineLengthCm = Math.random() * 6 + 10;
     const lineLengthPx = cmToPx(lineLengthCm);
     lineContainer.style.width = lineLengthPx + "px";
