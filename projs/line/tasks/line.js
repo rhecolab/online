@@ -15,6 +15,7 @@ const screenW = window.innerWidth;
 const screenH = window.innerHeight;
 const dpr = window.devicePixelRatio;
 var pxPerCm = parseFloat("${e://Field/px_per_cm}");
+const stimHeight = window.innerHeight;
 
 // to convert to px so cm size always displayed
 function cmToPx(cm){
@@ -36,93 +37,72 @@ async function startTask() {
 export default { startTask };
 
 
-// Run single trial
 function runTrial() {
-
-    console.log("RUN TRIAL", trialNumber);
-
     const stim = document.getElementById("stim");
+    const lineContainer = document.getElementById("lineContainer");
     const line = document.getElementById("line");
     const bisectLine = document.getElementById("bisectLine");
-    const lineContainer = document.getElementById("lineContainer");
 
-    // Show stimulus
     stim.style.display = "block";
 
-    // Randomize line length
-    const lineLengthCm = Math.random() * 6 + 10; // 10–16 cm
+    // Randomize line length (10-16cm)
+    const lineLengthCm = Math.random() * 6 + 10;
     const lineLengthPx = cmToPx(lineLengthCm);
     lineContainer.style.width = lineLengthPx + "px";
 
-    // Wait for layout before positioning
+    // Wait for layout to stabilize
     requestAnimationFrame(() => {
-
-        // Use window height (more robust than stim)
         const stimHeight = window.innerHeight;
+        const containerHeight = lineContainer.offsetHeight;
 
-        const bandHeight = cmToPx(2);
-        const margin = cmToPx(4);
+        // Constrain vertical jitter to middle 40% of screen
+        const topBand = stimHeight * 0.3;
+        const bottomBand = stimHeight * 0.7;
 
         const randomY = Math.floor(
-            Math.random() * (stimHeight - bandHeight - margin * 2)
-        ) + margin;
+            Math.random() * (bottomBand - topBand - containerHeight)
+        ) + topBand;
 
-        lineContainer.style.position = "absolute";
         lineContainer.style.top = randomY + "px";
-        lineContainer.style.left = "50%";
-        lineContainer.style.transform = "translateX(-50%)";
     });
 
     const startTime = performance.now();
 
-    // Follow mouse with bisector line
     function handleMouseMove(event) {
         const stimRect = stim.getBoundingClientRect();
-
         bisectLine.style.left = (event.clientX - stimRect.left) + "px";
-        bisectLine.style.top = (event.clientY - stimRect.top) + "px";
+        bisectLine.style.top = lineContainer.offsetTop + "px"; // lock to line vertically
     }
 
-    // Grab click & save trial
     function handleClick(event) {
-
         const clickTime = performance.now();
         const rt = clickTime - startTime;
 
         const rect = line.getBoundingClientRect();
-        const trueMid = rect.left + rect.width / 2;
+        const clickX = event.clientX - rect.left;
+        const trueMid = rect.width / 2;
 
-        const clickX = event.clientX;
         const devPx = clickX - trueMid;
         const devRel = devPx / rect.width;
         const devCm = devPx / pxPerCm;
 
-        // Save trial
         data.push({
             sub: subjID,
             task: taskName,
             trial: trialNumber + 1,
-
             devPx: Math.round(devPx),
             devRel: Number(devRel.toFixed(4)),
             devCm: Number(devCm.toFixed(2)),
-
             rt: Math.round(rt),
-
             lineLengthCm: Number(lineLengthCm.toFixed(2)),
             lineLengthPx: Math.round(lineLengthPx),
-
             pxPerCm,
             screenW,
             screenH,
             dpr
         });
 
-        // clean up
-        document.removeEventListener("mousemove", handleMouseMove);
-        lineContainer.removeEventListener("click", handleClick);
-        stim.style.display = "none";
-
+        cleanup();
         trialNumber++;
 
         if (trialNumber < totalTrials) {
@@ -132,12 +112,15 @@ function runTrial() {
         }
     }
 
+    function cleanup() {
+        document.removeEventListener("mousemove", handleMouseMove);
+        lineContainer.removeEventListener("click", handleClick);
+        stim.style.display = "none";
+    }
 
-    // Attach listeners
     document.addEventListener("mousemove", handleMouseMove);
     lineContainer.addEventListener("click", handleClick);
 }
-
 
 
 function endTask() {

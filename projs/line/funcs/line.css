@@ -84,6 +84,9 @@ button {
     display: flex;
     align-items: center;    
     top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 1px solid blue;
 }
 
 #line {
@@ -91,6 +94,7 @@ button {
     width: 100%;
     background: black;
 }
+
 #bisectLine {
     position: absolute;
     width: 2px;
