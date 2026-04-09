@@ -1,5 +1,5 @@
 import { randomizeFull, makeSeq } from '../../funcs/randomization.js';
-import { drawShape, runPractice } from '../../funcs/utils.js';
+import { drawShape, runPractice, showMessage, showTrialCounter } from '../../funcs/utils.js';
 import html from "./shapeBlink.html";
 import "../../funcs/blink.css";
 
@@ -64,6 +64,8 @@ async function startTask(participantID) {
         // Run practice block first
         await runPractice(pracSeq, runTrial);
 
+        // Show transition message
+        await showMessage("Practice complete! Main trials will start soon.");
         // Reset for main trials
         runTrial(fullSeq[trialNum],false);
     });
@@ -72,16 +74,26 @@ async function startTask(participantID) {
 export default { startTask };
 
 // Run single trial
-function runTrial(trialInfo) {
+function runTrial(trialInfo, isPractice = false) {
 
     currentTrial = trialInfo; 
     let i = 0;
     currentTrialRow = NaN;
     currentTrial.stimuli = trialInfo.stimOrder;
+    currentTrial.isPractice = isPractice;
+    
     const stimuli = trialInfo.stimOrder;
 
     trialStartTime = performance.now();
 
+        // Show trial counter
+        if (isPractice) {
+            window.pracTrialNum = (window.pracTrialNum || 0) + 1;
+            showTrialCounter(true, window.pracTrialNum, practiceSeq.length);
+        } else {
+            window.trialNum = (window.trialNum || 0) + 1;
+            showTrialCounter(false, window.trialNum, fullSeq.length);
+        }
 
     function showNext() {
         if (i < stimuli.length) {

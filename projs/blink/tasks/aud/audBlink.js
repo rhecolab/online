@@ -1,5 +1,6 @@
+
 import { randomizeFull, makeSeq } from '../../funcs/randomization.js';
-import { preloadSounds, playSound, buffer, audioCtx, runPractice } from '../../funcs/utils.js';
+import { preloadSounds, playSound, buffer, audioCtx, runPractice, showTrialCounter, showMessage } from '../../funcs/utils.js';
 import html from "./audBlink.html";
 import "../../funcs/blink.css";
 
@@ -67,6 +68,9 @@ async function startTask(participantID) {
 
         // Run practice block first
         await runPractice(pracSeq, runTrial);
+        
+        // Show transition message
+        await showMessage("Practice complete! Main trials will start soon.");
 
         // Reset for main trials
         runTrial(fullSeq[trialNum],false);
@@ -88,6 +92,15 @@ function runTrial(trialInfo, isPractice = false) {
     
     const stimuli = trialInfo.stimOrder;
     let t = audioCtx.currentTime;
+
+        // Show trial counter
+        if (isPractice) {
+            window.pracTrialNum = (window.pracTrialNum || 0) + 1;
+            showTrialCounter(true, window.pracTrialNum, practiceSeq.length);
+        } else {
+            window.trialNum = (window.trialNum || 0) + 1;
+            showTrialCounter(false, window.trialNum, fullSeq.length);
+        }
 
     for (let i = 0; i < stimuli.length; i++) {
         const stim = stimuli[i];

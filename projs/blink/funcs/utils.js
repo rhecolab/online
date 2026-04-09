@@ -23,40 +23,6 @@ export async function runPractice(seq, func) {
     // Ensure root can host overlay properly
     root.style.position = "relative";
 
-    function showMessage(text) {
-        return new Promise((resolve) => {
-            const overlay = document.createElement("div");
-
-            overlay.style.position = "absolute";
-            overlay.style.top = "0";
-            overlay.style.left = "0";
-            overlay.style.width = "100%";
-            overlay.style.height = "100%";
-            overlay.style.background = "white";
-            overlay.style.display = "flex";
-            overlay.style.flexDirection = "column";
-            overlay.style.alignItems = "center";
-            overlay.style.justifyContent = "center";
-            overlay.style.fontSize = "28px";
-            overlay.style.zIndex = "9999";
-
-            overlay.innerHTML = `
-                <div style="text-align:center;">
-                    ${text}
-                    <br><br>
-                    <button id="continueBtn">Continue</button>
-                </div>
-            `;
-
-            root.appendChild(overlay);
-
-            overlay.querySelector("#continueBtn").onclick = () => {
-                overlay.remove();  
-                resolve();
-            };
-        });
-    }
-
     // Initialize counter properly
     window.pracTrialNum = 0;
 
@@ -88,6 +54,39 @@ export async function runPractice(seq, func) {
     await showMessage("Practice finished! Press continue for main trials.");
 }
 
+export function showMessage(text) {
+        return new Promise((resolve) => {
+            const overlay = document.createElement("div");
+
+            overlay.style.position = "absolute";
+            overlay.style.top = "0";
+            overlay.style.left = "0";
+            overlay.style.width = "100%";
+            overlay.style.height = "100%";
+            overlay.style.display = "flex";
+            overlay.style.flexDirection = "column";
+            overlay.style.alignItems = "center";
+            overlay.style.justifyContent = "center";
+            overlay.style.fontSize = "28px";
+            overlay.style.zIndex = "9999";
+
+            overlay.innerHTML = `
+                <div style="text-align:center;">
+                    ${text}
+                    <br><br>
+                    <button id="continueBtn">Continue</button>
+                </div>
+            `;
+
+            root.appendChild(overlay);
+
+            overlay.querySelector("#continueBtn").onclick = () => {
+                overlay.remove();  
+                resolve();
+            };
+        });
+    }
+
 // General shuffle
 export function shuffle(array) {
   let arr = array.slice();
@@ -96,6 +95,35 @@ export function shuffle(array) {
     [arr[i], arr[j]] = [arr[j], arr[i]];
   }
   return arr;
+}
+
+//
+export function showTrialCounter(isPractice, trialNum, trialTotal) {
+    const root = document.getElementById("expRoot");
+    const banner = document.createElement("div");
+
+    banner.style.position = "absolute";
+    banner.style.top = "10px";
+    banner.style.left = "50%";
+    banner.style.transform = "translateX(-50%)";
+    banner.style.backgroundColor = isPractice ? "#a0c4ff" : "#fffa65"; // blue for practice, yellow for main
+    banner.style.color = "#000";
+    banner.style.fontSize = "24px";
+    banner.style.fontWeight = "bold";
+    banner.style.padding = "10px 20px";
+    banner.style.borderRadius = "8px";
+    banner.style.zIndex = "9999";
+    banner.style.textAlign = "center";
+
+    const blockName = isPractice ? "Practice" : "Main";
+    banner.textContent = `${blockName} Trial ${trialNum} of ${trialTotal}`;
+
+    root.appendChild(banner);
+
+    // Automatically remove banner after 1.5 seconds
+    setTimeout(() => {
+        banner.remove();
+    }, 1500);
 }
 
 // If sounds are necessary 

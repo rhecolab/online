@@ -1,5 +1,5 @@
 import { randomizeFull, makeSeq } from '../../funcs/randomization.js';
-import { runPractice } from '../../funcs/utils.js';
+import { runPractice, showTrialCounter, showMessage } from '../../funcs/utils.js';
 
 import html from "./visBlink.html";
 import "../../funcs/blink.css";
@@ -61,6 +61,9 @@ async function startTask(participantID) {
         // Run practice block first
         await runPractice(pracSeq, runTrial);
 
+        // Show transition message
+        await showMessage("Practice complete! Main trials will start soon.");
+
         // Run main trials
         runTrial(fullSeq[trialNum]);
     });
@@ -70,17 +73,27 @@ async function startTask(participantID) {
 export default { startTask };
 
 // Run single trial
-function runTrial(trialInfo) {
+function runTrial(trialInfo, isPractice = false) {
 
     currentTrial = trialInfo; 
     currentTrialRow = NaN;
     currentTrial.stimuli = trialInfo.stimOrder;
+    currentTrial.isPractice = isPractice;
 
     trialStartTime = performance.now();
 
     let i = 0;
     currentTrialRow = NaN;
     const stimuli = trialInfo.stimOrder;
+
+    // Show trial counter
+    if (isPractice) {
+        window.pracTrialNum = (window.pracTrialNum || 0) + 1;
+        showTrialCounter(true, window.pracTrialNum, practiceSeq.length);
+    } else {
+        window.trialNum = (window.trialNum || 0) + 1;
+        showTrialCounter(false, window.trialNum, fullSeq.length);
+    }
 
     function showNext() {
         if (i < stimuli.length) {
