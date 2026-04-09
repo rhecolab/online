@@ -13,6 +13,7 @@ module.exports = {
     library: {
         name: 'line',
         type: 'window',
+        export: 'default',
     },
   },
 
