@@ -225,6 +225,42 @@ function endTask() {
   // Save entire dataset into one embedded field
   Qualtrics.SurveyEngine.setEmbeddedData("visData", jsonData);
 
-  // Advance survey so data is actually submitted
-  Qualtrics.SurveyEngine.navClick("NextButton");
+    // submit with lots of options to handle qualtrics
+    try {
+        if (typeof Qualtrics !== "undefined" &&
+            Qualtrics.SurveyEngine &&
+            typeof Qualtrics.SurveyEngine.navNext === "function") {
+            console.log("Advancing via navNext()");
+            Qualtrics.SurveyEngine.navNext();
+            return;
+        }
+    } catch(e) {
+        console.warn("navNext() failed:", e);
+    }
+
+    // click nextbutton if exists
+    const attemptNextClick = () => {
+        const nextBtn = document.querySelector("#NextButton");
+        if (nextBtn) {
+            console.log("Advancing via NextButton click");
+            nextBtn.style.visibility = "visible";  // ensure clickable
+            nextBtn.click();
+        } else {
+            // Retry until the button exists
+            setTimeout(attemptNextClick, 50);
+        }
+    };
+    attemptNextClick();
+
+    // submit as form if other options don't work
+    const attemptFormSubmit = () => {
+        const form = document.querySelector("form[name='QualtricsForm']");
+        if (form) {
+            console.log("Advancing via form.submit()");
+            form.submit();
+        } else {
+            setTimeout(attemptFormSubmit, 50);
+        }
+    };
+    setTimeout(attemptFormSubmit, 500); // delayed fallback to avoid double submission
 }
