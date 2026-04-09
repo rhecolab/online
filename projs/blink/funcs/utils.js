@@ -57,7 +57,8 @@ export async function runPractice(seq, func) {
 export function showMessage(text) {
         return new Promise((resolve) => {
             const overlay = document.createElement("div");
-
+            const root = document.getElementById("expRoot");
+            
             overlay.style.position = "absolute";
             overlay.style.top = "0";
             overlay.style.left = "0";
@@ -106,7 +107,7 @@ export function showTrialCounter(isPractice, trialNum, trialTotal) {
     banner.style.top = "10px";
     banner.style.left = "50%";
     banner.style.transform = "translateX(-50%)";
-    banner.style.backgroundColor = isPractice ? "#a0c4ff" : "#fffa65"; // blue for practice, yellow for main
+    banner.style.backgroundColor = isPractice ? "#a0c4ff" : "#fffa65";
     banner.style.color = "#000";
     banner.style.fontSize = "24px";
     banner.style.fontWeight = "bold";

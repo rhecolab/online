@@ -96,7 +96,7 @@ function runTrial(trialInfo, isPractice = false) {
         // Show trial counter
         if (isPractice) {
             window.pracTrialNum = (window.pracTrialNum || 0) + 1;
-            showTrialCounter(true, window.pracTrialNum, practiceSeq.length);
+            showTrialCounter(true, window.pracTrialNum, pracSeq.length);
         } else {
             window.trialNum = (window.trialNum || 0) + 1;
             showTrialCounter(false, window.trialNum, fullSeq.length);
@@ -204,7 +204,7 @@ window.collectResp = function(question, response = null) {
         // Run next trial
         if (currentTrial.isPractice) {
             if (window.pracNum < practiceTotal) {
-                runTrial(practiceSeq[window.pracNum]);
+                runTrial(pracSeq[window.pracNum]);
             } else {
                 // switch to real trials
                 window.trialNum = 0;

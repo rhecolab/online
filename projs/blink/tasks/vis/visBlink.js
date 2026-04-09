@@ -14,6 +14,7 @@ let currentTrialRow = 0;
 let trialTotal = 0;
 let fullSeq = []
 let trialStartTime;
+let pracTotal = 3;
 
 var subjID = "${e://Field/subjID}";
 let ctx;
@@ -22,9 +23,7 @@ const taskName = 'visBlink';
 window.trialNum = 0
 window.pracNum = 0;
 
-async function startTask(participantID) {
-
-    subjID = participantID;
+async function startTask(subjID) {
 
     // Create experiment container
     const root = document.createElement("div");
@@ -89,7 +88,7 @@ function runTrial(trialInfo, isPractice = false) {
     // Show trial counter
     if (isPractice) {
         window.pracTrialNum = (window.pracTrialNum || 0) + 1;
-        showTrialCounter(true, window.pracTrialNum, practiceSeq.length);
+        showTrialCounter(true, window.pracTrialNum, pracSeq.length);
     } else {
         window.trialNum = (window.trialNum || 0) + 1;
         showTrialCounter(false, window.trialNum, fullSeq.length);
@@ -193,8 +192,8 @@ window.collectResp = function(question, response = null) {
     if (currentTrial.isPractice) {
         window.pracNum = (window.pracNum || 0) + 1;
 
-        if (window.pracNum < practiceTotal) {
-            runTrial(practiceSeq[window.pracNum]);
+        if (window.pracNum < pracTotal) {
+            runTrial(pracSeq[window.pracNum]);
         } else {
             window.trialNum = 0;
             runTrial(fullSeq[0]);
