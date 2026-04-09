@@ -66,8 +66,8 @@ async function startTask(participantID) {
     });
 }
 
+// this is important for the bundle to bundle properly
 export default { startTask };
-
 
 // Run single trial
 function runTrial(trialInfo) {

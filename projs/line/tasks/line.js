@@ -1,15 +1,19 @@
+import html from "./line.html";
+import "../funcs/line.css";
+
+// Parameters
 let data = [];
 let trialNumber = 0;
 const totalTrials = 10;
-const subjID = "${e://Field/subjID}";
+const subjID = "${e://Field/subjID}"; // should load in from qualtrics 
 const taskName = "line";
-const pxPerCm = parseFloat("${e://Field/px_per_cm}") || 37;
+const pxPerCm = parseFloat("${e://Field/px_per_cm}") || 37; // should load in from calib, but default 37 if not
 
 function cmToPx(cm) {
   return cm * pxPerCm;
 }
 
-function startTask() {
+async function startTask() {
   const startBtn = document.getElementById("startButton");
   const instrBox = document.getElementById("instrBox");
   startBtn.addEventListener("click", () => {
@@ -17,6 +21,9 @@ function startTask() {
     runTrial();
   });
 }
+
+// this is important for the bundle to bundle properly
+export default { startTask };
 
 function runTrial() {
   const stim = document.getElementById("stim");
