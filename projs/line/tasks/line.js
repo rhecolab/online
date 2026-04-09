@@ -119,7 +119,7 @@ function endTask() {
     // Save your data to an embedded field
     Qualtrics.SurveyEngine.setEmbeddedData("lineData", JSON.stringify(data));
 
-    // interal qulatrics api
+    // submit with lots of options to handle qualtrics
     try {
         if (typeof Qualtrics !== "undefined" &&
             Qualtrics.SurveyEngine &&

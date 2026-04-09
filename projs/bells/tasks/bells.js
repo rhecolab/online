@@ -50,7 +50,7 @@ function runTrial() {
         function resetTimers() {
 
         if (taskEnded) return;
-        
+
         console.log("Timers reset");
 
         clearTimeout(warningTimeout);
@@ -159,16 +159,57 @@ function endTask() {
     if (taskEnded) return;
     taskEnded = true;
 
+    // Stop timers
     clearTimeout(warningTimeout);
     clearTimeout(autoSubmitTimeout);
 
+    // Remove click listener
     const stimImage = document.getElementById("bells");
     if (clickListener) {
         stimImage.removeEventListener("click", clickListener);
     }
 
+    // Save data
     const jsonData = JSON.stringify(data);
     Qualtrics.SurveyEngine.setEmbeddedData("bellsData", jsonData);
 
-    Qualtrics.SurveyEngine.navClick("NextButton");
+    // 
+    // submit with lots of options to handle qualtrics
+    try {
+        if (typeof Qualtrics !== "undefined" &&
+            Qualtrics.SurveyEngine &&
+            typeof Qualtrics.SurveyEngine.navNext === "function") {
+            console.log("Advancing via navNext()");
+            Qualtrics.SurveyEngine.navNext();
+            return;
+        }
+    } catch(e) {
+        console.warn("navNext() failed:", e);
+    }
+
+    // click nextbutton if exists
+    const attemptNextClick = () => {
+        const nextBtn = document.querySelector("#NextButton");
+        if (nextBtn) {
+            console.log("Advancing via NextButton click");
+            nextBtn.style.visibility = "visible";  // ensure clickable
+            nextBtn.click();
+        } else {
+            // Retry until the button exists
+            setTimeout(attemptNextClick, 50);
+        }
+    };
+    attemptNextClick();
+
+    // submit as form if other options don't work
+    const attemptFormSubmit = () => {
+        const form = document.querySelector("form[name='QualtricsForm']");
+        if (form) {
+            console.log("Advancing via form.submit()");
+            form.submit();
+        } else {
+            setTimeout(attemptFormSubmit, 50);
+        }
+    };
+    setTimeout(attemptFormSubmit, 500); // delayed fallback to avoid double submission
 }
