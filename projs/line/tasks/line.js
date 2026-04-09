@@ -14,12 +14,25 @@ function cmToPx(cm) {
 }
 
 export async function startTask() {
-  const startBtn = document.getElementById("startButton");
-  const instrBox = document.getElementById("instrBox");
-  startBtn.addEventListener("click", () => {
-    instrBox.style.display = "none";
-    runTrial();
-  });
+
+    // Create experiment container
+    const root = document.createElement("div");
+    root.id = "expRoot";
+    document.querySelector(".SkinInner").appendChild(root);
+
+    // Inject HTML
+    root.innerHTML = html;
+
+    // Define 
+    const startBtn = document.getElementById("startButton");
+    const instrBox = document.getElementById("instrBox");
+
+    // actually start the experiment
+    startBtn.addEventListener("click", () => {
+        instrBox.style.display = "none";
+        runTrial();
+    });
+
 }
 
 function runTrial() {
