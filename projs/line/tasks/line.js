@@ -13,7 +13,7 @@ function cmToPx(cm) {
   return cm * pxPerCm;
 }
 
-async function startTask() {
+export async function startTask() {
   const startBtn = document.getElementById("startButton");
   const instrBox = document.getElementById("instrBox");
   startBtn.addEventListener("click", () => {
@@ -21,9 +21,6 @@ async function startTask() {
     runTrial();
   });
 }
-
-// this is important for the bundle to bundle properly
-export default { startTask };
 
 function runTrial() {
   const stim = document.getElementById("stim");
