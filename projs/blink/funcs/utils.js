@@ -109,15 +109,14 @@ export function showTrialCounter(isPractice, trialNum, trialTotal) {
     banner.style.transform = "translateX(-50%)";
     banner.style.backgroundColor = isPractice ? "#a0c4ff" : "#fffa65";
     banner.style.color = "#000";
-    banner.style.fontSize = "24px";
-    banner.style.fontWeight = "bold";
+    banner.style.fontSize = "16px";
     banner.style.padding = "10px 20px";
     banner.style.borderRadius = "8px";
     banner.style.zIndex = "9999";
     banner.style.textAlign = "center";
 
     const blockName = isPractice ? "Practice" : "Main";
-    banner.textContent = `${blockName} Trial ${trialNum} of ${trialTotal}`;
+    banner.textContent = `Trial ${trialNum} / ${trialTotal}`;
 
     root.appendChild(banner);
 

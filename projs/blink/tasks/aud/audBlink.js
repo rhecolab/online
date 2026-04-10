@@ -97,11 +97,11 @@ function runTrial(trialInfo, isPractice = false) {
 
         // Show trial counter
         if (isPractice) {
-            window.pracTrialNum = (window.pracTrialNum || 0) + 1;
-            showTrialCounter(true, window.pracTrialNum, pracSeq.length);
+            window.pracNum = (window.pracNum || 0) + 1;
+            //showTrialCounter(true, window.pracNum, pracSeq.length);
         } else {
             window.trialNum = (window.trialNum || 0) + 1;
-            showTrialCounter(false, window.trialNum, fullSeq.length);
+            //showTrialCounter(false, window.trialNum, fullSeq.length);
         }
 
     for (let i = 0; i < stimuli.length; i++) {
@@ -192,6 +192,12 @@ window.collectResp = function(question, response = null) {
         }
 
         currentTrialRow = null;
+
+        if (currentTrial.isPractice) {
+            showTrialCounter(true, window.pracNum + 1, pracTotal);
+        } else {
+            showTrialCounter(false, window.trialNum + 1, trialTotal);
+        }
 
         if (q1) q1.style.display = "none";
         if (q2) q2.style.display = "none";

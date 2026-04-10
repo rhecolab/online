@@ -90,8 +90,8 @@ function runTrial(trialInfo, isPractice = false) {
 
         // Show trial counter
         if (isPractice) {
-            window.pracTrialNum = (window.pracTrialNum || 0) + 1;
-            showTrialCounter(true, window.pracTrialNum, pracSeq.length);
+            window.pracNum = (window.pracNum || 0) + 1;
+            showTrialCounter(true, window.pracNum, pracSeq.length);
         } else {
             window.trialNum = (window.trialNum || 0) + 1;
             showTrialCounter(false, window.trialNum, fullSeq.length);
@@ -168,6 +168,14 @@ window.collectResp = function(question, response = null) {
         currentTrialRow.resp2 = response;
         currentTrialRow.rt2 = performance.now() - trialStartTime; 
     }
+
+    // Show trial counter
+    if (currentTrial.isPractice) {
+        showTrialCounter(true, window.pracNum + 1, pracTotal);
+    } else {
+        showTrialCounter(false, window.trialNum + 1, trialTotal);
+    }
+    
 
     // Show/hide question screens
     if (question === 1) {

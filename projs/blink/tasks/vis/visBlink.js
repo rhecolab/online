@@ -86,15 +86,6 @@ function runTrial(trialInfo, isPractice = false) {
     currentTrialRow = NaN;
     const stimuli = trialInfo.stimOrder;
 
-    // Show trial counter
-    if (isPractice) {
-        window.pracTrialNum = (window.pracTrialNum || 0) + 1;
-        showTrialCounter(true, window.pracTrialNum, pracSeq.length);
-    } else {
-        window.trialNum = (window.trialNum || 0) + 1;
-        showTrialCounter(false, window.trialNum, fullSeq.length);
-    }
-
     function showNext() {
         if (i < stimuli.length) {
             const stim = stimuli[i];
@@ -185,6 +176,13 @@ window.collectResp = function(question, response = null) {
     }
 
     currentTrialRow = null;
+
+    // Show trial counter
+    if (currentTrial.isPractice) {
+        showTrialCounter(true, window.pracNum + 1, pracTotal);
+    } else {
+        showTrialCounter(false, window.trialNum + 1, trialTotal);
+    }
 
     // Hide questions
     if (q1) q1.style.display = "none";
