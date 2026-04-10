@@ -49,9 +49,9 @@ async function startTask(subjID) {
         { t1: '1',   t2: '9', lag: 9 }
     ];
 
-    const pracSeq = makeSeq(pracTrials, 'vis');
+    pracSeq = makeSeq(pracTrials, 'vis');
 
-    window.trials = trialRnd;
+    window.trials = trialRnd; 
     trialTotal = window.trials.length;
 
     document.getElementById("startButton").addEventListener("click", async () => {
@@ -189,14 +189,16 @@ window.collectResp = function(question, response = null) {
     if (q2) q2.style.display = "none";
 
     if (currentTrial.isPractice) {
-        window.pracNum = (window.pracNum || 0) + 1;
 
-        if (window.pracNum < pracTotal) {
+        if (window.pracNum < pracTotal - 1) {
+            window.pracNum++;
             runTrial(pracSeq[window.pracNum]);
         } else {
             window.trialNum = 0;
             runTrial(fullSeq[0]);
         }
+
+    }
 
     } else {
         window.trialNum = (window.trialNum || 0) + 1;
@@ -210,7 +212,6 @@ window.collectResp = function(question, response = null) {
             endTask();
         }
     }
-}
 };
 
 
