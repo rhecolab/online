@@ -130,19 +130,23 @@ function changeStim(stim) {
 }
 
 // Response collection
-window.collectResp = function(question, response = null) {
+// Response collection
+window.collectResp = function (question, response = null) {
 
     const cTrial = currentTrial;
-    console.log('t1', cTrial.t1);
-    console.log('t2', cTrial.t2);
-    console.log('lag', cTrial.lag);
+    if (!cTrial) {
+        console.error("collectResp called with no currentTrial");
+        return;
+    }
 
     const q1 = document.getElementById("q1");
     const q2 = document.getElementById("q2");
 
-    // Always initialize when question 1 is shown
+    // question 1
     if (question === 1) {
+
         const now = new Date();
+
         currentTrialRow = {
             t1_item: cTrial.t1,
             t2_item: cTrial.t2,
@@ -153,73 +157,70 @@ window.collectResp = function(question, response = null) {
             t2_pos: "",
             rt1: "",
             rt2: "",
-            time: now.toISOString().split("T")[0] + " " + now.toTimeString().split(" ")[0],
-            seqLen: currentTrial.stimuli.length,
-            seqOrder: currentTrial.stimuli.map(s => s.stim).join(","),
+            time:
+                now.toISOString().split("T")[0] +
+                " " +
+                now.toTimeString().split(" ")[0],
+            seqLen: cTrial.stimuli.length,
+            seqOrder: cTrial.stimuli.map(s => s.stim).join(","),
         };
-    }
 
-    if (question === 2 && response !== null) {
-        currentTrialRow.resp1 = response;
-        currentTrialRow.rt1 = performance.now() - trialStartTime; 
-    }
-
-    if (question === 3 && response !== null) {
-        currentTrialRow.resp2 = response;
-        currentTrialRow.rt2 = performance.now() - trialStartTime; 
-    }
-
-    // Show trial counter
-    if (currentTrial.isPractice) {
-        showTrialCounter(true, window.pracNum + 1, pracTotal);
-    } else {
-        showTrialCounter(false, window.trialNum + 1, trialTotal);
-    }
-    
-
-    // Show/hide question screens
-    if (question === 1) {
         if (q1) q1.style.display = "block";
         if (q2) q2.style.display = "none";
     }
-    if (question === 2) {
+
+    // question 2
+    if (question === 2 && response !== null) {
+        currentTrialRow.resp1 = response;
+        currentTrialRow.rt1 = performance.now() - trialStartTime;
+
         if (q1) q1.style.display = "none";
         if (q2) q2.style.display = "block";
     }
 
-    if (question === 3) {
-        // Save data if not practice
+    // question 3 (end task)
+    if (question === 3 && response !== null) {
+
+        currentTrialRow.resp2 = response;
+        currentTrialRow.rt2 = performance.now() - trialStartTime;
+
+        // save data only for main trials
         if (!currentTrial.isPractice) {
             data.push(currentTrialRow);
         }
 
         currentTrialRow = null;
 
+        // hide questions
         if (q1) q1.style.display = "none";
         if (q2) q2.style.display = "none";
 
-        // Increment the correct trial counter
+        // Practice 
         if (currentTrial.isPractice) {
+
             window.pracNum = (window.pracNum || 0) + 1;
-        } else {
-            window.trialNum = (window.trialNum || 0) + 1;
+
+            if (window.pracNum < pracTotal) {
+                runTrial(pracSeq[window.pracNum], true);
+                return;
+            }
+
+            // transition to main task
+            window.trialNum = 0;
+            runTrial(fullSeq[0], false);
+            return;
         }
 
-        // Run next trial
-        if (currentTrial.isPractice) {
-            if (window.pracNum < pracTotal) {
-                runTrial(pracSeq[window.pracNum]);
-            } else {
-                // switch to real trials
-                window.trialNum = 0;
-                runTrial(fullSeq[window.trialNum]);
-            }
+       // Main trials
+        window.trialNum = (window.trialNum || 0) + 1;
+
+        console.log("trialNum:", window.trialNum, "trialTotal:", trialTotal);
+
+        if (window.trialNum < trialTotal) {
+            runTrial(fullSeq[window.trialNum], false);
         } else {
-            if (window.trialNum < trialTotal) {
-                runTrial(fullSeq[window.trialNum]);
-            } else {
-                endTask();
-            }
+            console.log("Ending task now");
+            endTask();
         }
     }
 };
