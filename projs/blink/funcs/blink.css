@@ -162,3 +162,9 @@ canvas#shapes {
   height: 100%;
   display: block;
 }
+
+.shape-row {
+    display: flex;
+    gap: 10px;        /* spacing between shapes */
+    align-items: center;
+}
