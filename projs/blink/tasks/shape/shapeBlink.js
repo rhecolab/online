@@ -13,6 +13,7 @@ let currentTrialRow = 0;
 let trialTotal = 0;
 let pracTotal = 3;
 let fullSeq = []
+let pracSeq = [];
 let trialStartTime;
 let ctx;
 let canvas;

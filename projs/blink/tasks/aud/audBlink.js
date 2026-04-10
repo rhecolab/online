@@ -14,7 +14,9 @@ let data = [];
 let currentTrial = null;
 let currentTrialRow = 0;
 let trialTotal = 0;
+let pracTotal = 3;
 let fullSeq = []
+let pracSeq = [];
 let trialStartTime;
 
 window.trialNum = 0
