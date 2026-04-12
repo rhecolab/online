@@ -126,6 +126,21 @@ export function showTrialCounter(isPractice, trialNum, trialTotal) {
     }, 1500);
 }
 
+function updateProgressBar(isPractice) {
+    const bar = document.getElementById("progressBar");
+    if (!bar) return;
+
+    let progress;
+
+    if (isPractice) {
+        progress = (window.pracNum / pracSeq.length) * 100;
+    } else {
+        progress = (window.trialNum / trialTotal) * 100;
+    }
+
+    bar.style.width = `${progress}%`;
+}
+
 // If sounds are necessary 
 export const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 export const buffer = {};  

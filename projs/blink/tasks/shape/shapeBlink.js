@@ -1,5 +1,5 @@
 import { randomizeFull, makeSeq } from '../../funcs/randomization.js';
-import { drawShape, runPractice, showMessage, showTrialCounter } from '../../funcs/utils.js';
+import { drawShape, runPractice, showMessage, showTrialCounter, updateProgressBar } from '../../funcs/utils.js';
 import html from "./shapeBlink.html";
 import "../../funcs/blink.css";
 
@@ -77,6 +77,8 @@ export default { startTask };
 // Run single trial
 function runTrial(trialInfo, isPractice = false) {
 
+    document.getElementById("progressContainer").style.display = "none";
+
     currentTrial = trialInfo; 
     let i = 0;
     currentTrialRow = NaN;
@@ -131,6 +133,8 @@ window.collectResp = function (question, response = null) {
     const q1 = document.getElementById("q1");
     const q2 = document.getElementById("q2");
 
+    document.getElementById("progressContainer").style.display = "block";
+
     // question 1
     if (question === 1) {
 
@@ -158,11 +162,11 @@ window.collectResp = function (question, response = null) {
         if (q2) q2.style.display = "none";
 
         // Show trial counter
-        if (isPractice) {
-            showTrialCounter(true, window.pracNum+1, pracSeq.length);
-        } else {
-            showTrialCounter(false, window.trialNum+1, fullSeq.length);
-        }
+        //if (isPractice) {
+        //    showTrialCounter(true, window.pracNum+1, pracSeq.length);
+        //} else {
+        //    showTrialCounter(false, window.trialNum+1, fullSeq.length);
+        //}
     }
 
     // question 2

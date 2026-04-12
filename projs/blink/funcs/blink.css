@@ -35,6 +35,7 @@
   align-items: center;
   padding: 20px;
   box-sizing: border-box;
+  background-color: gray;
 }
 
 /* Instruction box */
@@ -162,4 +163,20 @@ canvas#shapes {
     display: flex;
     gap: 10px;        /* spacing between shapes */
     align-items: center;
+}
+
+#progressContainer {
+    width: 60%;
+    height: 12px;
+    background-color: #ddd;
+    border-radius: 10px;
+    margin: 20px auto;
+    overflow: hidden;
+}
+
+#progressBar {
+    height: 100%;
+    width: 0%;
+    background-color: black;
+    transition: width 0.3s ease;
 }

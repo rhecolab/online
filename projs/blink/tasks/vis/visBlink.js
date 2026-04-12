@@ -130,9 +130,11 @@ window.collectResp = function (question, response = null) {
 
     const q1 = document.getElementById("q1");
     const q2 = document.getElementById("q2");
+    document.getElementById("progressContainer").style.display = "block";
 
     // question 1
     if (question === 1) {
+
 
         const now = new Date();
 
@@ -158,11 +160,11 @@ window.collectResp = function (question, response = null) {
         if (q2) q2.style.display = "none";
 
         // Show trial counter
-        if (isPractice) {
-            showTrialCounter(true, window.pracNum+1, pracSeq.length);
-        } else {
-            showTrialCounter(false, window.trialNum+1, fullSeq.length);
-        }
+        //if (isPractice) {
+        //    showTrialCounter(true, window.pracNum+1, pracSeq.length);
+        //} else {
+        //    showTrialCounter(false, window.trialNum+1, fullSeq.length);
+        //}
     }
 
     // question 2
