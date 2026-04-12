@@ -11,7 +11,6 @@ let data = [];
 let currentTrial = null;
 let currentTrialRow = 0;
 let trialTotal = 0;
-let pracTotal = 3;
 let fullSeq = []
 let pracSeq = [];
 let trialStartTime;
@@ -53,7 +52,7 @@ async function startTask(participantID) {
         { t1: 'triangle',   t2: 'semileft', lag: 9 }
     ];
 
-    const pracSeq = makeSeq(pracTrials, 'shape');
+    pracSeq = makeSeq(pracTrials, 'shape');
 
     window.trials = trialRnd;
     trialTotal = window.trials.length;
@@ -90,10 +89,8 @@ function runTrial(trialInfo, isPractice = false) {
 
         // Show trial counter
         if (isPractice) {
-            window.pracNum = (window.pracNum || 0) + 1;
             showTrialCounter(true, window.pracNum, pracSeq.length);
         } else {
-            window.trialNum = (window.trialNum || 0) + 1;
             showTrialCounter(false, window.trialNum, fullSeq.length);
         }
 
@@ -200,7 +197,7 @@ window.collectResp = function (question, response = null) {
 
             window.pracNum = (window.pracNum || 0) + 1;
 
-            if (window.pracNum < pracTotal) {
+            if (window.pracNum < pracSeq.length) {
                 runTrial(pracSeq[window.pracNum], true);
                 return;
             }

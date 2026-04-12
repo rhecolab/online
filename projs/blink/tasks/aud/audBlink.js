@@ -14,7 +14,6 @@ let data = [];
 let currentTrial = null;
 let currentTrialRow = 0;
 let trialTotal = 0;
-let pracTotal = 3;
 let fullSeq = []
 let pracSeq = [];
 let trialStartTime;
@@ -50,7 +49,7 @@ async function startTask(participantID) {
         { t1: 'glide_up',   t2: 'a2_sh', lag: 9 }
     ];
 
-    const pracSeq = makeSeq(pracTrials, 'aud');
+    pracSeq = makeSeq(pracTrials, 'aud');
 
     window.trials = trialRnd;
     trialTotal = window.trials.length;
@@ -205,7 +204,7 @@ window.collectResp = function (question, response = null) {
 
             window.pracNum = (window.pracNum || 0) + 1;
 
-            if (window.pracNum < pracTotal) {
+            if (window.pracNum < pracSeq.length) {
                 runTrial(pracSeq[window.pracNum], true);
                 return;
             }

@@ -15,7 +15,6 @@ let trialTotal = 0;
 let fullSeq = [];
 let pracSeq = [];
 let trialStartTime;
-let pracTotal = 3;
 
 var subjID = "${e://Field/subjID}";
 let ctx;
@@ -190,7 +189,7 @@ window.collectResp = function (question, response = null) {
 
             window.pracNum = (window.pracNum || 0) + 1;
 
-            if (window.pracNum < pracTotal) {
+            if (window.pracNum < pracSeq.length) {
                 runTrial(pracSeq[window.pracNum], true);
                 return;
             }
