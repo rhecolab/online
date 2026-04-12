@@ -87,13 +87,6 @@ function runTrial(trialInfo, isPractice = false) {
 
     trialStartTime = performance.now();
 
-        // Show trial counter
-        if (isPractice) {
-            showTrialCounter(true, window.pracNum, pracSeq.length);
-        } else {
-            showTrialCounter(false, window.trialNum, fullSeq.length);
-        }
-
     function showNext() {
         if (i < stimuli.length) {
             const stim = stimuli[i];
@@ -126,7 +119,6 @@ function changeStim(stim) {
   drawShape(stim.stim, ctx, ctx.canvas.width / 2, ctx.canvas.height / 2, color);
 }
 
-// Response collection
 // Response collection
 window.collectResp = function (question, response = null) {
 
@@ -164,6 +156,13 @@ window.collectResp = function (question, response = null) {
 
         if (q1) q1.style.display = "block";
         if (q2) q2.style.display = "none";
+
+        // Show trial counter
+        if (isPractice) {
+            showTrialCounter(true, window.pracNum+1, pracSeq.length);
+        } else {
+            showTrialCounter(false, window.trialNum+1, fullSeq.length);
+        }
     }
 
     // question 2

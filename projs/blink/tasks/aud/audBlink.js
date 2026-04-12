@@ -94,15 +94,6 @@ function runTrial(trialInfo, isPractice = false) {
     const stimuli = trialInfo.stimOrder;
     let t = audioCtx.currentTime;
 
-        // Show trial counter
-        if (isPractice) {
-            window.pracNum = (window.pracNum || 0) + 1;
-            //showTrialCounter(true, window.pracNum, pracSeq.length);
-        } else {
-            window.trialNum = (window.trialNum || 0) + 1;
-            //showTrialCounter(false, window.trialNum, fullSeq.length);
-        }
-
     for (let i = 0; i < stimuli.length; i++) {
         const stim = stimuli[i];
 
@@ -171,6 +162,13 @@ window.collectResp = function (question, response = null) {
 
         if (q1) q1.style.display = "block";
         if (q2) q2.style.display = "none";
+
+        // Show trial counter
+        if (isPractice) {
+            showTrialCounter(true, window.pracNum, pracSeq.length);
+        } else {
+            showTrialCounter(false, window.trialNum, fullSeq.length);
+        }
     }
 
     // question 2

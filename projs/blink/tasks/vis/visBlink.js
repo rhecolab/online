@@ -156,6 +156,13 @@ window.collectResp = function (question, response = null) {
 
         if (q1) q1.style.display = "block";
         if (q2) q2.style.display = "none";
+
+        // Show trial counter
+        if (isPractice) {
+            showTrialCounter(true, window.pracNum+1, pracSeq.length);
+        } else {
+            showTrialCounter(false, window.trialNum+1, fullSeq.length);
+        }
     }
 
     // question 2
