@@ -64,8 +64,10 @@ async function startTask(subjID) {
         await showMessage("Practice complete! Main trials will start soon.");
         await new Promise(r => setTimeout(r, 1000));
 
-        // Run main trials
-        runTrial(fullSeq[trialNum]);
+        // Run main trials (short delay to show message before starting)
+        setTimeout(() => {
+        runTrial(fullSeq[0], false);
+        }, 50);
     });
 }
 
