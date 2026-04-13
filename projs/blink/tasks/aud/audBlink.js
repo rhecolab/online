@@ -137,7 +137,7 @@ window.collectResp = function (question, response = null) {
     const q1 = document.getElementById("q1");
     const q2 = document.getElementById("q2");
 
-    document.getElementById("progressContainer").style.display = "block";
+    //document.getElementById("progressContainer").style.display = "block";
 
     // question 1
     if (question === 1) {
