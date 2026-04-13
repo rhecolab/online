@@ -1,11 +1,11 @@
 html, body {
-    margin: 0 !important;
-    padding: 0 !important;
+    margin: 0;
+    padding: 0;
     width: 100%;
     height: 100%;
     overflow: hidden;
-    background-color: #e0e0e0 !important;
-    color: white;
+    background-color: #e0e0e0;
+    color: black;
 }
 
 /* Remove all Qualtrics layout constraints */
@@ -37,15 +37,8 @@ html, body {
     left: 0;
     width: 100vw;
     height: 100vh;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    margin-top: 40px;
-
     background-color: #808080;
-    z-index: 9999;
+    z-index: 10;
 }
 
 #exptBox {
@@ -166,4 +159,10 @@ a {
 
 .stimuli {
     font-size: 80px;
+}
+
+canvas {
+    display: block;
+    width: 100vw;
+    height: 100vh;
 }

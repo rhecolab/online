@@ -15,8 +15,10 @@ let fullSeq = []
 let pracSeq = [];
 let trialStartTime;
 let ctx;
-let canvas;
-
+let canvas = document.createElement("canvas");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+document.body.appendChild(canvas);
 window.trialNum = 0
 window.pracNum = 0;
 
