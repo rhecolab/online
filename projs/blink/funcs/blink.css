@@ -16,6 +16,11 @@
   border: none !important;
 }
 
+body {
+    background-color: black;
+    color: white;
+}
+
 /* Overall experiment box & general */
 #expRoot {
     display: flex;
