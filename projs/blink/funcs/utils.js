@@ -55,38 +55,42 @@ export async function runPractice(seq, func) {
 }
 
 export function showMessage(text) {
-        return new Promise((resolve) => {
-            const overlay = document.createElement("div");
-            const root = document.getElementById("expRoot");
-            
-            overlay.style.position = "absolute";
-            overlay.style.top = "0";
-            overlay.style.left = "0";
-            overlay.style.width = "100%";
-            overlay.style.height = "100%";
-            overlay.style.display = "flex";
-            overlay.style.flexDirection = "column";
-            overlay.style.alignItems = "center";
-            overlay.style.justifyContent = "center";
-            overlay.style.fontSize = "28px";
-            overlay.style.zIndex = "9999";
+    return new Promise((resolve) => {
 
-            overlay.innerHTML = `
-                <div style="text-align:center;">
-                    ${text}
-                    <br><br>
-                    <button id="continueBtn">Continue</button>
-                </div>
-            `;
+        const overlay = document.createElement("div");
 
-            root.appendChild(overlay);
+        overlay.style.position = "fixed";
+        overlay.style.top = "0";
+        overlay.style.left = "0";
+        overlay.style.width = "100vw";
+        overlay.style.height = "100vh";
+        overlay.style.display = "flex";
+        overlay.style.flexDirection = "column";
+        overlay.style.alignItems = "center";
+        overlay.style.justifyContent = "center";
+        overlay.style.fontSize = "20px";
+        overlay.style.zIndex = "999999";
+        overlay.style.background = "rgba(0,0,0,0.85)";
+        overlay.style.color = "white";
 
-            overlay.querySelector("#continueBtn").onclick = () => {
-                overlay.remove();  
-                resolve();
-            };
-        });
-    }
+        overlay.innerHTML = `
+            <div style="text-align:center;">
+                ${text}
+                <br><br>
+                <button id="continueBtn" style="font-size:18px; padding:10px 20px;">
+                    Continue
+                </button>
+            </div>
+        `;
+
+        document.body.appendChild(overlay);
+
+        overlay.querySelector("#continueBtn").onclick = () => {
+            overlay.remove();
+            resolve();
+        };
+    });
+}
 
 // General shuffle
 export function shuffle(array) {

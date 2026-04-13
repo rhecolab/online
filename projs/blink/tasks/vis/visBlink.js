@@ -62,6 +62,7 @@ async function startTask(subjID) {
 
         // Show transition message
         await showMessage("Practice complete! Main trials will start soon.");
+        await new Promise(r => setTimeout(r, 1000));
 
         // Run main trials
         runTrial(fullSeq[trialNum]);
