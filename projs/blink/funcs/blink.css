@@ -95,9 +95,6 @@ canvas {
     cursor: pointer;
     border-radius: 8px;
 }
-.choice-btn:hover {
-    background: rgba(0, 0, 0, 0.07);
-}
 
 /* ── General buttons ── */
 button {
@@ -107,7 +104,7 @@ button {
     border-radius: 8px;
     border: 1px solid #555;
     background-color: #ffffff;
-    color: white;
+    color: rgb(142, 142, 142);
     cursor: pointer;
     transition: background 0.15s;
 }
@@ -191,7 +188,6 @@ button {
     left: 50%;
     transform: translate(-50%, -50%);
     font-size: 30px;
-    font-weight: bold;
     color: #111;
     pointer-events: none;
     user-select: none;
