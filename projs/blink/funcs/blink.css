@@ -51,7 +51,7 @@ html, body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 80px;
+    font-size: 60px;
     font-weight: bold;
     color: #111;
     pointer-events: none;
@@ -75,13 +75,12 @@ canvas {
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 100;
-    background: rgba(255, 255, 255, 0.97);
+    background: rgba(187, 187, 187, 0.97);
     color: #111;
     padding: 28px 36px;
     border-radius: 14px;
     text-align: center;
     font-size: 18px;
-    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.18);
     min-width: 220px;
 }
 
@@ -109,13 +108,10 @@ button {
     margin: 6px;
     border-radius: 8px;
     border: 1px solid #555;
-    background-color: #4a90e2;
+    background-color: #ffffff;
     color: white;
     cursor: pointer;
     transition: background 0.15s;
-}
-button:hover {
-    background-color: #357ab8;
 }
 
 /* ── START button ── */
@@ -123,11 +119,6 @@ button:hover {
     font-size: 18px;
     padding: 12px 32px;
     margin-top: 20px;
-    background-color: #2e7d32;
-    border-color: #1b5e20;
-}
-.button:hover {
-    background-color: #1b5e20;
 }
 
 /* ── Instruction box ── */
@@ -204,7 +195,7 @@ button:hover {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 40px;
+    font-size: 30px;
     font-weight: bold;
     color: #111;
     pointer-events: none;
@@ -219,7 +210,7 @@ button:hover {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: rgba(0, 0, 0, 0.78);
+    background: rgba(163, 155, 155, 0.78);
     color: white;
     font-size: 22px;
     text-align: center;

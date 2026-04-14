@@ -50,7 +50,6 @@ async function startTask() {
     document.getElementById("startButton").addEventListener("click", async () => {
         document.getElementById("instrBox").style.display = "none";
         await runPractice(pracSeq, runTrial);
-        await showMessage("Practice complete! Main trials will start soon.");
         runTrial(fullSeq[0], false);
     });
 }
