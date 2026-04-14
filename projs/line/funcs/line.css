@@ -24,8 +24,10 @@
 
 #lineContainer {
   position: absolute;
-  height: 8px; /* line thickness */
-  display: block;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   left: 50%;
   transform: translateX(-50%);
 }
