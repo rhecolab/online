@@ -1,5 +1,5 @@
 import { randomizeFull, makeSeq } from '../../funcs/randomization.js';
-import { drawShape, runPractice, showMessage, buildTrialRow, qualtricsAdvance } from '../../funcs/utils.js';
+import { drawShape, runPractice, showMessage, buildTrialRow, qualtricsAdvance, updateProgressBar } from '../../funcs/utils.js';
 import html from "./shapeBlink.html";
 import "../../funcs/blink.css";
  
