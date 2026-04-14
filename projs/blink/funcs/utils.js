@@ -97,7 +97,7 @@ export function qualtricsAdvance(fieldName, data) {
     }, 500);
 }
  
-// ── Trial counter banner (optional) ──────────────────────────────────────────
+// ── Trial counter banner  ──────────────────────────────────────────
 export function showTrialCounter(isPractice, trialNum, trialTotal) {
     const root = document.getElementById("expRoot");
     if (!root) return;

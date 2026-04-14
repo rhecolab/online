@@ -51,8 +51,7 @@ html, body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 60px;
-    font-weight: bold;
+    font-size: 50px;
     color: #111;
     pointer-events: none;
     user-select: none;
@@ -75,7 +74,7 @@ canvas {
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 100;
-    background: rgba(187, 187, 187, 0.97);
+    background: #d4d4d4;
     color: #111;
     padding: 28px 36px;
     border-radius: 14px;
@@ -95,7 +94,6 @@ canvas {
     margin: 4px;
     cursor: pointer;
     border-radius: 8px;
-    transition: background 0.15s;
 }
 .choice-btn:hover {
     background: rgba(0, 0, 0, 0.07);
