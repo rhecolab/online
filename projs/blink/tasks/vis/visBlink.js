@@ -31,7 +31,7 @@ async function startTask() {
     pracSeq = makeSeq([
         { t1: '2', t2: '8', lag: 0 },
         { t1: '4', t2: '6', lag: 3 },
-        { t1: '1', t2: '9', lag: 9 },
+        { t1: '1', t2: '5', lag: 9 },
     ], 'vis');
     trialTotal = fullSeq.length;
  
@@ -80,6 +80,8 @@ window.collectResp = function (question, response = null) {
     if (!currentTrial) return;
     const q1 = document.getElementById("q1");
     const q2 = document.getElementById("q2");
+
+    updateProgressBar(window.trialNum + (currentTrial.isPractice ? 0 : 1), trialTotal);
  
     if (question === 1) {
         currentTrialRow = buildTrialRow(currentTrial);

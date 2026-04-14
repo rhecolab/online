@@ -149,20 +149,19 @@ button {
     width: 100px;
     height: 110px;
     padding: 10px 8px 8px;
-    background-color: #4a90e2;
+    background-color: #ffffff;
     border: 1px solid #2c6fad;
     border-radius: 10px;
     color: white;
     font-size: 13px;
     cursor: pointer;
-    transition: background 0.15s;
 }
 
 /* Uniform image size inside example buttons */
 .btn2 .choice-img,
 .choice-img {
-    width: 52px;
-    height: 52px;
+    width: 30px;
+    height: 30px;
     object-fit: contain;
     display: block;
 }

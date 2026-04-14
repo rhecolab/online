@@ -89,7 +89,9 @@ window.collectResp = function (question, response = null) {
     if (!currentTrial) return;
     const q1 = document.getElementById("q1");
     const q2 = document.getElementById("q2");
- 
+
+    updateProgressBar(window.trialNum + (currentTrial.isPractice ? 0 : 1), trialTotal);
+
     if (question === 1) {
         currentTrialRow = buildTrialRow(currentTrial);
         q1.style.display = "block";
