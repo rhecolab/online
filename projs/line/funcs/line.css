@@ -24,14 +24,14 @@
 
 #lineContainer {
   position: absolute;
-  height: 4px; /* line thickness */
+  height: 16px; /* line thickness */
   display: block;
   left: 50%;
   transform: translateX(-50%);
 }
 
 #line {
-  height: 4px;
+  height: 8px;
   width: 100%;
   background: black;
 }
