@@ -24,7 +24,7 @@
 
 #lineContainer {
   position: absolute;
-  height: 16px; /* line thickness */
+  height: 8px; /* line thickness */
   display: block;
   left: 50%;
   transform: translateX(-50%);
@@ -38,8 +38,8 @@
 
 #bisectLine {
   position: absolute;
-  width: 2px;
-  height: 20px;
+  width: 4px;
+  height: 25px;
   background-color: red;
   pointer-events: none;
   z-index: 10;
