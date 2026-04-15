@@ -45,7 +45,15 @@ html body .QuestionBody {
     box-shadow: none !important;
 }
 
-/* hide Qualtrics chrome */
+.QuestionOuter,
+.QuestionInner,
+.QuestionText,
+.QuestionTextWrapper,
+.QuestionBody {
+    background: inherit !important;
+}
+
+/* hide Qualtrics */
 html body #Header,
 html body #Footer,
 html body #Buttons,
