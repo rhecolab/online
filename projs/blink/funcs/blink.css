@@ -53,6 +53,12 @@ html body .QuestionBody {
     background: inherit !important;
 }
 
+#SurveyEngineBody,
+#SkinContent,
+#SkinContainer {
+    height: 100% !important;
+}
+
 /* hide Qualtrics */
 html body #Header,
 html body #Footer,
@@ -73,13 +79,14 @@ html body #SurveyEngineBody {
 
 /* ── Experiment root ── */
 #expRoot {
-    position: fixed;
-    inset: 0;
-    /*background-color: #d4d4d4 !important;*/
-    background: red !important; /* temp */
-    overflow: hidden;
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    width: 100vw !important;
+    height: 100vh !important;
+    background: #d4d4d4 !important;
+    z-index: 999999 !important;
 }
-
 /* ── Stimulus text (visBlink) ── */
 #alphanum {
     position: absolute;
