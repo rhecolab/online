@@ -14,13 +14,6 @@ html, body {
     font-family: Arial, sans-serif;
 }
 
-html, body,
-#SurveyEngineBody,
-.Skin,
-.SkinInner {
-    background: #d4d4d4 !important;
-}
-
 /* ── Remove Qualtrics ── */
 .Skin,
 .SkinInner,
@@ -46,7 +39,14 @@ html, body,
     background: transparent !important;
 }
 
-/* Hide Qualtrics nav */
+html body,
+html body #SurveyEngineBody,
+html body .Skin,
+html body .SkinInner,
+html body .SkinContent {
+    background: #d4d4d4 !important;
+}
+
 #Header,
 #Footer,
 #Buttons,
@@ -54,6 +54,10 @@ html, body,
     display: none !important;
 }
 
+html body #Wrapper,
+html body #QIDContainer {
+    background: transparent !important;
+}
 
 /* ── Experiment root ── */
 #expRoot {
