@@ -133,11 +133,42 @@ export function shuffle(array) {
 // ── Audio ─────────────────────────────────────────────────────────────────────
 export const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 export const buffer = {};
+
+const soundMap = {
+    "a1_sh": "https://georgetown.pdx1.qualtrics.com/ControlPanel/File.php?F=F_EXnP0Dz14YYpPI4",
+    "a2_sh": "https://georgetown.pdx1.qualtrics.com/ControlPanel/File.php?F=F_lhq9MyLg6i1CYS8",
+    "a8_sh": "https://georgetown.pdx1.qualtrics.com/ControlPanel/File.php?F=F_1Pkb63NwqqypRiw",
+    "a9_sh": "https://georgetown.pdx1.qualtrics.com/ControlPanel/File.php?F=F_QSwJAhGWWTcbd0m",
+    "h1_sh": "https://georgetown.pdx1.qualtrics.com/ControlPanel/File.php?F=F_aCis5yRStDtW9Gw",
+    "h2_sh": "https://georgetown.pdx1.qualtrics.com/ControlPanel/File.php?F=F_7eEqOi3UpbmXiuU",
+    "h3_sh": "https://georgetown.pdx1.qualtrics.com/ControlPanel/File.php?F=F_sjhrF9gNQ6n6Tt9",
+    "h4_sh": "https://georgetown.pdx1.qualtrics.com/ControlPanel/File.php?F=F_4lzr2eB5KOI7Xof",
+    "h5_sh": "https://georgetown.pdx1.qualtrics.com/ControlPanel/File.php?F=F_gmAdA1iPY7PZirW",
+    "h6_sh": "https://georgetown.pdx1.qualtrics.com/ControlPanel/File.php?F=F_MxTWlj8EyU8trzA",
+    "h7_sh": "https://georgetown.pdx1.qualtrics.com/ControlPanel/File.php?F=F_JAUEC5QH3opl5HL",
+    "h8_sh": "https://georgetown.pdx1.qualtrics.com/ControlPanel/File.php?F=F_HKIhdB9fwzJEo61",
+    "h9_sh": "https://georgetown.pdx1.qualtrics.com/ControlPanel/File.php?F=F_knwtfU1S23vofMz",
+    "h10_sh": "https://georgetown.pdx1.qualtrics.com/ControlPanel/File.php?F=F_TITdsfJ35wGIv1Q",
+    "i1_sh": "https://georgetown.pdx1.qualtrics.com/ControlPanel/File.php?F=F_18oYIPFfTU3EusM",
+    "i2_sh": "https://georgetown.pdx1.qualtrics.com/ControlPanel/File.php?F=F_C5dSZNFxbAGvqYZ",
+    "i3_sh": "https://georgetown.pdx1.qualtrics.com/ControlPanel/File.php?F=F_C0ixWZurESV87uq",
+    "i4_sh": "https://georgetown.pdx1.qualtrics.com/ControlPanel/File.php?F=F_zgkSGL246ktCU8V",
+    "i5_sh": "https://georgetown.pdx1.qualtrics.com/ControlPanel/File.php?F=F_z4FrjREm2e2v0RI",
+    "i6_sh": "https://georgetown.pdx1.qualtrics.com/ControlPanel/File.php?F=F_dwFipmAYAq3lw5r",
+    "i7_sh": "https://georgetown.pdx1.qualtrics.com/ControlPanel/File.php?F=F_MYvHp1ykY80uk6c",
+    "i8_sh": "https://georgetown.pdx1.qualtrics.com/ControlPanel/File.php?F=F_n5ipg59uxHU5RUt",
+    "i9_sh": "https://georgetown.pdx1.qualtrics.com/ControlPanel/File.php?F=F_QmwDNa99oiqikrG",
+    "i10_sh": "https://georgetown.pdx1.qualtrics.com/ControlPanel/File.php?F=F_eGblpO8m7Qp6zwz",
+    "glide_down": "https://georgetown.pdx1.qualtrics.com/ControlPanel/File.php?F=F_YtN6Pysa7halCkB",
+    "glide_up": "https://georgetown.pdx1.qualtrics.com/ControlPanel/File.php?F=F_a0NfcN3mYDVozl3",
+
+}
  
 export async function preloadSounds(soundFiles) {
     const base = getBasePath();
     await Promise.all(soundFiles.map(async name => {
-        const res = await fetch(`${base}stimuli/snds/${name}.wav`);
+        const url = soundMap[name];
+        const res = await fetch(url);
         buffer[name] = await audioCtx.decodeAudioData(await res.arrayBuffer());
     }));
     console.log("Sounds preloaded.");

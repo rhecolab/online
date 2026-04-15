@@ -33,6 +33,7 @@ async function startTask() {
         ['a1_sh','a2_sh','a8_sh','a9_sh'],
         [0,3,9], 2
     );
+    
     fullSeq = makeSeq(trialRnd, 'aud');
     pracSeq = makeSeq([
         { t1: 'glide_up',   t2: 'a1_sh', lag: 0 },
