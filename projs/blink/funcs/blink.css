@@ -15,48 +15,48 @@ html, body {
 }
 
 /* ── Remove Qualtrics ── */
-.Skin,
-.SkinInner,
-.QuestionOuter,
-.QuestionInner,
-.QuestionBody {
-    margin: 0 !important;
-    padding: 0 !important;
-    width: 100% !important;
-    max-width: none !important;
-    background: transparent !important;
-    box-shadow: none !important;
-    border: none !important;
-}
-
-.QuestionText,
-.QuestionTextWrapper,
-.QuestionBody,
-.QuestionOuter,
-.QuestionInner,
-.SkinInner,
-.Skin {
-    background: transparent !important;
-}
-
-html body,
 html body #SurveyEngineBody,
+html body #SkinContent,
+html body #SkinContainer,
 html body .Skin,
 html body .SkinInner,
 html body .SkinContent {
-    background: #d4d4d4 !important;
+    background: transparent !important;
+    box-shadow: none !important;
 }
 
-#Header,
-#Footer,
-#Buttons,
-#NextButton {
+html body .SkinInner,
+html body .SkinContent,
+html body #SkinContainer {
+    margin: 0 !important;
+    padding: 0 !important;
+    max-width: none !important;
+}
+
+html body .QuestionOuter,
+html body .QuestionInner,
+html body .QuestionText,
+html body .QuestionTextWrapper,
+html body .QuestionBody {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+html body #Header,
+html body #Footer,
+html body #Buttons,
+html body #NextButton {
     display: none !important;
 }
 
-html body #Wrapper,
-html body #QIDContainer {
-    background: transparent !important;
+html body,
+html body #SurveyEngineBody {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    overflow: hidden !important;
 }
 
 /* ── Experiment root ── */
