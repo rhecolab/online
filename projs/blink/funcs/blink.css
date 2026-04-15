@@ -14,7 +14,14 @@ html, body {
     font-family: Arial, sans-serif;
 }
 
-/* ── Strip Qualtrics chrome ── */
+html, body,
+#SurveyEngineBody,
+.Skin,
+.SkinInner {
+    background: #d4d4d4 !important;
+}
+
+/* ── Remove Qualtrics ── */
 .Skin,
 .SkinInner,
 .QuestionOuter,
@@ -29,6 +36,16 @@ html, body {
     border: none !important;
 }
 
+.QuestionText,
+.QuestionTextWrapper,
+.QuestionBody,
+.QuestionOuter,
+.QuestionInner,
+.SkinInner,
+.Skin {
+    background: transparent !important;
+}
+
 /* Hide Qualtrics nav */
 #Header,
 #Footer,
@@ -37,11 +54,12 @@ html, body {
     display: none !important;
 }
 
+
 /* ── Experiment root ── */
 #expRoot {
     position: fixed;
     inset: 0;
-    background-color: #d4d4d4;
+    background-color: #d4d4d4 !important;
     overflow: hidden;
 }
 
