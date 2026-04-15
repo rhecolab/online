@@ -21,10 +21,11 @@ html body #SkinContainer,
 html body .Skin,
 html body .SkinInner,
 html body .SkinContent {
-    background: transparent !important;
+    background: #d4d4d4 !important;
     box-shadow: none !important;
 }
 
+/* layout cleanup */
 html body .SkinInner,
 html body .SkinContent,
 html body #SkinContainer {
@@ -33,6 +34,7 @@ html body #SkinContainer {
     max-width: none !important;
 }
 
+/* question styling */
 html body .QuestionOuter,
 html body .QuestionInner,
 html body .QuestionText,
@@ -43,6 +45,7 @@ html body .QuestionBody {
     box-shadow: none !important;
 }
 
+/* hide Qualtrics chrome */
 html body #Header,
 html body #Footer,
 html body #Buttons,
@@ -50,6 +53,7 @@ html body #NextButton {
     display: none !important;
 }
 
+/* full canvas */
 html body,
 html body #SurveyEngineBody {
     margin: 0 !important;
