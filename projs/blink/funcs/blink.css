@@ -107,6 +107,10 @@ html body #SurveyEngineBody {
     background: #d4d4d4 !important;
 }
 
+#exptBox {
+  background: #d4d4d4  
+}
+
 /* ── Stimulus text (visBlink) ── */
 #alphanum {
     position: absolute;
