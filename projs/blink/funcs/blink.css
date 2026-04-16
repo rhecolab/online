@@ -14,7 +14,7 @@ html, body {
     font-family: Arial, sans-serif;
 }
 
-/* ── Strip Qualtrics chrome ── */
+/* ── Remove Qualtrics ── */
 .Skin,
 .SkinInner,
 .QuestionOuter,
@@ -35,30 +35,85 @@ html, body {
     border: none !important;
 }
 
-/* Hide Qualtrics nav */
-#Header,
-#Footer,
-#Buttons,
-#NextButton {
+html body #SurveyEngineBody,
+html body #SkinContent,
+html body #SkinContainer,
+html body .Skin,
+html body .SkinInner,
+html body .SkinContent {
+    background: #d4d4d4 !important;
+    box-shadow: none !important;
+}
+
+/* layout cleanup */
+html body .SkinInner,
+html body .SkinContent,
+html body #SkinContainer {
+    margin: 0 !important;
+    padding: 0 !important;
+    max-width: none !important;
+}
+
+/* question styling */
+html body .QuestionOuter,
+html body .QuestionInner,
+html body .QuestionText,
+html body .QuestionTextWrapper,
+html body .QuestionBody {
+    background: #d4d4d4 !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.QuestionOuter,
+.QuestionInner,
+.QuestionText,
+.QuestionTextWrapper,
+.QuestionBody {
+    background: inherit !important;
+}
+
+#SurveyEngineBody,
+#SkinContent,
+#SkinContainer {
+    height: 100% !important;
+}
+
+/* hide Qualtrics */
+html body #Header,
+html body #Footer,
+html body #Buttons,
+html body #NextButton {
     display: none !important;
+}
+
+/* full canvas */
+html body,
+html body #SurveyEngineBody {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    overflow: hidden !important;
 }
 
 /* ── Experiment root ── */
 #expRoot {
-    position: fixed;
-    inset: 0;
-    background-color: #d4d4d4;
-    overflow: hidden;
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    width: 100vw !important;
+    height: 100vh !important;
+    background: #d4d4d4 !important;
+    z-index: 999999 !important;
 }
-
 /* ── Stimulus text (visBlink) ── */
 #alphanum {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 80px;
-    font-weight: bold;
+    font-size: 50px;
     color: #111;
     pointer-events: none;
     user-select: none;
@@ -81,13 +136,12 @@ canvas {
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 100;
-    background: rgba(255, 255, 255, 0.97);
+    background: #d4d4d4;
     color: #111;
     padding: 28px 36px;
     border-radius: 14px;
     text-align: center;
     font-size: 18px;
-    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.18);
     min-width: 220px;
 }
 
@@ -102,10 +156,6 @@ canvas {
     margin: 4px;
     cursor: pointer;
     border-radius: 8px;
-    transition: background 0.15s;
-}
-.choice-btn:hover {
-    background: rgba(0, 0, 0, 0.07);
 }
 
 /* ── General buttons ── */
@@ -115,13 +165,10 @@ button {
     margin: 6px;
     border-radius: 8px;
     border: 1px solid #555;
-    background-color: #4a90e2;
-    color: white;
+    background-color: #ffffff;
+    color: rgb(142, 142, 142);
     cursor: pointer;
     transition: background 0.15s;
-}
-button:hover {
-    background-color: #357ab8;
 }
 
 /* ── START button ── */
@@ -129,11 +176,6 @@ button:hover {
     font-size: 18px;
     padding: 12px 32px;
     margin-top: 20px;
-    background-color: #2e7d32;
-    border-color: #1b5e20;
-}
-.button:hover {
-    background-color: #1b5e20;
 }
 
 /* ── Instruction box ── */
@@ -169,23 +211,19 @@ button:hover {
     width: 100px;
     height: 110px;
     padding: 10px 8px 8px;
-    background-color: #4a90e2;
+    background-color: #ffffff;
     border: 1px solid #2c6fad;
     border-radius: 10px;
     color: white;
     font-size: 13px;
     cursor: pointer;
-    transition: background 0.15s;
-}
-.btn2:hover {
-    background-color: #357ab8;
 }
 
 /* Uniform image size inside example buttons */
 .btn2 .choice-img,
 .choice-img {
-    width: 52px;
-    height: 52px;
+    width: 40px;
+    height: 40px;
     object-fit: contain;
     display: block;
 }
@@ -210,8 +248,7 @@ button:hover {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 40px;
-    font-weight: bold;
+    font-size: 30px;
     color: #111;
     pointer-events: none;
     user-select: none;
@@ -225,7 +262,7 @@ button:hover {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: rgba(0, 0, 0, 0.78);
+    background: rgba(163, 155, 155, 0.78);
     color: white;
     font-size: 22px;
     text-align: center;
