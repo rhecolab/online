@@ -1,49 +1,118 @@
-
-/* Remove qualtrics default */
-.Skin,
-.SkinInner,
-.QuestionOuter,
-.QuestionInner {
-  background: transparent !important;
-  padding: 0 !important;
-  margin: 0 !important;
-  max-width: 100% !important;
-  width: 100% !important;
-  box-shadow: none !important;
-}
-
-.QuestionOuter {
-  padding: 0 !important;
-}
-
-/* Add experiment specific things */
-#expRoot {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: #ffffff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
+/* ── Global reset ── */
+*, *::before, *::after {
+    box-sizing: border-box;
 }
 
 html, body {
-  margin: 0 !important;
-  padding: 0 !important;
-  height: 100%;
-  width: 100%;
-    font-family: sans-serif;
-    display: flex;
-    justify-content: center;  
-    align-items: center;
-    min-height: 100vh;
-    background-color: #ffffff;
-
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    overflow: hidden !important;
+    background-color: #d4d4d4 !important;
+    color: #111;
+    font-family: Arial, sans-serif;
 }
 
+/* ── Remove Qualtrics ── */
+.Skin,
+.SkinInner,
+.QuestionOuter,
+.QuestionInner,
+.QuestionBody,
+#SurveyEngineContainer,
+#outter-wrapper,
+#inner-wrapper,
+#Page,
+.Page {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    max-width: none !important;
+    min-height: 0 !important;
+    background-color: #d4d4d4 !important;
+    box-shadow: none !important;
+    border: none !important;
+}
+
+html body #SurveyEngineBody,
+html body #SkinContent,
+html body #SkinContainer,
+html body .Skin,
+html body .SkinInner,
+html body .SkinContent {
+    background: #d4d4d4 !important;
+    box-shadow: none !important;
+}
+
+/* layout cleanup */
+html body .SkinInner,
+html body .SkinContent,
+html body #SkinContainer {
+    margin: 0 !important;
+    padding: 0 !important;
+    max-width: none !important;
+}
+
+/* question styling */
+html body .QuestionOuter,
+html body .QuestionInner,
+html body .QuestionText,
+html body .QuestionTextWrapper,
+html body .QuestionBody {
+    background: #d4d4d4 !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.QuestionOuter,
+.QuestionInner,
+.QuestionText,
+.QuestionTextWrapper,
+.QuestionBody {
+    background: inherit !important;
+}
+
+#SurveyEngineBody,
+#SkinContent,
+#SkinContainer {
+    height: 100% !important;
+}
+
+/* hide Qualtrics */
+html body #Header,
+html body #Footer,
+html body #Buttons,
+html body #NextButton {
+    display: none !important;
+}
+
+/* full canvas */
+html body,
+html body #SurveyEngineBody {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    overflow: hidden !important;
+}
+
+
+/* ── Experiment root ── */
+#expRoot {
+    position: absolute; 
+    top: 0;
+    left: 0;
+    width: 100vw !important;
+    height: 100vh !important;
+    background: #d4d4d4 !important;
+}
+
+#exptBox {
+  background: #d4d4d4  
+}
+
+/* ── Stimulus ── */
 #stimContainer {
   position: relative;
   width: 100%;
