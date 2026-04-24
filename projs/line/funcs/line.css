@@ -1,57 +1,170 @@
+/* ── Global reset ── */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    overflow: hidden !important;
+    background-color: #d4d4d4 !important;
+    color: #111;
+    font-family: Arial, sans-serif;
+}
+
+/* ── Remove Qualtrics ── */
+.Skin,
+.SkinInner,
+.QuestionOuter,
+.QuestionInner,
+.QuestionBody,
+#SurveyEngineContainer,
+#outter-wrapper,
+#inner-wrapper,
+#Page,
+.Page {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    max-width: none !important;
+    min-height: 0 !important;
+    background-color: #d4d4d4 !important;
+    box-shadow: none !important;
+    border: none !important;
+}
+
+html body #SurveyEngineBody,
+html body #SkinContent,
+html body #SkinContainer,
+html body .Skin,
+html body .SkinInner,
+html body .SkinContent {
+    background: #d4d4d4 !important;
+    box-shadow: none !important;
+}
+
+/* layout cleanup */
+html body .SkinInner,
+html body .SkinContent,
+html body #SkinContainer {
+    margin: 0 !important;
+    padding: 0 !important;
+    max-width: none !important;
+}
+
+/* question styling */
+html body .QuestionOuter,
+html body .QuestionInner,
+html body .QuestionText,
+html body .QuestionTextWrapper,
+html body .QuestionBody {
+    background: #d4d4d4 !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.QuestionOuter,
+.QuestionInner,
+.QuestionText,
+.QuestionTextWrapper,
+.QuestionBody {
+    background: inherit !important;
+}
+
+#SurveyEngineBody,
+#SkinContent,
+#SkinContainer {
+    height: 100% !important;
+}
+
+/* hide Qualtrics */
+html body #Header,
+html body #Footer,
+html body #Buttons,
+html body #NextButton {
+    display: none !important;
+}
+
+/* full canvas */
+html body,
+html body #SurveyEngineBody {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    overflow: hidden !important;
+}
+
+
+/* ── Experiment root ── */
+#expRoot {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw !important;
+    height: 100vh !important;
+    background: #d4d4d4 !important;
+}
+
 #exptBox {
-  position: fixed;
-  inset: 0;
-  width: 100vw;
-  height: 100vh;
-  background: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;   
+    background: #d4d4d4;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
+/* ── Instructions ── */
 #instrBox {
-  text-align: center;
-  z-index: 10;
+    text-align: center;
 }
 
+/* ── Stimulus ── */
 #stim {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  display: none; 
+    position: absolute;
+    inset: 0;
+    display: none;
 }
 
 #lineContainer {
-  position: absolute;
-  height: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  left: 50%;
-  transform: translateX(-50%);
+    position: absolute;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    left: 50%;
+    transform: translateX(-50%);
+    cursor: crosshair;
 }
 
 #line {
-  height: 8px;
-  width: 100%;
-  background: black;
+    height: 8px;
+    width: 100%;
+    background: black;
 }
 
 #bisectLine {
-  position: absolute;
-  width: 4px;
-  height: 100px;
-  background-color: red;
-  pointer-events: none;
-  z-index: 10;
+    position: absolute;
+    width: 4px;
+    height: 100px;
+    background-color: red;
+    pointer-events: none;
+    z-index: 10;
+    display: none;
 }
 
+/* ── Buttons ── */
 button {
-  font-size: 15px;    
-  padding: 20px;   
-  border-radius: 12px; 
-  border: 2px solid #444;
-  background-color: #f5f5f5;
-  cursor: pointer;
+    font-size: 15px;
+    padding: 20px 20px;
+    margin: 10px;
+    border-radius: 12px;
+    border: 2px solid #444;
+    background-color: #f5f5f5;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
 }
