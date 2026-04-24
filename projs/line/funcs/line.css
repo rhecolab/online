@@ -138,7 +138,7 @@ html body #SurveyEngineBody {
     justify-content: center;
     left: 50%;
     transform: translateX(-50%);
-    cursor: crosshair;
+    cursor: none;
 }
 
 #line {
