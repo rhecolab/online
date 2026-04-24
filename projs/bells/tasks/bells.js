@@ -10,7 +10,7 @@ var subjID = "${e://Field/subjID}";
 const taskName = 'bells';
 
 let reminderTime = 30 * 1000; // after 30 sec of no clicks, ask if they want to submit
-let submitTime = 60 * 1000; // if there's no clicks for 60 sec, auto submit
+let submitTime = 180 * 1000; // if there's no clicks for 180 sec, auto submit
 
 let warningTimeout;
 let autoSubmitTimeout;
