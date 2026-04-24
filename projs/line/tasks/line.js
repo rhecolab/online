@@ -13,7 +13,7 @@ function cmToPx(cm) {
     return cm * pxPerCm;
 }
 
-async function startTask(subjID) {
+async function startTask() {
 
     // Create experiment container & inject HTML
     const root = document.createElement("div");

@@ -62,6 +62,8 @@ function runTrial(trialInfo, isPractice = false) {
     currentTrial.stimuli    = trialInfo.stimOrder;
     currentTrial.isPractice = isPractice;
     trialStartTime = performance.now();
+
+    document.body.style.cursor = "none"; // Hide cursor
  
     const stimuli = trialInfo.stimOrder;
     let i = 0;
@@ -90,6 +92,8 @@ window.collectResp = function (question, response = null) {
     const q1 = document.getElementById("q1");
     const q2 = document.getElementById("q2");
 
+    document.body.style.cursor = "auto"; // Show cursor
+
     updateProgressBar(window.trialNum + (currentTrial.isPractice ? 0 : 1), trialTotal);
 
     if (question === 1) {
@@ -111,7 +115,10 @@ window.collectResp = function (question, response = null) {
         if (!currentTrial.isPractice) data.push(currentTrialRow);
         q1.style.display = "none";
         q2.style.display = "none";
- 
+
+        const pause = document.getElementById("pauseScreen");
+        pause.style.display = "block";
+
         if (currentTrial.isPractice) {
             window.pracTrialNum = (window.pracTrialNum || 0) + 1;
             return;

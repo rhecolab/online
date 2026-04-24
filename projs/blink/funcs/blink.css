@@ -170,7 +170,6 @@ button {
     border-radius: 8px;
     border: 1px solid #555;
     background-color: #ffffff;
-    color: rgb(142, 142, 142);
     cursor: pointer;
     transition: background 0.15s;
 }
@@ -226,8 +225,8 @@ button {
 /* Uniform image size inside example buttons */
 .btn2 .choice-img,
 .choice-img {
-    width: 40px;
-    height: 40px;
+    width: 60px;
+    height: 60px;
     object-fit: contain;
     display: block;
 }
@@ -241,10 +240,12 @@ button {
     margin: 8px 0;
 }
 
+/*
 .shape-row svg {
     background: #555;
     border-radius: 6px;
 }
+(*/
 
 /* ── Fixation cross ── */
 #fix {
