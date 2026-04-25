@@ -64,6 +64,8 @@ function runTrial(trialInfo, isPractice = false) {
     trialStartTime = performance.now();
 
     document.body.style.cursor = "none"; // Hide cursor
+    const pause = document.getElementById("pauseScreen");
+    pause.style.display = "none"; // Hide pause screen
  
     const stimuli = trialInfo.stimOrder;
     let i = 0;

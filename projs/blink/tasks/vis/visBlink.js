@@ -55,7 +55,9 @@ function runTrial(trialInfo, isPractice = false) {
     let i = 0;
 
     document.body.style.cursor = "none"; // Hide cursor
- 
+    const pause = document.getElementById("pauseScreen");
+    pause.style.display = "none"; // Hide pause screen
+
     function showNext() {
         if (i < stimuli.length) {
             changeStim(stimuli[i++]);

@@ -68,6 +68,8 @@ function runTrial(trialInfo, isPractice = false) {
     let t = audioCtx.currentTime;
 
     document.body.style.cursor = "none"; // Hide cursor
+    const pause = document.getElementById("pauseScreen");
+    pause.style.display = "none"; // Hide pause screen
  
     for (const stim of stimuli) {
         
@@ -93,8 +95,10 @@ window.collectResp = function (question, response = null) {
     if (!currentTrial) return;
     const q1 = document.getElementById("q1");
     const q2 = document.getElementById("q2");
+    const pause = document.getElementById("pauseScreen");
  
     updateProgressBar(window.trialNum + (currentTrial.isPractice ? 0 : 1), trialTotal);
+    
     document.body.style.cursor = "auto"; // Show cursor
 
     if (question === 1) {
@@ -124,7 +128,7 @@ window.collectResp = function (question, response = null) {
             window.pracTrialNum = (window.pracTrialNum || 0) + 1;
             return;
         }
- 
+
         window.trialNum++;
         if (window.trialNum < trialTotal) {
             runTrial(fullSeq[window.trialNum], false);
