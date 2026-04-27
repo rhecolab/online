@@ -98,7 +98,7 @@ window.collectResp = function (question, response = null) {
     const pause = document.getElementById("pauseScreen");
  
     updateProgressBar(window.trialNum + (currentTrial.isPractice ? 0 : 1), trialTotal);
-    
+
     document.body.style.cursor = "auto"; // Show cursor
 
     if (question === 1) {
@@ -114,7 +114,8 @@ window.collectResp = function (question, response = null) {
         q2.style.display = "block";
     }
  
-    if (question === 3 && response !== null) {
+     if (question === 3 && response !== null) {
+
         currentTrialRow.resp2 = response;
         currentTrialRow.rt2   = performance.now() - trialStartTime;
         if (!currentTrial.isPractice) data.push(currentTrialRow);
@@ -124,17 +125,16 @@ window.collectResp = function (question, response = null) {
         const pause = document.getElementById("pauseScreen");
         pause.style.display = "block";
  
-        if (currentTrial.isPractice) {
-            window.pracTrialNum = (window.pracTrialNum || 0) + 1;
-            return;
-        }
+        document.getElementById("continueButton").onclick = () => {
+        pause.style.display = "none";
 
-        window.trialNum++;
-        if (window.trialNum < trialTotal) {
-            runTrial(fullSeq[window.trialNum], false);
-        } else {
-            qualtricsAdvance("audData", data);
-        }
+            window.trialNum++;
+            if (window.trialNum < trialTotal) {
+                runTrial(fullSeq[window.trialNum], false);
+            } else {
+                qualtricsAdvance("visData", data);
+            }
+        };
     }
 };
  

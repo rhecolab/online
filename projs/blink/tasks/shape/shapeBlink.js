@@ -112,6 +112,7 @@ window.collectResp = function (question, response = null) {
     }
  
     if (question === 3 && response !== null) {
+
         currentTrialRow.resp2 = response;
         currentTrialRow.rt2   = performance.now() - trialStartTime;
         if (!currentTrial.isPractice) data.push(currentTrialRow);
@@ -120,17 +121,16 @@ window.collectResp = function (question, response = null) {
 
         const pause = document.getElementById("pauseScreen");
         pause.style.display = "block";
-
-        if (currentTrial.isPractice) {
-            window.pracTrialNum = (window.pracTrialNum || 0) + 1;
-            return;
-        }
  
-        window.trialNum++;
-        if (window.trialNum < trialTotal) {
-            runTrial(fullSeq[window.trialNum], false);
-        } else {
-            qualtricsAdvance("shapeData", data);
-        }
+        document.getElementById("continueButton").onclick = () => {
+        pause.style.display = "none";
+
+            window.trialNum++;
+            if (window.trialNum < trialTotal) {
+                runTrial(fullSeq[window.trialNum], false);
+            } else {
+                qualtricsAdvance("visData", data);
+            }
+        };
     }
 };

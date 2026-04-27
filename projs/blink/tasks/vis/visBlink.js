@@ -113,16 +113,16 @@ window.collectResp = function (question, response = null) {
         const pause = document.getElementById("pauseScreen");
         pause.style.display = "block";
  
-        if (currentTrial.isPractice) {
-            window.pracTrialNum = (window.pracTrialNum || 0) + 1;
-            return; // runPractice loop takes over
-        }
- 
-        window.trialNum++;
-        if (window.trialNum < trialTotal) {
-            runTrial(fullSeq[window.trialNum], false);
-        } else {
-            qualtricsAdvance("visData", data);
-        }
+        document.getElementById("continueButton").onclick = () => {
+        pause.style.display = "none";
+
+            window.trialNum++;
+            if (window.trialNum < trialTotal) {
+                runTrial(fullSeq[window.trialNum], false);
+            } else {
+                qualtricsAdvance("visData", data);
+            }
+        };
     }
-};
+
+}

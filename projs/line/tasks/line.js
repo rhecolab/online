@@ -3,11 +3,12 @@ import "../funcs/line.css";
 
 // Parameters
 let data = [];
-let trialNumber = 0;
 const totalTrials = 10;
 const subjID = "${e://Field/subjID}";
 const taskName = "line";
 const pxPerCm = parseFloat("${e://Field/px_per_cm}") || 37;
+window.trialNum  = 0;
+window.pracNum   = 0;
 
 function cmToPx(cm) {
     return cm * pxPerCm;
@@ -25,8 +26,9 @@ async function startTask() {
     document.getElementById("stim").style.display = "none";
 
     // Start on button click
-    document.getElementById("startButton").addEventListener("click", () => {
+    document.getElementById("startButton").addEventListener("click", async () => {
         document.getElementById("instrBox").style.display = "none";
+        await runPractice();
         runTrial();
     });
 
@@ -35,7 +37,44 @@ async function startTask() {
 export default { startTask };
 
 
-function runTrial() {
+async function runPractice(runTrial) {
+ 
+    await showMessage("Practice starting...");
+ 
+    for (let i = 0; i < seq.length; i++) {
+        if (fix) fix.textContent = "";
+        const before = window.pracTrialNum;
+        runTrial(seq[i], true);
+        await new Promise(resolve => {
+            const poll = setInterval(() => {
+                if (window.pracTrialNum > before) { clearInterval(poll); resolve(); }
+            }, 50);
+        });
+    }
+ 
+    await showMessage("Practice complete! Press continue for main trials.");
+}
+ 
+// ── Overlay message with fade in/out ─────────────────────────────────────────
+export function showMessage(text) {
+    return new Promise(resolve => {
+        const overlay = document.createElement("div");
+        overlay.className = "overlayBox";
+        overlay.innerHTML = `
+            <div style="text-align:center; max-width:520px; padding:0 24px;">
+                ${text}<br><br>
+                <button id="continueBtn" style="font-size:18px; padding:10px 28px;">Continue</button>
+            </div>`;
+        document.body.appendChild(overlay);
+        overlay.querySelector("#continueBtn").onclick = () => {
+            overlay.remove();
+            resolve();
+        };
+    });
+}
+
+
+function runTrial(isPractice=false) {
     const stim = document.getElementById("stim");
     const lineContainer = document.getElementById("lineContainer");
     const bisectLine = document.getElementById("bisectLine");
@@ -77,7 +116,8 @@ function runTrial() {
         const devRel = devPx / rect.width;
         const devCm = devPx / pxPerCm;
 
-        data.push({
+        if (!isPractice){
+          data.push({
             sub: subjID,
             task: taskName,
             trial: trialNumber + 1,
@@ -91,13 +131,21 @@ function runTrial() {
             screenW: window.innerWidth,
             screenH: window.innerHeight,
             dpr: window.devicePixelRatio
-        });
+
+          });
+          trialNumber++;
+
+        }
 
         cleanup();
-        trialNumber++;
+
+        if (isPractice) {
+            window.pracTrialNum++;
+            return;
+        }
 
         if (trialNumber < totalTrials) {
-            setTimeout(runTrial, 400);
+             setTimeout(() => runTrial(), 400);
         } else {
             endTask();
         }
