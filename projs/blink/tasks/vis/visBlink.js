@@ -111,13 +111,14 @@ window.collectResp = function (question, response = null) {
         q2.style.display = "none";
 
         const pause = document.getElementById("pauseScreen");
+        const btn = pause.querySelector("#continueBtn");
         pause.style.display = "block";
- 
-        document.getElementById("continueButton").onclick = () => {
-        pause.style.display = "none";
+
+        btn.onclick = () => {
+            pause.style.display = "none";
 
             window.trialNum++;
-            if (window.trialNum < trialTotal) {
+            if (window.trialNum < trialTotal) {ß
                 runTrial(fullSeq[window.trialNum], false);
             } else {
                 qualtricsAdvance("visData", data);
