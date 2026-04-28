@@ -133,7 +133,7 @@ canvas {
 }
 
 /* ── Question panels ── */
-#q1, #q2 {
+#q1, #q2, #pauseScreen {
     display: none;
     position: absolute;
     top: 50%;
