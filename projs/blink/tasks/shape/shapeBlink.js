@@ -58,6 +58,9 @@ export default { startTask };
  
 // ── Trial ─────────────────────────────────────────────────────────────────────
 function runTrial(trialInfo, isPractice = false, on = stimON, off = stimOFF) {
+    on = on ?? stimON;
+    off = off ?? stimOFF;
+    
     currentTrial = trialInfo;
     currentTrial.stimuli    = trialInfo.stimOrder;
     currentTrial.isPractice = isPractice;
