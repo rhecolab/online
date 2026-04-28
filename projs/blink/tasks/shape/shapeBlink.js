@@ -127,7 +127,7 @@ window.collectResp = function (question, response = null) {
             pause.style.display = "none";
 
             window.trialNum++;
-            if (window.trialNum < trialTotal) {ß
+            if (window.trialNum < trialTotal) {
                 runTrial(fullSeq[window.trialNum], false);
             } else {
                 qualtricsAdvance("shapeData", data);

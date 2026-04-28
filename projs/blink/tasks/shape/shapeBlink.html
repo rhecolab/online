@@ -13,13 +13,13 @@
         <div id="exptBox" class="stimuli-grid"> 
 
             <div id="alphanum" class="stimuli">
-            <canvas id="shapes" width="300" height="300"></canvas>
-        </div>
+              <canvas id="shapes" width="300" height="300"></canvas>
+            </div>
 
-        <div id="pauseScreen" style="display:none;">
-            <p>Press continue to start the next trial...</p>
-            <button id="continueBtn">Continue</button>
-        </div>
+            <div id="pauseScreen" style="display:none;">
+              <p>Press continue to start the next trial...</p>
+              <button id="continueBtn">Continue</button>
+            </div>
 
         <div id="instrBox">
 
@@ -41,41 +41,40 @@
               <svg width="50" height="50" viewBox="0 0 100 100"><path d="M10 50 A40 40 0 0 0 90 50 Z" /></svg>
               <svg width="50" height="50" viewBox="0 0 100 100"><path d="M50 10 A40 40 0 0 1 50 90 Z" /></svg>
           </div>            
-          <br> After the stream, you'll be asked what white shape you saw and the direction of the semicircle.
+            <br> After the stream, you'll be asked what white shape you saw and the direction of the semicircle.
             <br>
             <button id="startButton" class="button"> START </button>
-
         </div>
         
         <div id="progressContainer">
-  <div id="progressBar"></div>
-</div>
+            <div id="progressBar"></div>
+        </div>
 
-<div id="q1" style="display: none"> 
-  What shape was white?<br><br>
+        <div id="q1" style="display: none"> 
+        What shape was white?<br><br>
 
-  <!-- Circle -->
-  <button onclick="collectResp(2,'circle')" style="border:none;background:none;cursor:pointer;">
-    <svg width="50" height="50" viewBox="0 0 100 80">
-      <circle cx="50" cy="50" r="40" fill="white"/>
-    </svg>
-  </button>
-  <br>
-  <!-- Square -->
-  <button onclick="collectResp(2,'square')" style="border:none;background:none;cursor:pointer;">
-    <svg width="50" height="50" viewBox="0 0 100 100">
-      <rect x="10" y="10" width="80" height="80" fill="white"/>
-    </svg>
-  </button>
-  <br>
-  <!-- Triangle -->
-  <button onclick="collectResp(2,'triangle')" style="border:none;background:none;cursor:pointer;">
-    <svg width="50" height="50" viewBox="0 0 100 100">
-      <polygon points="50,10 90,90 10,90" fill="white"/>
-    </svg>
-  </button>
-  <br>
-  <!-- Pentagon -->
+        <!-- Circle -->
+      <button onclick="collectResp(2,'circle')" style="border:none;background:none;cursor:pointer;">
+        <svg width="50" height="50" viewBox="0 0 100 80">
+          <circle cx="50" cy="50" r="40" fill="white"/>
+        </svg>
+      </button>
+      <br>
+      <!-- Square -->
+    <button onclick="collectResp(2,'square')" style="border:none;background:none;cursor:pointer;">
+      <svg width="50" height="50" viewBox="0 0 100 100">
+        <rect x="10" y="10" width="80" height="80" fill="white"/>
+      </svg>
+    </button>
+      <br>
+    <!-- Triangle -->
+    <button onclick="collectResp(2,'triangle')" style="border:none;background:none;cursor:pointer;">
+      <svg width="50" height="50" viewBox="0 0 100 100">
+        <polygon points="50,10 90,90 10,90" fill="white"/>
+      </svg>
+    </button>
+    <br>
+    <!-- Pentagon -->
   <button onclick="collectResp(2,'pentagon')" style="border:none;background:none;cursor:pointer;">
     <svg width="50" height="50" viewBox="0 0 100 100">
       <polygon points="50.00,5.00 92.80,36.09 76.45,86.41 23.55,86.41 7.20,36.09" fill="white"/>
