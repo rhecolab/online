@@ -50,14 +50,14 @@ async function startTask() {
     document.getElementById("startButton").addEventListener("click", async () => {
         document.getElementById("instrBox").style.display = "none";
         await runPractice(pracSeq, runTrial);
-        runTrial(fullSeq[0], false);
+        runTrial(fullSeq[0]);
     });
 }
  
 export default { startTask };
  
 // ── Trial ─────────────────────────────────────────────────────────────────────
-function runTrial(trialInfo, isPractice = false) {
+function runTrial(trialInfo, isPractice = false, on = stimON, off = stimOFF) {
     currentTrial = trialInfo;
     currentTrial.stimuli    = trialInfo.stimOrder;
     currentTrial.isPractice = isPractice;
@@ -76,14 +76,14 @@ function runTrial(trialInfo, isPractice = false) {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             drawShape(stim.stim, ctx, canvas.width / 2, canvas.height / 2,
                       stim.type === 't1' ? 'white' : 'black');
-            setTimeout(showISI, stimON);
+            setTimeout(showISI, on);
         } else {
             collectResp(1);
         }
     }
     function showISI() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        setTimeout(showNext, stimOFF);
+        setTimeout(showNext, off);
     }
     showNext();
 }

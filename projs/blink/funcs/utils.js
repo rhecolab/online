@@ -20,7 +20,7 @@ export async function runPractice(seq, runTrial) {
     for (let i = 0; i < seq.length; i++) {
         if (fix) fix.textContent = "";
         const before = window.pracTrialNum;
-        runTrial(seq[i], true);
+        runTrial(seq[i], true, stimON*2, stimOFF*2); // double timings for practice
         await new Promise(resolve => {
             const poll = setInterval(() => {
                 if (window.pracTrialNum > before) { clearInterval(poll); resolve(); }

@@ -58,7 +58,7 @@ async function startTask() {
 export default { startTask };
  
 // ── Trial ─────────────────────────────────────────────────────────────────────
-function runTrial(trialInfo, isPractice = false) {
+function runTrial(trialInfo, isPractice = false, on = stimON, off = stimOFF) {
     currentTrial = trialInfo;
     currentTrial.stimuli    = trialInfo.stimOrder;
     currentTrial.isPractice = isPractice;
@@ -75,11 +75,11 @@ function runTrial(trialInfo, isPractice = false) {
         
         playSound(stim.stim, t);
         scheduleFixAt(t, "+");
-        scheduleFixAt(t + stimON / 1000, "");
-        t += (stimON + stimOFF) / 1000;
+        scheduleFixAt(t + on / 1000, "");
+        t += (on + off) / 1000;
     }
- 
-    setTimeout(() => collectResp(1), stimuli.length * (stimON + stimOFF));
+
+    setTimeout(() => collectResp(1), stimuli.length * (on + off));
 }
  
 function scheduleFixAt(when, text) {

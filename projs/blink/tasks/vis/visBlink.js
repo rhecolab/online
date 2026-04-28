@@ -38,14 +38,14 @@ async function startTask() {
     document.getElementById("startButton").addEventListener("click", async () => {
         document.getElementById("instrBox").style.display = "none";
         await runPractice(pracSeq, runTrial);
-        runTrial(fullSeq[0], false);
+        runTrial(fullSeq[0]);
     });
 }
  
 export default { startTask };
- 
-// ── Trial ─────────────────────────────────────────────────────────────────────
-function runTrial(trialInfo, isPractice = false) {
+
+// ── Trial ───────────────────────────────────────────────────────────────────
+function runTrial(trialInfo, isPractice = false, on = stimON, off = stimOFF) {
     currentTrial = trialInfo;
     currentTrial.stimuli   = trialInfo.stimOrder;
     currentTrial.isPractice = isPractice;
@@ -61,14 +61,14 @@ function runTrial(trialInfo, isPractice = false) {
     function showNext() {
         if (i < stimuli.length) {
             changeStim(stimuli[i++]);
-            setTimeout(showISI, stimON);
+            setTimeout(showISI, on);
         } else {
             collectResp(1);
         }
     }
     function showISI() {
         document.getElementById("alphanum").innerHTML = "";
-        setTimeout(showNext, stimOFF);
+        setTimeout(showNext, off);
     }
     showNext();
 }
