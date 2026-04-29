@@ -49,7 +49,7 @@ async function startTask() {
  
     document.getElementById("startButton").addEventListener("click", async () => {
         document.getElementById("instrBox").style.display = "none";
-        await runPractice(pracSeq, runTrial);
+        await runPractice(pracSeq, runTrial, { on: 300, off: 100 });
         runTrial(fullSeq[0]);
     });
 }
@@ -57,7 +57,7 @@ async function startTask() {
 export default { startTask };
  
 // ── Trial ─────────────────────────────────────────────────────────────────────
-function runTrial(trialInfo, isPractice = false, on = stimON, off = stimOFF) {
+function runTrial(trialInfo, isPractice = false, on, off) {
     on = on ?? stimON;
     off = off ?? stimOFF;
     

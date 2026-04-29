@@ -11,25 +11,27 @@ function getBasePath() {
 // ── Practice runner ──────────────────────────────────────────────────────────
 // Runs each practice trial in sequence, waiting for window.pracTrialNum to
 // increment (set by collectResp in each task) before advancing.
-export async function runPractice(seq, runTrial) {
-    const fix = document.getElementById("fix");
-    window.pracTrialNum = 0;
- 
-    await showMessage("Practice starting...");
- 
+export async function runPractice(seq, func, trialArgs = {}) {
+    
     for (let i = 0; i < seq.length; i++) {
+        const startTrial = window.pracTrialNum;
+        const fix = document.getElementById("fix");
         if (fix) fix.textContent = "";
-        const before = window.pracTrialNum;
-        runTrial(seq[i], true, stimON*2, stimOFF*2); // double timings for practice
-        await new Promise(resolve => {
-            const poll = setInterval(() => {
-                if (window.pracTrialNum > before) { clearInterval(poll); resolve(); }
+
+        func(seq[i], true, trialArgs.on, trialArgs.off);  // forward here
+
+        await new Promise((resolve) => {
+            const check = setInterval(() => {
+                if (window.pracTrialNum > startTrial) {
+                    clearInterval(check);
+                    resolve();
+                }
             }, 50);
         });
     }
- 
-    await showMessage("Practice complete! Press continue for main trials.");
+    await showMessage("Practice finished! Press continue for main trials.");
 }
+
  
 // ── Overlay message with fade in/out ─────────────────────────────────────────
 export function showMessage(text) {
