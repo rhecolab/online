@@ -126,6 +126,11 @@ window.collectResp = function (question, response = null) {
         q1.style.display = "none";
         q2.style.display = "none";
 
+
+        if (currentTrial.isPractice) {
+            window.pracTrialNum = (window.pracTrialNum || 0) + 1;  // ADD THIS
+        return;
+    }
         const pause = document.getElementById("pauseScreen");
         const btn = pause.querySelector("#continueBtn");
         pause.style.display = "block";

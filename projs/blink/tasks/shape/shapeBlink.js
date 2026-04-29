@@ -119,8 +119,14 @@ window.collectResp = function (question, response = null) {
         currentTrialRow.resp2 = response;
         currentTrialRow.rt2   = performance.now() - trialStartTime;
         if (!currentTrial.isPractice) data.push(currentTrialRow);
+
         q1.style.display = "none";
         q2.style.display = "none";
+
+        if (currentTrial.isPractice) {
+            window.pracTrialNum = (window.pracTrialNum || 0) + 1;  // ADD THIS
+        return;
+    }
 
         const pause = document.getElementById("pauseScreen");
         const btn = pause.querySelector("#continueBtn");
