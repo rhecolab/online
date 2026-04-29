@@ -45,10 +45,9 @@ async function startTask() {
 export default { startTask };
 
 // ── Trial ───────────────────────────────────────────────────────────────────
-function runTrial(trialInfo, isPractice = false, on = stimON, off = stimOFF) {
+function runTrial(trialInfo, isPractice = false, on, off) {
     on = on ?? stimON;
     off = off ?? stimOFF;
-
 
     currentTrial = trialInfo;
     currentTrial.stimuli   = trialInfo.stimOrder;
