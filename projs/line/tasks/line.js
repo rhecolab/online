@@ -47,11 +47,11 @@ async function runPractice(runTrial) {
     for (let i = 0; i < seq.length; i++) {
         const fix = document.getElementById("fixation");
         if (fix) fix.textContent = "";
-        const before = window.pracTrialNum;
+        const before = window.pracNum;
         runTrial(seq[i], true);
         await new Promise(resolve => {
             const poll = setInterval(() => {
-                if (window.pracTrialNum > before) { clearInterval(poll); resolve(); }
+                if (window.pracNum > before) { clearInterval(poll); resolve(); }
             }, 50);
         });
     }
