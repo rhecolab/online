@@ -57,19 +57,32 @@ export function showMessage(text) {
     return new Promise(resolve => {
         const overlay = document.createElement("div");
         overlay.className = "overlayBox";
+        overlay.style.cssText = `
+            position: fixed;
+            inset: 0;
+            background: rgba(212,212,212,0.95);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            pointer-events: all;
+        `;
         overlay.innerHTML = `
             <div style="text-align:center; max-width:520px; padding:0 24px;">
                 ${text}<br><br>
                 <button id="continueBtn" style="font-size:18px; padding:10px 28px;">Continue</button>
             </div>`;
-        document.body.appendChild(overlay);
+
+        // Append to expRoot so it sits inside the experiment layer, not body
+        const root = document.getElementById("expRoot") || document.body;
+        root.appendChild(overlay);
+
         overlay.querySelector("#continueBtn").onclick = () => {
             overlay.remove();
             resolve();
         };
     });
 }
-
 
 function runTrial(isPractice = false, onComplete = null) {
     const stim = document.getElementById("stim");

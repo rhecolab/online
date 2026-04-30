@@ -79,6 +79,17 @@ html body .QuestionBody {
     height: 100% !important;
 }
 
+.overlayBox {
+    position: fixed;
+    inset: 0;
+    background: rgba(212,212,212,0.95);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    pointer-events: all;
+}
+
 /* hide Qualtrics */
 html body #Header,
 html body #Footer,
