@@ -12,6 +12,8 @@ function getBasePath() {
 // Runs each practice trial in sequence, waiting for window.pracTrialNum to
 // increment (set by collectResp in each task) before advancing.
 export async function runPractice(seq, func, trialArgs = {}) {
+
+    window.pracTrialNum = 0
     
     for (let i = 0; i < seq.length; i++) {
         const startTrial = window.pracTrialNum;
