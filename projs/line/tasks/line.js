@@ -37,27 +37,21 @@ async function startTask() {
 export default { startTask };
 
 
-async function runPractice(runTrial) {
+async function runPractice() {
 
     await showMessage("Practice starting...");
 
     const pracTrials = 3;
-    const seq = Array.from({ length: pracTrials }, (_, i) => i);
 
-    for (let i = 0; i < seq.length; i++) {
-        const fix = document.getElementById("fixation");
-        if (fix) fix.textContent = "";
-        const before = window.pracNum;
-        runTrial(seq[i], true);
+    for (let i = 0; i < pracTrials; i++) {
         await new Promise(resolve => {
-            const poll = setInterval(() => {
-                if (window.pracNum > before) { clearInterval(poll); resolve(); }
-            }, 50);
+            runTrial(true, resolve);
         });
     }
 
     await showMessage("Practice complete! Press continue for main trials.");
 }
+
 // ── Overlay message with fade in/out ─────────────────────────────────────────
 export function showMessage(text) {
     return new Promise(resolve => {
@@ -77,7 +71,7 @@ export function showMessage(text) {
 }
 
 
-function runTrial(isPractice=false) {
+function runTrial(isPractice = false, onComplete = null) {
     const stim = document.getElementById("stim");
     const lineContainer = document.getElementById("lineContainer");
     const bisectLine = document.getElementById("bisectLine");
@@ -119,36 +113,34 @@ function runTrial(isPractice=false) {
         const devRel = devPx / rect.width;
         const devCm = devPx / pxPerCm;
 
-        if (!isPractice){
-          data.push({
-            sub: subjID,
-            task: taskName,
-            trial: trialNumber + 1,
-            devPx: Math.round(devPx),
-            devRel: Number(devRel.toFixed(4)),
-            devCm: Number(devCm.toFixed(2)),
-            rt,
-            lineLengthCm: Number(lineLengthCm.toFixed(2)),
-            lineLengthPx: Math.round(lineLengthPx),
-            pxPerCm,
-            screenW: window.innerWidth,
-            screenH: window.innerHeight,
-            dpr: window.devicePixelRatio
-
-          });
-          trialNumber++;
-
+        if (!isPractice) {
+            data.push({
+                sub: subjID,
+                task: taskName,
+                trial: window.trialNum + 1,
+                devPx: Math.round(devPx),
+                devRel: Number(devRel.toFixed(4)),
+                devCm: Number(devCm.toFixed(2)),
+                rt,
+                lineLengthCm: Number(lineLengthCm.toFixed(2)),
+                lineLengthPx: Math.round(lineLengthPx),
+                pxPerCm,
+                screenW: window.innerWidth,
+                screenH: window.innerHeight,
+                dpr: window.devicePixelRatio
+            });
+            window.trialNum++;
         }
 
         cleanup();
 
         if (isPractice) {
-            window.pracTrialNum++;
+            if (onComplete) onComplete();
             return;
         }
 
-        if (trialNumber < totalTrials) {
-             setTimeout(() => runTrial(), 400);
+        if (window.trialNum < totalTrials) {
+            setTimeout(() => runTrial(), 400);
         } else {
             endTask();
         }
