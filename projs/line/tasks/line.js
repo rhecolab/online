@@ -38,10 +38,14 @@ export default { startTask };
 
 
 async function runPractice(runTrial) {
- 
+
     await showMessage("Practice starting...");
- 
+
+    const pracTrials = 3;
+    const seq = Array.from({ length: pracTrials }, (_, i) => i);
+
     for (let i = 0; i < seq.length; i++) {
+        const fix = document.getElementById("fixation");
         if (fix) fix.textContent = "";
         const before = window.pracTrialNum;
         runTrial(seq[i], true);
@@ -51,10 +55,9 @@ async function runPractice(runTrial) {
             }, 50);
         });
     }
- 
+
     await showMessage("Practice complete! Press continue for main trials.");
 }
- 
 // ── Overlay message with fade in/out ─────────────────────────────────────────
 export function showMessage(text) {
     return new Promise(resolve => {
