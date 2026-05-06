@@ -95,61 +95,59 @@ body:has(#expRoot) #NextButton {
     background: #d4d4d4 !important;
 }
 
-#exptBox {
+/* ── Experiment box ── */
+#expRoot #exptBox {
     background: #d4d4d4;
-}
-
-/* ── Stimulus text (visBlink) ── */
-#expRoot #alphanum {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 50px;
-    color: #111;
-    pointer-events: none;
-    user-select: none;
-}
-
-/* ── Canvas (shapeBlink) ── */
-#expRoot canvas {
-    display: block;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-/* ── Question panels ── */
-#expRoot #q1,
-#expRoot #q2,
-#expRoot #pauseScreen {
-    display: none;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 100;
-    background: #d4d4d4;
-    color: #111;
-    padding: 28px 36px;
-    border-radius: 14px;
-    text-align: center;
-    font-size: 18px;
-    min-width: 220px;
-}
-
-/* ── Choice buttons inside q panels ── */
-#expRoot .choice-btn {
-    display: inline-flex;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: none;
-    border: none;
-    padding: 6px;
-    margin: 4px;
-    cursor: pointer;
-    border-radius: 8px;
+}
+
+/* ── Instruction box ── */
+#expRoot #instrBox {
+    text-align: center;
+    padding: 40px;
+    color: #111;
+}
+
+/* ── Stimulus wrapper ── */
+#expRoot #stim {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+/* ── Stimulus container (holds image + click circles) ── */
+#expRoot #stimContainer {
+    position: relative;
+    display: inline-block;
+}
+
+/* ── Bells image — natural size, not stretched ── */
+#expRoot #bells {
+    display: block;
+    max-width: 90vw;
+    max-height: 75vh;
+    width: auto;
+    height: auto;
+}
+
+/* ── Submit area ── */
+#expRoot #submitDiv {
+    margin-top: 12px;
+    text-align: center;
+}
+
+/* ── Warning text ── */
+#expRoot #warningText {
+    color: #111;
+    font-size: 16px;
+    margin-bottom: 8px;
 }
 
 /* ── General buttons ── */
@@ -169,110 +167,4 @@ body:has(#expRoot) #NextButton {
     font-size: 18px;
     padding: 12px 32px;
     margin-top: 20px;
-}
-
-/* ── Instruction box ── */
-#expRoot #instrBox {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 40px;
-    color: #111;
-    background: transparent;
-    overflow-y: auto;
-}
-
-/* ── Audio example buttons (audBlink) ── */
-#expRoot .button-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    justify-content: center;
-    margin: 10px 0;
-}
-
-#expRoot .btn2 {
-    display: inline-flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 6px;
-    width: 100px;
-    height: 110px;
-    padding: 10px 8px 8px;
-    background-color: #ffffff;
-    border: 1px solid #2c6fad;
-    border-radius: 10px;
-    color: white;
-    font-size: 13px;
-    cursor: pointer;
-}
-
-/* Uniform image size inside example buttons */
-#expRoot .btn2 .choice-img,
-#expRoot .choice-img {
-    width: 60px;
-    height: 60px;
-    object-fit: contain;
-    display: block;
-}
-
-/* ── Shape row in shapeBlink instructions ── */
-#expRoot .shape-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    justify-content: center;
-    margin: 8px 0;
-}
-
-/* ── Fixation cross ── */
-#expRoot #fix {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 30px;
-    color: #111;
-    pointer-events: none;
-    user-select: none;
-}
-
-/* ── Overlay / transition messages ── */
-#expRoot .overlayBox {
-    position: fixed;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background: rgba(163, 155, 155, 0.78);
-    color: white;
-    font-size: 22px;
-    text-align: center;
-    z-index: 99999;
-}
-
-/* ── Progress bar ── */
-#expRoot #progressContainer {
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 50%;
-    height: 6px;
-    background: rgba(0, 0, 0, 0.15);
-    border-radius: 10px;
-    overflow: hidden;
-}
-
-#expRoot #progressBar {
-    height: 100%;
-    width: 0%;
-    background: #4a90e2;
-    transition: width 0.3s ease;
 }
