@@ -171,45 +171,34 @@ function runTrial(isPractice = false, onComplete = null) {
 }
 
 function endTask() {
-
     // Save data
     Qualtrics.SurveyEngine.setEmbeddedData("lineData", JSON.stringify(data));
 
-    // Submit with fallbacks to handle Qualtrics
+    // Try navNext first
     try {
         if (typeof Qualtrics !== "undefined" &&
             Qualtrics.SurveyEngine &&
             typeof Qualtrics.SurveyEngine.navNext === "function") {
             console.log("Advancing via navNext()");
             Qualtrics.SurveyEngine.navNext();
-            return;
+            return; // ← this return should prevent the rest, but navNext is async
+                    //   so the code below was still executing
         }
     } catch (e) {
         console.warn("navNext() failed:", e);
     }
 
-    // Click NextButton if it exists
-    const attemptNextClick = () => {
-        const nextBtn = document.querySelector("#NextButton");
-        if (nextBtn) {
-            console.log("Advancing via NextButton click");
-            nextBtn.style.visibility = "visible";
-            nextBtn.click();
-        } else {
-            setTimeout(attemptNextClick, 50);
-        }
-    };
-    attemptNextClick();
-
-    // Fall back to form submit
-    const attemptFormSubmit = () => {
+    // Only reach here if navNext wasn't available
+    const nextBtn = document.querySelector("#NextButton");
+    if (nextBtn) {
+        console.log("Advancing via NextButton click");
+        nextBtn.style.visibility = "visible";
+        nextBtn.click();
+    } else {
         const form = document.querySelector("form[name='QualtricsForm']");
         if (form) {
             console.log("Advancing via form.submit()");
             form.submit();
-        } else {
-            setTimeout(attemptFormSubmit, 50);
         }
-    };
-    setTimeout(attemptFormSubmit, 500);
+    }
 }
