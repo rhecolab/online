@@ -174,6 +174,11 @@ function endTask() {
     // Save data
     Qualtrics.SurveyEngine.setEmbeddedData("lineData", JSON.stringify(data));
 
+    // Clean up before advancing so break page shows properly
+    const root = document.getElementById("expRoot");
+    if (root) root.remove();
+
+
     // Try navNext first
     try {
         if (typeof Qualtrics !== "undefined" &&
