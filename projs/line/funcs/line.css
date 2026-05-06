@@ -1,9 +1,13 @@
-/* ── Global reset ── */
+/* ── Safe global reset (won't affect other blocks) ── */
 *, *::before, *::after {
     box-sizing: border-box;
 }
 
-html, body {
+/* ── Everything below is scoped to when #expRoot exists ── */
+
+/* Body & html layout */
+body:has(#expRoot),
+html:has(#expRoot) {
     margin: 0 !important;
     padding: 0 !important;
     width: 100% !important;
@@ -14,17 +18,17 @@ html, body {
     font-family: Arial, sans-serif;
 }
 
-/* ── Remove Qualtrics ── */
-.Skin,
-.SkinInner,
-.QuestionOuter,
-.QuestionInner,
-.QuestionBody,
-#SurveyEngineContainer,
-#outter-wrapper,
-#inner-wrapper,
-#Page,
-.Page {
+/* Qualtrics chrome — strip layout */
+body:has(#expRoot) .Skin,
+body:has(#expRoot) .SkinInner,
+body:has(#expRoot) .QuestionOuter,
+body:has(#expRoot) .QuestionInner,
+body:has(#expRoot) .QuestionBody,
+body:has(#expRoot) #SurveyEngineContainer,
+body:has(#expRoot) #outter-wrapper,
+body:has(#expRoot) #inner-wrapper,
+body:has(#expRoot) #Page,
+body:has(#expRoot) .Page {
     margin: 0 !important;
     padding: 0 !important;
     width: 100% !important;
@@ -35,51 +39,54 @@ html, body {
     border: none !important;
 }
 
-html body #SurveyEngineBody,
-html body #SkinContent,
-html body #SkinContainer,
-html body .Skin,
-html body .SkinInner,
-html body .SkinContent {
+/* Qualtrics chrome — background */
+body:has(#expRoot) #SurveyEngineBody,
+body:has(#expRoot) #SkinContent,
+body:has(#expRoot) #SkinContainer,
+body:has(#expRoot) .Skin,
+body:has(#expRoot) .SkinInner,
+body:has(#expRoot) .SkinContent {
     background: #d4d4d4 !important;
     box-shadow: none !important;
 }
 
-/* layout cleanup */
-html body .SkinInner,
-html body .SkinContent,
-html body #SkinContainer {
+/* Qualtrics chrome — layout cleanup */
+body:has(#expRoot) .SkinInner,
+body:has(#expRoot) .SkinContent,
+body:has(#expRoot) #SkinContainer {
     margin: 0 !important;
     padding: 0 !important;
     max-width: none !important;
 }
 
-/* question styling */
-html body .QuestionOuter,
-html body .QuestionInner,
-html body .QuestionText,
-html body .QuestionTextWrapper,
-html body .QuestionBody {
+/* Qualtrics question elements */
+body:has(#expRoot) .QuestionOuter,
+body:has(#expRoot) .QuestionInner,
+body:has(#expRoot) .QuestionText,
+body:has(#expRoot) .QuestionTextWrapper,
+body:has(#expRoot) .QuestionBody {
     background: #d4d4d4 !important;
     border: none !important;
     box-shadow: none !important;
 }
 
-.QuestionOuter,
-.QuestionInner,
-.QuestionText,
-.QuestionTextWrapper,
-.QuestionBody {
-    background: inherit !important;
-}
-
-#SurveyEngineBody,
-#SkinContent,
-#SkinContainer {
+/* Full height containers */
+body:has(#expRoot) #SurveyEngineBody,
+body:has(#expRoot) #SkinContent,
+body:has(#expRoot) #SkinContainer {
     height: 100% !important;
 }
 
-.overlayBox {
+/* Hide Qualtrics chrome */
+body:has(#expRoot) #Header,
+body:has(#expRoot) #Footer,
+body:has(#expRoot) #Buttons,
+body:has(#expRoot) #NextButton {
+    display: none !important;
+}
+
+/* ── Overlay message ── */
+body:has(#expRoot) .overlayBox {
     position: fixed;
     inset: 0;
     background: rgba(212,212,212,0.95);
@@ -89,25 +96,6 @@ html body .QuestionBody {
     z-index: 9999;
     pointer-events: all;
 }
-
-/* hide Qualtrics */
-html body #Header,
-html body #Footer,
-html body #Buttons,
-html body #NextButton {
-    display: none !important;
-}
-
-/* full canvas */
-html body,
-html body #SurveyEngineBody {
-    margin: 0 !important;
-    padding: 0 !important;
-    width: 100% !important;
-    height: 100% !important;
-    overflow: hidden !important;
-}
-
 
 /* ── Experiment root ── */
 #expRoot {
@@ -168,8 +156,8 @@ html body #SurveyEngineBody {
     display: none;
 }
 
-/* ── Buttons ── */
-button {
+/* ── Buttons (scoped to expRoot to avoid affecting other blocks) ── */
+#expRoot button {
     font-size: 15px;
     padding: 20px 20px;
     margin: 10px;
