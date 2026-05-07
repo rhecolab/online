@@ -120,15 +120,17 @@ body:has(#expRoot) #NextButton {
     align-items: center;
     justify-content: center;
     width: 100%;
+    flex: 1;
 }
 
 /* ── Stimulus container (holds image + click circles) ── */
 #expRoot #stimContainer {
     position: relative;
-    display: inline-block;
+    display: flex;   
+    justify-content: center;
+    align-items: center;
 }
-
-/* ── Bells image — natural size, not stretched ── */
+/* ── Bells image -- */
 #expRoot #bells {
     display: block;
     max-width: 90vw;
