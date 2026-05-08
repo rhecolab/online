@@ -10,6 +10,9 @@ const pxPerCm = parseFloat("${e://Field/px_per_cm}") || 37;
 window.trialNum  = 0;
 window.pracNum   = 0;
 
+// How many px above/below the line centre counts as "on the line"
+const Y_TOLERANCE_PX = 20;
+
 function cmToPx(cm) {
     return cm * pxPerCm;
 }
@@ -89,9 +92,9 @@ function runTrial(isPractice = false, onComplete = null) {
     const lineContainer = document.getElementById("lineContainer");
     const bisectLine = document.getElementById("bisectLine");
 
-    // Show stimulus
+    // Show stimulus area (but keep bisect line hidden until cursor is near)
     stim.style.display = "block";
-    bisectLine.style.display = "block";
+    bisectLine.style.display = "none";
 
     // Random line length between 10–16 cm
     const lineLengthCm = Math.random() * 6 + 10;
@@ -110,13 +113,47 @@ function runTrial(isPractice = false, onComplete = null) {
 
     const startTime = performance.now();
 
+    // Track whether the cursor is currently in the tolerance band
+    let inBand = false;
+
+    function getLineCentreY() {
+        // Use getBoundingClientRect for the most accurate position at call time
+        const rect = document.getElementById("line").getBoundingClientRect();
+        return rect.top + rect.height / 2;
+    }
+
     function handleMouseMove(e) {
-        const stimRect = stim.getBoundingClientRect();
-        bisectLine.style.left = (e.clientX - stimRect.left) + "px";
-        bisectLine.style.top = lineContainer.offsetTop + (lineContainer.offsetHeight / 2) - (bisectLine.offsetHeight / 2) + "px";
+        const lineCentreY = getLineCentreY();
+        const distY = Math.abs(e.clientY - lineCentreY);
+
+        if (distY <= Y_TOLERANCE_PX) {
+            // Cursor is within the tolerance band — show the bisect line
+            inBand = true;
+            bisectLine.style.display = "block";
+
+            const stimRect = stim.getBoundingClientRect();
+            // X follows the cursor
+            bisectLine.style.left = (e.clientX - stimRect.left) + "px";
+            // Y is locked to the black line's centre
+            bisectLine.style.top =
+                lineContainer.offsetTop +
+                lineContainer.offsetHeight / 2 -
+                bisectLine.offsetHeight / 2 + "px";
+
+            // Show a crosshair so it's obvious clicking will register
+            stim.style.cursor = "crosshair";
+        } else {
+            // Outside the band — hide bisect line and restore default cursor
+            inBand = false;
+            bisectLine.style.display = "none";
+            stim.style.cursor = "default";
+        }
     }
 
     function handleClick(e) {
+        // Only register the click when the cursor is in the tolerance band
+        if (!inBand) return;
+
         const rt = Math.round(performance.now() - startTime);
 
         const rect = document.getElementById("line").getBoundingClientRect();
@@ -161,13 +198,16 @@ function runTrial(isPractice = false, onComplete = null) {
 
     function cleanup() {
         document.removeEventListener("mousemove", handleMouseMove);
-        lineContainer.removeEventListener("click", handleClick);
+        document.removeEventListener("click", handleClick);
         stim.style.display = "none";
+        stim.style.cursor = "";
         bisectLine.style.display = "none";
+        inBand = false;
     }
 
+    // Both listeners on document so mousemove is never missed
     document.addEventListener("mousemove", handleMouseMove);
-    lineContainer.addEventListener("click", handleClick);
+    document.addEventListener("click", handleClick);
 }
 
 function endTask() {
