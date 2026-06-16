@@ -213,15 +213,16 @@ function drawTriangle(ctx, x, y, size, color) {
  
 function drawPolygon(ctx, x, y, radius, sides, color) {
     const angle = (2 * Math.PI) / sides;
+    const startAngle = -Math.PI / 2; // match point-up convention used in the instructions SVG
     ctx.beginPath();
     for (let i = 0; i < sides; i++) {
-        const px = x + radius * Math.cos(i * angle);
-        const py = y + radius * Math.sin(i * angle);
+        const px = x + radius * Math.cos(startAngle + i * angle);
+        const py = y + radius * Math.sin(startAngle + i * angle);
         i === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
     }
     ctx.closePath(); ctx.fillStyle = color; ctx.fill();
 }
- 
+
 function drawSemicircle(ctx, x, y, radius, color, direction) {
     const angles = {
         up:    [Math.PI,        2 * Math.PI],
