@@ -1,0 +1,22 @@
+/* ── Experiment box ── */
+#exptBox {
+    background: #d4d4d4;
+    width: 100%;
+    height: 100%;
+
+}
+
+/* ── Instructions ── */
+#instrBox {
+    text-align: center;
+    padding: 40px;
+    color: #111;
+}
+
+/* ── Stimuli ── */
+#stimImg {
+    text-align: center;
+    padding: 40px;
+    color: #111;
+    display: none;
+}
