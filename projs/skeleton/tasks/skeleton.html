@@ -2,23 +2,29 @@
 <html>
 
     <head>  
+        <!---link to your javascript-->
         <script type="module" src="skeleton.js" defer>  </script>
     </head>
 
     <body>
 
-      <!---instructions-->
-        <div id= "instructions"></div>
+      <!---instructions--->
+        <div id= "instrBox"></div>
             <button id='startButton' type onclick="startTask()"> Start </button>
         </div>
 
       <!---experiment box: where all the stimuli, fixations, etc will be presented-->
-        <div id="exptbox">
+        <div id="exptBox">
         
             <!--- we'll change the src trial by trial for what we want to show -->
             <img id="stimImg" class="stim" src="" width=200 height="200">
             <div id="fix">+</div>
 
+            <!--- responses --->
+            <div id="respBox" style="display: none">
+                <button id="resp1" onclick="collectResp(1,'y')"> yes </button>
+                <button id="resp2" onclick="collectResp(1,'n')"> no </button>
+            </div>
         </div>
 
     </body>
