@@ -19,9 +19,10 @@ const DISTRACTORS = {
     shape: ['circle', 'square', 'triangle', 'pentagon'],
     vis:   ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'],
     aud:   ['h1_sh','h2_sh','h3_sh','h4_sh','h5_sh','h6_sh','h7_sh','h8_sh','h9_sh','h10_sh',
-            'i1_sh','i2_sh','i3_sh','i4_sh','i5_sh','i6_sh','i7_sh','i8_sh','i9_sh','i10_sh'],
+            'i1_sh','i2_sh','i3_sh','i4_sh','i7_sh','i8_sh','i9_sh','i10_sh'],
 };
  
+
 function randItem(arr) {
     return arr[Math.floor(Math.random() * arr.length)];
 }
