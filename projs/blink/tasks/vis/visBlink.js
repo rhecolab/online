@@ -41,6 +41,10 @@ async function startTask() {
         runTrial(fullSeq[0]);
     });
 }
+
+
+
+
  
 export default { startTask };
 
