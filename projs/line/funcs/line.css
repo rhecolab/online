@@ -156,25 +156,6 @@ body:has(#expRoot) .overlayBox {
     display: none;
 }
 
-#homeTarget {
-    position: absolute;
-    right: 12%;
-    top: 10%;
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    background: rgba(80, 180, 80, 0.4);
-    border: 2px solid #2a8a2a;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    font-size: 11px;
-    color: #1a5c1a;
-    text-align: center;
-    pointer-events: none;
-}
-
-
 /* ── Buttons (scoped to expRoot to avoid affecting other blocks) ── */
 #expRoot button {
     font-size: 15px;

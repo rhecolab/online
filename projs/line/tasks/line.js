@@ -35,26 +35,16 @@ function cmToPx(cm) {
     return cm * pxPerCm;
 }
 
-// ── Click home circle to continue to next trial ──────────────────────────────────────────
+// ── Click home button to continue to next trial ──────────────────────────────────────────
 function waitForHome() {
     return new Promise(resolve => {
-        const homeTarget = document.getElementById("homeTarget");
-        const stim = document.getElementById("stim");
-        stim.style.display = "block";
-        homeTarget.style.display = "flex";
-
-        function onMove(e) {
-            const rect = homeTarget.getBoundingClientRect();
-            if (e.clientX >= rect.left && e.clientX <= rect.right &&
-                e.clientY >= rect.top  && e.clientY <= rect.bottom) {
-                document.removeEventListener("mousemove", onMove);
-                homeTarget.style.display = "none";
-                stim.style.display = "none";
-                resolve();
-            }
-        }
-
-        document.addEventListener("mousemove", onMove);
+        const btn = document.getElementById("homeButton");
+        document.getElementById("stim").style.display = "block";
+        btn.style.display = "block";
+        btn.onclick = () => {
+            btn.style.display = "none";
+            resolve();
+        };
     });
 }
 
