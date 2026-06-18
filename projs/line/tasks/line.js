@@ -38,43 +38,18 @@ function cmToPx(cm) {
 // ── Click home circle to continue to next trial ──────────────────────────────────────────
 function waitForHome() {
     return new Promise(resolve => {
-        const TARGET_X = window.innerWidth  * 0.80;   // 80 % across
-        const TARGET_Y = window.innerHeight * 0.15;   // 15 % down
-        const RADIUS   = 40;
-
-        const target = document.createElement("div");
-        target.style.cssText = `
-            position: fixed;
-            left:   ${TARGET_X - RADIUS}px;
-            top:    ${TARGET_Y - RADIUS}px;
-            width:  ${RADIUS * 2}px;
-            height: ${RADIUS * 2}px;
-            border-radius: 50%;
-            background: rgba(80, 180, 80, 0.35);
-            border: 2px solid #2a8a2a;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-            pointer-events: none;
-            font-size: 11px;
-            color: #1a5c1a;
-            text-align: center;
-            line-height: 1.2;
-        `;
-        target.textContent = "move here";
-
-        document.body.appendChild(target);
+        const homeTarget = document.getElementById("homeTarget");
+        const stim = document.getElementById("stim");
+        stim.style.display = "block";
+        homeTarget.style.display = "flex";
 
         function onMove(e) {
-            const rect = target.getBoundingClientRect();
-            const cx = rect.left + rect.width  / 2;
-            const cy = rect.top  + rect.height / 2;
-            const dx = e.clientX - cx;
-            const dy = e.clientY - cy;
-            if (Math.sqrt(dx * dx + dy * dy) <= RADIUS) {
+            const rect = homeTarget.getBoundingClientRect();
+            if (e.clientX >= rect.left && e.clientX <= rect.right &&
+                e.clientY >= rect.top  && e.clientY <= rect.bottom) {
                 document.removeEventListener("mousemove", onMove);
-                target.remove();
+                homeTarget.style.display = "none";
+                stim.style.display = "none";
                 resolve();
             }
         }
