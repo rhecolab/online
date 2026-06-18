@@ -1,6 +1,6 @@
 import html from "./line.html";
 import "../funcs/line.css";
-import { qualtricsAdvance } from "../funcs/utils_line.js";
+import { qualtricsAdvance } from "../funcs/utils.js";
 
 // Parameters
 let data = [];
@@ -11,7 +11,6 @@ const pxPerCm = parseFloat("${e://Field/px_per_cm}") || 37;
 window.trialNum  = 0;
 window.pracNum   = 0;
 
-// How many px above/below the line centre counts as "on the line"
 const Y_TOLERANCE_PX = 20;
 
 // ── Balanced line-length array (half 12 cm, half 24 cm) ──────────────────────
@@ -36,7 +35,7 @@ function cmToPx(cm) {
     return cm * pxPerCm;
 }
 
-// ── Home-target to be clicked ──────────────────────────────────────────
+// ── Click home circle to continue to next trial ──────────────────────────────────────────
 function waitForHome() {
     return new Promise(resolve => {
         const TARGET_X = window.innerWidth  * 0.80;   // 80 % across
@@ -65,12 +64,14 @@ function waitForHome() {
         `;
         target.textContent = "move here";
 
-        const root = document.getElementById("expRoot") || document.body;
-        root.appendChild(target);
+        document.body.appendChild(target);
 
         function onMove(e) {
-            const dx = e.clientX - TARGET_X;
-            const dy = e.clientY - TARGET_Y;
+            const rect = target.getBoundingClientRect();
+            const cx = rect.left + rect.width  / 2;
+            const cy = rect.top  + rect.height / 2;
+            const dx = e.clientX - cx;
+            const dy = e.clientY - cy;
             if (Math.sqrt(dx * dx + dy * dy) <= RADIUS) {
                 document.removeEventListener("mousemove", onMove);
                 target.remove();
