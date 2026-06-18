@@ -1,6 +1,6 @@
 import html from "./line.html";
 import "../funcs/line.css";
-import { qualtricsAdvance } from "../funcs/utils.js";
+import { qualtricsAdvance } from "../funcs/utils_line.js";
 
 // Parameters
 let data = [];
