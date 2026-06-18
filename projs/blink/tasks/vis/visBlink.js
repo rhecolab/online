@@ -44,8 +44,6 @@ async function startTask() {
 
 
 
-
- 
 export default { startTask };
 
 // ── Trial ───────────────────────────────────────────────────────────────────

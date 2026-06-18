@@ -1,5 +1,6 @@
 import html from "./line.html";
 import "../funcs/line.css";
+import { qualtricsAdvance } from "../funcs/utils_line.js";
 
 // Parameters
 let data = [];
@@ -13,8 +14,72 @@ window.pracNum   = 0;
 // How many px above/below the line centre counts as "on the line"
 const Y_TOLERANCE_PX = 20;
 
+// ── Balanced line-length array (half 12 cm, half 24 cm) ──────────────────────
+function makeLineLengths(n) {
+    const half = Math.floor(n / 2);
+    const arr = [...Array(half).fill(12), ...Array(n - half).fill(24)];
+    // Fisher-Yates shuffle
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+}
+let lineLengths = makeLineLengths(totalTrials);
+
+// Practice trials also use the two lengths, picked randomly
+function pracLineLength() {
+    return Math.random() < 0.5 ? 12 : 24;
+}
+
 function cmToPx(cm) {
     return cm * pxPerCm;
+}
+
+// ── Home-target to be clicked ──────────────────────────────────────────
+function waitForHome() {
+    return new Promise(resolve => {
+        const TARGET_X = window.innerWidth  * 0.80;   // 80 % across
+        const TARGET_Y = window.innerHeight * 0.15;   // 15 % down
+        const RADIUS   = 40;
+
+        const target = document.createElement("div");
+        target.style.cssText = `
+            position: fixed;
+            left:   ${TARGET_X - RADIUS}px;
+            top:    ${TARGET_Y - RADIUS}px;
+            width:  ${RADIUS * 2}px;
+            height: ${RADIUS * 2}px;
+            border-radius: 50%;
+            background: rgba(80, 180, 80, 0.35);
+            border: 2px solid #2a8a2a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            pointer-events: none;
+            font-size: 11px;
+            color: #1a5c1a;
+            text-align: center;
+            line-height: 1.2;
+        `;
+        target.textContent = "move here";
+
+        const root = document.getElementById("expRoot") || document.body;
+        root.appendChild(target);
+
+        function onMove(e) {
+            const dx = e.clientX - TARGET_X;
+            const dy = e.clientY - TARGET_Y;
+            if (Math.sqrt(dx * dx + dy * dy) <= RADIUS) {
+                document.removeEventListener("mousemove", onMove);
+                target.remove();
+                resolve();
+            }
+        }
+
+        document.addEventListener("mousemove", onMove);
+    });
 }
 
 async function startTask() {
@@ -96,8 +161,10 @@ function runTrial(isPractice = false, onComplete = null) {
     stim.style.display = "block";
     bisectLine.style.display = "none";
 
-    // Random line length between 10–16 cm
-    const lineLengthCm = Math.random() * 6 + 10;
+    // Line length: balanced 12/24 cm for main trials, random for practice
+    const lineLengthCm = isPractice
+        ? pracLineLength()
+        : lineLengths[window.trialNum];
     const lineLengthPx = cmToPx(lineLengthCm);
     lineContainer.style.width = lineLengthPx + "px";
 
@@ -116,15 +183,14 @@ function runTrial(isPractice = false, onComplete = null) {
     // Track whether the cursor is currently in the tolerance band
     let inBand = false;
 
-    function getLineCentreY() {
-        // Use getBoundingClientRect for the most accurate position at call time
+    function getLineCenterY() {
         const rect = document.getElementById("line").getBoundingClientRect();
         return rect.top + rect.height / 2;
     }
 
     function handleMouseMove(e) {
-        const lineCentreY = getLineCentreY();
-        const distY = Math.abs(e.clientY - lineCentreY);
+        const lineCenterY = getLineCenterY();
+        const distY = Math.abs(e.clientY - lineCenterY);
 
         if (distY <= Y_TOLERANCE_PX) {
             // Cursor is within the tolerance band — show the bisect line
@@ -134,7 +200,7 @@ function runTrial(isPractice = false, onComplete = null) {
             const stimRect = stim.getBoundingClientRect();
             // X follows the cursor
             bisectLine.style.left = (e.clientX - stimRect.left) + "px";
-            // Y is locked to the black line's centre
+            // Y is locked to the black line's center
             bisectLine.style.top =
                 lineContainer.offsetTop +
                 lineContainer.offsetHeight / 2 -
@@ -184,13 +250,17 @@ function runTrial(isPractice = false, onComplete = null) {
 
         cleanup();
 
+        // ── Practice: return to home, then fire the resolve callback ─────────
         if (isPractice) {
-            if (onComplete) onComplete();
+            waitForHome().then(() => {
+                if (onComplete) onComplete();
+            });
             return;
         }
 
+        // ── Main trials: return to home, then start next trial or end ────────
         if (window.trialNum < totalTrials) {
-            setTimeout(() => runTrial(), 400);
+            waitForHome().then(() => runTrial());
         } else {
             endTask();
         }
@@ -211,39 +281,8 @@ function runTrial(isPractice = false, onComplete = null) {
 }
 
 function endTask() {
-    // Save data
-    Qualtrics.SurveyEngine.setEmbeddedData("lineData", JSON.stringify(data));
-
-    // Clean up before advancing so break page shows properly
     const root = document.getElementById("expRoot");
     if (root) root.remove();
 
-
-    // Try navNext first
-    try {
-        if (typeof Qualtrics !== "undefined" &&
-            Qualtrics.SurveyEngine &&
-            typeof Qualtrics.SurveyEngine.navNext === "function") {
-            console.log("Advancing via navNext()");
-            Qualtrics.SurveyEngine.navNext();
-            return; // ← this return should prevent the rest, but navNext is async
-                    //   so the code below was still executing
-        }
-    } catch (e) {
-        console.warn("navNext() failed:", e);
-    }
-
-    // Only reach here if navNext wasn't available
-    const nextBtn = document.querySelector("#NextButton");
-    if (nextBtn) {
-        console.log("Advancing via NextButton click");
-        nextBtn.style.visibility = "visible";
-        nextBtn.click();
-    } else {
-        const form = document.querySelector("form[name='QualtricsForm']");
-        if (form) {
-            console.log("Advancing via form.submit()");
-            form.submit();
-        }
-    }
+    qualtricsAdvance("lineData", data);
 }
