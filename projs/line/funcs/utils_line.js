@@ -1,4 +1,5 @@
 // Qualtrics needs absolute URLs for stimuli; fall back to relative for local dev
+// test 
 const GITHUB_PATH = "https://rhecolab.github.io/online/projs/blink/";
  
 function getBasePath() {
@@ -7,6 +8,7 @@ function getBasePath() {
         ? "../../"
         : GITHUB_PATH;
 }
+
 // ── Qualtrics submission ──────────────────────────────────────────────────────
 // Saves data to an embedded field then advances to the next survey page.
 export function qualtricsAdvance(fieldName, data) {
