@@ -36,18 +36,32 @@ function cmToPx(cm) {
 }
 
 // ── Click home button to continue to next trial ──────────────────────────────────────────
-function waitForHome() {
+function waitForContinue() {
     return new Promise(resolve => {
         const btn = document.getElementById("homeButton");
+
+        // Get line position before stim is hidden
+        const lineEl = document.getElementById("line");
+        const rect = lineEl.getBoundingClientRect();
+        const stimRect = document.getElementById("stim").getBoundingClientRect();
+
+        // Position button just above-right of the line's right edge
+        btn.style.position = "absolute";
+        btn.style.left = (rect.right - stimRect.left + 12) + "px";
+        btn.style.top  = (rect.top  - stimRect.top  - btn.offsetHeight - 8) + "px";
+
+        // Show stim (so button is visible in its container) but hide the line container
         document.getElementById("stim").style.display = "block";
+        document.getElementById("lineContainer").style.display = "none";
         btn.style.display = "block";
+
         btn.onclick = () => {
             btn.style.display = "none";
+            document.getElementById("lineContainer").style.display = "";  // restore
             resolve();
         };
     });
-}
-
+}ç
 async function startTask() {
 
     // Create experiment container & inject HTML
@@ -107,7 +121,7 @@ export function showMessage(text) {
                 <button id="continueBtn" style="font-size:18px; padding:10px 28px;">Continue</button>
             </div>`;
 
-        // Append to expRoot so it sits inside the experiment layer, not body
+        // Append to expRoot
         const root = document.getElementById("expRoot") || document.body;
         root.appendChild(overlay);
 
@@ -216,9 +230,9 @@ function runTrial(isPractice = false, onComplete = null) {
 
         cleanup();
 
-        // ── Practice: return to home, then fire the resolve callback ─────────
+        // ── Practice: return to home, then continue ─────────
         if (isPractice) {
-            waitForHome().then(() => {
+            waitForContinue().then(() => {
                 if (onComplete) onComplete();
             });
             return;
@@ -226,7 +240,7 @@ function runTrial(isPractice = false, onComplete = null) {
 
         // ── Main trials: return to home, then start next trial or end ────────
         if (window.trialNum < totalTrials) {
-            waitForHome().then(() => runTrial());
+            waitForContinue().then(() => runTrial());
         } else {
             endTask();
         }
