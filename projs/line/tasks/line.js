@@ -40,14 +40,14 @@ function waitForContinue() {
     return new Promise(resolve => {
         const btn = document.getElementById("homeButton");
         const stim = document.getElementById("stim");
+        const lineContainer = document.getElementById("lineContainer");
 
         stim.style.display = "block";
-        document.getElementById("lineContainer").style.display = "none";
+        lineContainer.style.display = "none";
 
-        // Position using fixed coordinates 
         btn.style.position = "fixed";
-        btn.style.left =  "75%";
-        btn.style.top  = "25%";
+        btn.style.left = "75%";
+        btn.style.top = "20%";
         btn.style.display = "block";
 
         btn.onclick = () => {
@@ -55,7 +55,7 @@ function waitForContinue() {
             btn.style.position = "";
             btn.style.left = "";
             btn.style.top = "";
-            document.getElementById("lineContainer").style.display = "";
+            lineContainer.style.display = "";
             resolve();
         };
     });
