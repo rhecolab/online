@@ -46,8 +46,8 @@ function waitForContinue() {
         lineContainer.style.display = "none";
 
         btn.style.position = "fixed";
-        btn.style.left = "75%";
-        btn.style.top = "20%";
+        btn.style.left = "60%";
+        btn.style.top = "30%";
         btn.style.display = "block";
 
         btn.onclick = () => {
