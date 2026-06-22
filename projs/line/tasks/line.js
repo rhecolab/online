@@ -61,7 +61,8 @@ function waitForContinue() {
             resolve();
         };
     });
-}ç
+}
+
 async function startTask() {
 
     // Create experiment container & inject HTML
