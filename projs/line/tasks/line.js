@@ -7,7 +7,7 @@ let data = [];
 const totalTrials = 10;
 const subjID = "${e://Field/subjID}";
 const taskName = "line";
-const pxPerCm = parseFloat("${e://Field/px_per_cm}") || 37;
+const pxPerCm = parseFloat("${e://Field/pxPerCm}") || 37;
 window.trialNum  = 0;
 window.pracNum   = 0;
 
@@ -39,25 +39,23 @@ function cmToPx(cm) {
 function waitForContinue() {
     return new Promise(resolve => {
         const btn = document.getElementById("homeButton");
+        const stim = document.getElementById("stim");
 
-        // Get line position before stim is hidden
-        const lineEl = document.getElementById("line");
-        const rect = lineEl.getBoundingClientRect();
-        const stimRect = document.getElementById("stim").getBoundingClientRect();
-
-        // Position button just above-right of the line's right edge
-        btn.style.position = "absolute";
-        btn.style.left = (rect.right - stimRect.left + 12) + "px";
-        btn.style.top  = (rect.top  - stimRect.top  - btn.offsetHeight - 8) + "px";
-
-        // Show stim (so button is visible in its container) but hide the line container
-        document.getElementById("stim").style.display = "block";
+        stim.style.display = "block";
         document.getElementById("lineContainer").style.display = "none";
+
+        // Position using fixed coordinates 
+        btn.style.position = "fixed";
+        btn.style.left = (lineRect.right + 12) + "px";
+        btn.style.top  = (lineRect.top - 48) + "px";
         btn.style.display = "block";
 
         btn.onclick = () => {
             btn.style.display = "none";
-            document.getElementById("lineContainer").style.display = ""; 
+            btn.style.position = "";
+            btn.style.left = "";
+            btn.style.top = "";
+            document.getElementById("lineContainer").style.display = "";
             resolve();
         };
     });
