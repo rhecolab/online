@@ -46,8 +46,8 @@ function waitForContinue() {
 
         // Position using fixed coordinates 
         btn.style.position = "fixed";
-        btn.style.left = (lineContainer.right + 12) + "px";
-        btn.style.top  = (lineContainer.top - 48) + "px";
+        btn.style.left =  "75%";
+        btn.style.top  = "25%";
         btn.style.display = "block";
 
         btn.onclick = () => {
