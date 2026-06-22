@@ -57,7 +57,7 @@ function waitForContinue() {
 
         btn.onclick = () => {
             btn.style.display = "none";
-            document.getElementById("lineContainer").style.display = "";  // restore
+            document.getElementById("lineContainer").style.display = ""; 
             resolve();
         };
     });
