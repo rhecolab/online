@@ -29,23 +29,40 @@ export async function runPractice(seq, func, trialArgs = {}) {
 }
  
 // ── Overlay message with fade in/out ─────────────────────────────────────────
+// Update this function inside your utils.js file
 export function showMessage(text) {
     return new Promise(resolve => {
         const overlay = document.createElement("div");
         overlay.className = "overlayBox";
+        
+        // Force explicit fallback styling so it can't hide behind Qualtrics themes
+        Object.assign(overlay.style, {
+            position: "fixed",
+            top: "0", left: "0", width: "100vw", height: "100vh",
+            backgroundColor: "rgba(0,0,0,0.85)",
+            color: "white",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            zIndex: "999999",
+            fontSize: "20px"
+        });
+
         overlay.innerHTML = `
-            <div style="text-align:center; max-width:520px; padding:0 24px;">
+            <div style="text-align:center; max-width:520px; padding:24px; background:#222; border-radius:8px; border:1px solid #444;">
                 ${text}<br><br>
-                <button id="continueBtn" style="font-size:18px; padding:10px 28px;">Continue</button>
+                <button id="msgContinueBtn" style="font-size:18px; padding:10px 28px; cursor:pointer;">Continue</button>
             </div>`;
+            
         document.body.appendChild(overlay);
-        overlay.querySelector("#continueBtn").onclick = () => {
+        document.body.style.cursor = "auto"; // Ensure cursor is visible to click it
+
+        overlay.querySelector("#msgContinueBtn").onclick = () => {
             overlay.remove();
             resolve();
         };
     });
 }
- 
 // ── Shared trial row builder ──────────────────────────────────────────────────
 // Reads t1_pos / t2_pos that makeSeq computed and bakes them into the data row.
 export function buildTrialRow(trial) {

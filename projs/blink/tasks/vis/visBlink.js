@@ -59,7 +59,7 @@ function runTrial(trialInfo, isPractice = false, on, off) {
 
     document.body.style.cursor = "none"; // Hide cursor
     const pause = document.getElementById("pauseScreen");
-    pause.style.display = "none"; // Hide pause screen
+    if (pause) pause.style.display = "none"; // Hide pause screen
 
     function showNext() {
         if (i < stimuli.length) {
@@ -81,8 +81,8 @@ function changeStim(stim) {
     el.textContent = stim.stim;
     el.style.color = stim.type === 't1' ? 'white' : 'black';
 }
-
- // ── Response collection ───────────────────────────────────────────────────────
+ 
+// ── Response collection ───────────────────────────────────────────────────────
 window.collectResp = function (question, response = null) {
     if (!currentTrial) return;
     const q1 = document.getElementById("q1");
@@ -106,8 +106,7 @@ window.collectResp = function (question, response = null) {
     }
  
     if (question === 3 && response !== null) {
-        // Prevent double-processing if questions are already hidden
-        if (q2.style.display === "none") return;
+        if (q2.style.display === "none") return; // Double-click safety filter
 
         currentTrialRow.resp2 = response;
         currentTrialRow.rt2   = performance.now() - trialStartTime;
@@ -116,14 +115,11 @@ window.collectResp = function (question, response = null) {
         q2.style.display = "none";
 
         if (currentTrial.isPractice) {
-            // Call the resolve callback passed from runPractice
-            if (typeof currentTrial.onComplete === "function") {
-                currentTrial.onComplete();
-            }
+            window.pracTrialNum = (window.pracTrialNum || 0) + 1;
             return;
         }    
 
-        if (!currentTrial.isPractice) data.push(currentTrialRow);
+        data.push(currentTrialRow);
 
         const pause = document.getElementById("pauseScreen");
         const btn = pause.querySelector("#continueBtn");
@@ -131,6 +127,7 @@ window.collectResp = function (question, response = null) {
 
         btn.onclick = () => {
             pause.style.display = "none";
+
             window.trialNum++;
             if (window.trialNum < trialTotal) {
                 runTrial(fullSeq[window.trialNum], false);
@@ -139,4 +136,4 @@ window.collectResp = function (question, response = null) {
             }
         };
     }
-};
+}; 
