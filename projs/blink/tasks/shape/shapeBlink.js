@@ -97,10 +97,10 @@ window.collectResp = function (question, response = null) {
     const q1 = document.getElementById("q1");
     const q2 = document.getElementById("q2");
 
-    document.body.style.cursor = "auto"; // Show cursor
-
     updateProgressBar(window.trialNum + (currentTrial.isPractice ? 0 : 1), trialTotal);
 
+    document.body.style.cursor = "auto"; // Show cursor
+ 
     if (question === 1) {
         currentTrialRow = buildTrialRow(currentTrial);
         q1.style.display = "block";
@@ -115,18 +115,24 @@ window.collectResp = function (question, response = null) {
     }
  
     if (question === 3 && response !== null) {
+        // Prevent double-processing if questions are already hidden
+        if (q2.style.display === "none") return;
 
         currentTrialRow.resp2 = response;
         currentTrialRow.rt2   = performance.now() - trialStartTime;
-        if (!currentTrial.isPractice) data.push(currentTrialRow);
-
+        
         q1.style.display = "none";
         q2.style.display = "none";
 
         if (currentTrial.isPractice) {
-            window.pracTrialNum = (window.pracTrialNum || 0) + 1;  // ADD THIS
-        return;
-    }
+            // Call the resolve callback passed from runPractice
+            if (typeof currentTrial.onComplete === "function") {
+                currentTrial.onComplete();
+            }
+            return;
+        }    
+
+        if (!currentTrial.isPractice) data.push(currentTrialRow);
 
         const pause = document.getElementById("pauseScreen");
         const btn = pause.querySelector("#continueBtn");
@@ -134,7 +140,6 @@ window.collectResp = function (question, response = null) {
 
         btn.onclick = () => {
             pause.style.display = "none";
-
             window.trialNum++;
             if (window.trialNum < trialTotal) {
                 runTrial(fullSeq[window.trialNum], false);
