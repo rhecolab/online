@@ -115,7 +115,9 @@ window.collectResp = function (question, response = null) {
         q2.style.display = "none";
 
         if (currentTrial.isPractice) {
-            window.pracTrialNum = (window.pracTrialNum || 0) + 1;
+            if (typeof currentTrial.onComplete === "function") {
+                currentTrial.onComplete();
+            }
             return;
         }    
 
@@ -136,4 +138,4 @@ window.collectResp = function (question, response = null) {
             }
         };
     }
-}; 
+};
