@@ -9,13 +9,11 @@ function getBasePath() {
 }
  
 // ── Practice runner ──────────────────────────────────────────────────────────
-// Runs each practice trial in sequence, waiting for window.pracTrialNum to
-// increment (set by collectResp in each task) before advancing.
-export async function runPractice(seq, func, trialArgs = {}) {
+export async function runPractice(seq, func, trialArgs = {}, finishMessage = "") {
     for (let i = 0; i < seq.length; i++) {
         const fix = document.getElementById("fix");
         if (fix) fix.textContent = "";
-
+ 
         // Create a promise for the current trial execution
         await new Promise((resolve) => {
             // Attach the resolver directly to the trial object
@@ -25,11 +23,10 @@ export async function runPractice(seq, func, trialArgs = {}) {
             func(seq[i], true, trialArgs.on, trialArgs.off);
         });
     }
-    await showMessage("Practice finished! Press continue for main trials.");
+    if (finishMessage) await showMessage(finishMessage);
 }
- 
+
 // ── Overlay message with fade in/out ─────────────────────────────────────────
-// Update this function inside your utils.js file
 export function showMessage(text) {
     return new Promise(resolve => {
         const overlay = document.createElement("div");

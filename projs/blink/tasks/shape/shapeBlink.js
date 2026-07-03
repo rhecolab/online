@@ -44,12 +44,18 @@ async function startTask() {
         { t1: 'circle',   t2: 'semiup',   lag: 0 },
         { t1: 'square',   t2: 'semidown', lag: 3 },
         { t1: 'triangle', t2: 'semileft', lag: 9 },
+        { t1: 'circle',   t2: 'semiup',   lag: 3 },
+        { t1: 'triangle', t2: 'semiright', lag: 3 },
+        { t1: 'triangle', t2: 'semidown', lag: 9 },
+        { t1: 'circle',   t2: 'semiup', lag: 0 },
+        { t1: 'square', t2: 'semileft', lag: 0 },
     ], 'shape');
     trialTotal = fullSeq.length;
  
     document.getElementById("startButton").addEventListener("click", async () => {
         document.getElementById("instrBox").style.display = "none";
-        await runPractice(pracSeq, runTrial, { on: 300, off: 100 });
+        await runPractice(pracSeq.slice(0,3), runTrial, { on: 300, off: 100 }, "Great! Now let's try a few more practice trials but faster.");
+        await runPractice(pracSeq.slice(3), runTrial, { on: stimON, off: stimOFF }, "Practice complete! The main task will start now.");
         runTrial(fullSeq[0]);
     });
 }

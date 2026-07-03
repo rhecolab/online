@@ -7,7 +7,7 @@ window.playSound = playSound;
  
 // Parameters
 const stimON  = 300;
-const stimOFF = 300;
+const stimOFF = 100;
  
 let data         = [];
 let currentTrial = null;
@@ -39,6 +39,12 @@ async function startTask() {
         { t1: 'glide_up',   t2: 'a1_sh', lag: 0 },
         { t1: 'glide_down', t2: 'a8_sh', lag: 3 },
         { t1: 'glide_up',   t2: 'a2_sh', lag: 9 },
+        { t1: 'glide_up',   t2: 'a1_sh', lag: 0 },
+        { t1: 'glide_down', t2: 'a2_sh', lag: 3 },
+        { t1: 'glide_down', t2: 'a2_sh', lag: 0 },
+        { t1: 'glide_down', t2: 'a1_sh', lag: 9 },
+        { t1: 'glide_up',   t2: 'a8_sh', lag: 3 },
+
     ], 'aud');
     trialTotal = fullSeq.length;
  
@@ -50,7 +56,8 @@ async function startTask() {
  
     document.getElementById("startButton").addEventListener("click", async () => {
         document.getElementById("instrBox").style.display = "none";
-        await runPractice(pracSeq, runTrial, { on: 300, off: 100 });
+        await runPractice(pracSeq.slice(0,3), runTrial, { on: 400, off: 200 }, "Great! Now let's try a few more practice trials but faster.");
+        await runPractice(pracSeq.slice(3), runTrial, { on: stimON, off: stimOFF }, "Practice complete! The main task will start now.");
         runTrial(fullSeq[0], false);
     });
 }

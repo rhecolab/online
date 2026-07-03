@@ -32,12 +32,19 @@ async function startTask() {
         { t1: '2', t2: '8', lag: 0 },
         { t1: '4', t2: '6', lag: 3 },
         { t1: '1', t2: '5', lag: 9 },
+        { t1: '2', t2: '8', lag: 0 },
+        { t1: '2', t2: '4', lag: 0 },
+        { t1: '1', t2: '5', lag: 3 },
+        { t1: '4', t2: '8', lag: 9 },
+        { t1: '3', t2: '7', lag: 0 },
+
     ], 'vis');
     trialTotal = fullSeq.length;
  
     document.getElementById("startButton").addEventListener("click", async () => {
         document.getElementById("instrBox").style.display = "none";
-        await runPractice(pracSeq, runTrial, { on: 300, off: 100 });
+        await runPractice(pracSeq.slice(0,3), runTrial, { on: 300, off: 100 }, "Great! Now let's try a few more practice trials but faster.");
+        await runPractice(pracSeq.slice(3), runTrial, { on: stimON, off: stimOFF }, "Practice complete! The main task will start now.");
         runTrial(fullSeq[0]);
     });
 }
