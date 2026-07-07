@@ -39,6 +39,7 @@ async function startTask() {
         { t1: '3', t2: '7', lag: 0 },
 
     ], 'vis');
+    
     trialTotal = fullSeq.length;
  
     document.getElementById("startButton").addEventListener("click", async () => {

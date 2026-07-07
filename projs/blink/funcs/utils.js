@@ -9,7 +9,7 @@ function getBasePath() {
 }
  
 // ── Practice runner ──────────────────────────────────────────────────────────
-export async function runPractice(seq, func, trialArgs = {}, finishMessage = "") {
+export async function runPractice(seq, func, trialArgs = {}, finishMessage = "", pauseMessage = "Click continue for the next practice trial.") {
     for (let i = 0; i < seq.length; i++) {
         const fix = document.getElementById("fix");
         if (fix) fix.textContent = "";
@@ -22,6 +22,13 @@ export async function runPractice(seq, func, trialArgs = {}, finishMessage = "")
             // Execute the trial
             func(seq[i], true, trialArgs.on, trialArgs.off);
         });
+
+        // Pause between trials, mirroring the main task's continue screen.
+        // Skipped after the last trial in this block — finishMessage (if set)
+        // already requires a click before moving on.
+        if (pauseMessage && i < seq.length - 1) {
+            await showMessage(pauseMessage);
+        }
     }
     if (finishMessage) await showMessage(finishMessage);
 }
@@ -220,7 +227,7 @@ function drawTriangle(ctx, x, y, size, color) {
  
 function drawPolygon(ctx, x, y, radius, sides, color) {
     const angle = (2 * Math.PI) / sides;
-    const startAngle = -Math.PI / 2; // match point-up convention used in the instructions SVG
+    const startAngle = -Math.PI / 2; // 
     ctx.beginPath();
     for (let i = 0; i < sides; i++) {
         const px = x + radius * Math.cos(startAngle + i * angle);
@@ -257,4 +264,3 @@ export function drawShape(shape, ctx, x, y, color) {
         case "semiright": drawSemicircle(ctx, x, y, r, color, 'right'); break;
     }
 }
- 
