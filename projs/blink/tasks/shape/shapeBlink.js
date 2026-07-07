@@ -4,8 +4,8 @@ import html from "./shapeBlink.html";
 import "../../funcs/blink.css";
  
 // Parameters
-const stimON  = 150;
-const stimOFF = 50;
+const stimON  = 131;
+const stimOFF = 49;
  
 let data         = [];
 let currentTrial = null;

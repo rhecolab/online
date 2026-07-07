@@ -7,7 +7,7 @@ window.playSound = playSound;
  
 // Parameters
 const stimON  = 300;
-const stimOFF = 100;
+const stimOFF = 49;
  
 let data         = [];
 let currentTrial = null;

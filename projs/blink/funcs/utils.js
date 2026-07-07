@@ -43,7 +43,7 @@ export function showMessage(text) {
         Object.assign(overlay.style, {
             position: "fixed",
             top: "0", left: "0", width: "100vw", height: "100vh",
-            backgroundColor: "rgba(0,0,0,0.85)",
+            backgroundColor: "#d4d4d4",
             color: "white",
             display: "flex",
             alignItems: "center",
@@ -53,9 +53,9 @@ export function showMessage(text) {
         });
 
         overlay.innerHTML = `
-            <div style="text-align:center; max-width:520px; padding:24px; background:#222; border-radius:8px; border:1px solid #444;">
+            <div style="text-align:center; max-width:520px; padding:24px; background:#222; border-radius:8px; border:1px solid #d4d4d4;">
                 ${text}<br><br>
-                <button id="msgContinueBtn" style="font-size:18px; padding:10px 28px; cursor:pointer;">Continue</button>
+                <button id="msgContinueBtn" style="font-size:20px; padding:10px 28px; cursor:pointer;">Continue</button>
             </div>`;
             
         document.body.appendChild(overlay);
@@ -113,23 +113,6 @@ export function qualtricsAdvance(fieldName, data) {
         if (form) form.submit();
         else setTimeout(arguments.callee, 50);
     }, 500);
-}
- 
-// ── Trial counter banner  ──────────────────────────────────────────
-export function showTrialCounter(isPractice, trialNum, trialTotal) {
-    const root = document.getElementById("expRoot");
-    if (!root) return;
-    const banner = document.createElement("div");
-    Object.assign(banner.style, {
-        position: "absolute", top: "10px", left: "50%",
-        transform: "translateX(-50%)",
-        backgroundColor: isPractice ? "#a0c4ff" : "#fffa65",
-        color: "#000", fontSize: "16px", padding: "10px 20px",
-        borderRadius: "8px", zIndex: "9999", textAlign: "center",
-    });
-    banner.textContent = `Trial ${trialNum} / ${trialTotal}`;
-    root.appendChild(banner);
-    setTimeout(() => banner.remove(), 1500);
 }
  
 // ── Progress bar ──────────────────────────────────────────────────────────────
